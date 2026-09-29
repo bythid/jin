@@ -355,25 +355,30 @@ publishing all run there — every push and pull request executes `pnpm run veri
 (`.github/workflows/ci.yml`). Issues and pull requests live there too: there is no second copy to
 keep in sync.
 
-Cutting a release stays exactly as [CHANGELOG.md](../CHANGELOG.md) describes: one commit on
-`main` that bumps `package.json` and adds the entry, tagged `vX.Y.Z`. Pushing such a tag runs
-`.github/workflows/publish.yml` on GitHub, which uses npm trusted publishing (OIDC) to put the
-version in the **stage queue** rather than releasing it — no npm token is stored anywhere, and
-provenance rides on the OIDC token. Releasing takes one approval from a maintainer on a trusted
-device:
+Cutting a release stays exactly as [CHANGELOG.md](../CHANGELOG.md) describes, in this order:
 
-```bash
-npm stage list @bythid/jin          # find the stage id
-npm stage view <stage-id>           # inspect it
-npm stage approve <stage-id>        # a 2FA challenge, and the version goes live
-```
+1. **Prepare**: one commit on `main` that bumps `version` in `package.json` and writes the entry
+   under `[Unreleased]` in the CHANGELOG — written for the application that has to react, not for
+   the commit history.
+2. **Tag it**: `git tag vX.Y.Z && git push origin vX.Y.Z`. The tag runs
+   `.github/workflows/publish.yml`, whose `prepublishOnly` runs `verify` and `smoke` first.
+3. **Approve it**: the workflow uses npm trusted publishing (OIDC) to put the version in the
+   **stage queue** rather than releasing it — no npm token is stored anywhere, and provenance rides
+   on the OIDC token. A maintainer releases it from a trusted device:
 
-The same queue is visible on the package page at npmjs.com. That step is the point: an action
-compromised inside the workflow can reach the queue but never the consumers. The first publish is
-the one exception — it is done by hand to establish the package and its scope, and the
-trusted-publisher setting (this repository, `publish.yml`, staged publishing only) is configured
-on npmjs.com afterwards. `v0.1.0` is that hand-published version and is therefore never tagged;
-tag-driven publishing starts at the next one.
+   ```bash
+   npm stage list @bythid/jin          # find the stage id
+   npm stage view <stage-id>           # inspect it
+   npm stage approve <stage-id>        # a 2FA challenge, and the version goes live
+   ```
+
+   The same queue is visible on the package page at npmjs.com. That step is the point: an action
+   compromised inside the workflow can reach the queue but never the consumers.
+
+The first publish is the one exception — it is done by hand to establish the package and its scope,
+and the trusted-publisher setting (this repository, `publish.yml`, staged publishing only) is
+configured on npmjs.com afterwards. `v0.1.0` is that hand-published version and is therefore never
+tagged; tag-driven publishing starts at the next one.
 
 The publish workflow runs on Node 22, whose bundled npm is 10.9.x; trusted publishing needs npm CLI
 11.5.1 or later and staged publishing needs 11.15.0 — so the workflow installs npm explicitly

@@ -326,22 +326,27 @@ tarball、以及一个 git tag——按便利程度从高到低，按健壮性�
 push 和每个 pull request 都会执行 `pnpm run verify`（`.github/workflows/ci.yml`）。Issue 与 PR
 也都在 GitHub——没有第二份副本需要同步。
 
-发版流程与 [CHANGELOG.md](CHANGELOG.md) 描述的完全一致：在 `main` 上一个提交，bump
-`package.json` 并加入条目，打上 `vX.Y.Z` 标签。推送这样的标签会在 GitHub 上触发
-`.github/workflows/publish.yml`，它用 npm trusted publishing（OIDC）把版本送进**待审队列**而不是
-直接上线——任何地方都不存 npm token，provenance 由 OIDC 令牌自动生成。上线要由维护者在可信设备上
-批准一次：
+发版流程与 [CHANGELOG.md](CHANGELOG.md) 描述的完全一致，顺序是：
 
-```bash
-npm stage list @bythid/jin          # 找到 stage-id
-npm stage view <stage-id>           # 审内容
-npm stage approve <stage-id>        # 过一遍 2FA，版本才上线
-```
+1. **准备**：在 `main` 上一个提交，bump `package.json` 的 `version`，并在 CHANGELOG 的
+   `[Unreleased]` 下写条目——条目写给"必须作出反应的使用方"，不是写给提交历史。
+2. **推标签**：`git tag vX.Y.Z && git push origin vX.Y.Z`。标签触发
+   `.github/workflows/publish.yml`，CI 先跑 `verify` 与 `smoke`（`prepublishOnly` 就是它们）。
+3. **批准上线**：工作流用 npm trusted publishing（OIDC）把版本送进**待审队列**而不是直接上线——
+   任何地方都不存 npm token，provenance 由 OIDC 令牌自动生成。由维护者在可信设备上批准：
 
-npmjs.com 的包页面上也能批准。这一步是刻意的：即使工作流里的某个 action 被投毒，它也只能把版本送进
-队列，碰不到使用者。首次发布是唯一的例外，它手工执行以建立包和它的 scope，之后在 npmjs.com 上配置
-trusted publisher（本仓库、`publish.yml`，只允许分阶段发布）。`v0.1.0` 就是那一版手工发布的产物，
-因此不打标签；标签驱动的发布从下一个版本开始。
+   ```bash
+   npm stage list @bythid/jin          # 找到 stage-id
+   npm stage view <stage-id>           # 审内容
+   npm stage approve <stage-id>        # 过一遍 2FA，版本才上线
+   ```
+
+   npmjs.com 的包页面上也能批准。这一步是刻意的：即使工作流里的某个 action 被投毒，它也只能把版本
+   送进队列，碰不到使用者。
+
+首次发布是唯一的例外，它手工执行以建立包和它的 scope，之后在 npmjs.com 上配置 trusted publisher
+（本仓库、`publish.yml`，只允许分阶段发布）。`v0.1.0` 就是那一版手工发布的产物，因此不打标签；
+标签驱动的发布从下一个版本开始。
 
 发布工作流跑在 Node 22 上，而 Node 22 自带的 npm 是 10.9.x；trusted publishing 要求 npm CLI
 ≥ 11.5.1，分阶段发布要求 ≥ 11.15.0。所以 `publish.yml` 在装依赖之前显式装了一次 npm——少了那一步，
