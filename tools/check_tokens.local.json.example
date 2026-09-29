@@ -1,0 +1,11 @@
+{
+  "$comment": [
+    "Copy this file to tools/check_tokens.local.json to add vocabulary that only",
+    "your checkout should reject. The copy is gitignored, so the words you add",
+    "stay out of the published package.",
+    "",
+    "Both lists are additive; the generic checks run either way."
+  ],
+  "business_words": ["example-app-name", "example-internal-term"],
+  "app_markers": ["example-app-name", "apps/example-app"]
+}

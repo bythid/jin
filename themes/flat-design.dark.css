@@ -1,0 +1,124 @@
+/*
+ * Jin theme: flat design (dark).
+ *
+ * The full contract is restated here so nothing leaks from the light file.
+ * Flat design in the dark is not the light palette inverted: the surfaces step
+ * up in lightness from the page so a panel edge is still findable, and the
+ * accent has to be a light blue rather than the light mode's 700-weight one —
+ * a saturated mid-blue on a dark surface is a hole, not a colour.
+ *
+ * ---
+ * Style definition: the "flat design" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='flat-design'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text */
+  --jin-bg: #121417;
+  --jin-surface: #1a1d21;
+  --jin-surface-raised: #212529;
+  --jin-surface-sunken: #0d0f11;
+  --jin-surface-translucent: #212529;
+  --jin-scrim: rgba(4, 6, 8, 0.7);
+  --jin-text: #f2f4f7;
+  --jin-text-muted: #c2c8d0;
+  --jin-text-subtle: #aeb6c0;
+  --jin-text-on-accent: #0b1220;
+
+  /* border & shape */
+  --jin-border-color: #2f3338;
+  --jin-border-color-strong: #4a5058;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 2px;
+  --jin-radius-md: 4px;
+  --jin-radius-lg: 6px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 28px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth */
+  --jin-elevation-1: none;
+  --jin-elevation-2: none;
+  --jin-elevation-3: none;
+  --jin-elevation-4: none;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #64b5f6;
+  --jin-accent-hover: #8ac6f8;
+  --jin-accent-active: #4a9fe0;
+  --jin-danger: #ef5350;
+  --jin-warning: #ffb74d;
+  --jin-success: #66bb6a;
+  --jin-info: #64b5f6;
+  --jin-danger-text: #ff8a80;
+  --jin-warning-text: #ffcc80;
+  --jin-success-text: #9ccc9c;
+  --jin-info-text: #a8d4ff;
+  --jin-danger-bg: #3a1d1d;
+  --jin-warning-bg: #3a2e18;
+  --jin-success-bg: #1e3320;
+  --jin-info-bg: #152a3d;
+
+  /* focus */
+  --jin-focus-ring-color: #64b5f6;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 150ms;
+  --jin-duration-base: 180ms;
+  --jin-duration-slow: 200ms;
+  --jin-easing-standard: cubic-bezier(0, 0, 0.2, 1);
+  --jin-easing-emphasized: cubic-bezier(0, 0, 0.2, 1);
+
+  /* typography */
+  --jin-font-family: 'Roboto', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --jin-font-display: 'Roboto', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --jin-font-mono: 'Roboto Mono', ui-monospace, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 22px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.5;
+  --jin-letter-spacing: 0.01em;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='flat-design'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

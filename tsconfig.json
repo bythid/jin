@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": false,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      // tests/gallery-i18n.spec.ts reaches into the gallery's dictionaries, and
+      // the gallery imports the library by its published name. That resolves
+      // through the `file:..` link in gallery/node_modules, which a CI checkout
+      // does not have, so the mapping stands in for it and the typecheck sees
+      // the module graph the gallery sees.
+      "@bythid/jin/*": ["./*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "contracts/**/*.json",
+    "env.d.ts"
+  ],
+  "exclude": ["node_modules", "dist", "gallery"]
+}

@@ -1,0 +1,132 @@
+/*
+ * Jin theme: minimalism & Swiss style (light).
+ *
+ * The grid, the type and one red. Zero radius, zero shadow, zero gradient —
+ * and no decoration of any kind, because the style's whole argument is that
+ * hierarchy comes from scale, weight and alignment. The only colour in the
+ * interface is the accent, which is why --jin-accent is a saturated red rather
+ * than something tasteful: it is the single exception in an otherwise
+ * monochrome page, and it has to be able to carry that role.
+ *
+ * The focus ring is black rather than the accent. In this style the accent is
+ * used sparingly enough that a keyboard user would be hunting for it; a black
+ * ring is unambiguous on every surface the theme defines.
+ *
+ * ---
+ * Style definition: the "minimalism & swiss style" entry in
+ * nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='minimalism-and-swiss-style'] {
+  color-scheme: light;
+
+  /* surface & text */
+  --jin-bg: #ffffff;
+  --jin-surface: #ffffff;
+  --jin-surface-raised: #ffffff;
+  --jin-surface-sunken: #f4f2ed;
+  --jin-surface-translucent: #ffffff;
+  --jin-scrim: rgba(13, 13, 13, 0.45);
+  --jin-text: #0d0d0d;
+  --jin-text-muted: #3f3f3f;
+  --jin-text-subtle: #4e4e4e;
+  --jin-text-on-accent: #ffffff;
+
+  /* border & shape */
+  --jin-border-color: #dcdcdc;
+  --jin-border-color-strong: #8f8f8f;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 0px;
+  --jin-radius-md: 0px;
+  --jin-radius-lg: 0px;
+  /* No pills either: a Swiss button is a rectangle. Controls that must stay
+     circular (the spinner ring) draw a geometric 50% of their own box. */
+  --jin-radius-full: 0px;
+  --jin-control-height-sm: 28px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth — none, by definition of the style */
+  --jin-elevation-1: none;
+  --jin-elevation-2: none;
+  --jin-elevation-3: none;
+  --jin-elevation-4: none;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #c8102e;
+  --jin-accent-hover: #a60d26;
+  --jin-accent-active: #850a1e;
+  --jin-danger: #b3261e;
+  --jin-warning: #8a6a00;
+  --jin-success: #0f6b3f;
+  --jin-info: #1b4fa8;
+  --jin-danger-text: #93201a;
+  --jin-warning-text: #6f5500;
+  --jin-success-text: #0b5533;
+  --jin-info-text: #17408a;
+  --jin-danger-bg: #f7e4e2;
+  --jin-warning-bg: #f6efd8;
+  --jin-success-bg: #e2f0e7;
+  --jin-info-bg: #e4eaf7;
+
+  /* focus */
+  --jin-focus-ring-color: #0d0d0d;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 200ms;
+  --jin-duration-base: 250ms;
+  --jin-duration-slow: 300ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --jin-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* typography — the one place this style spends its budget */
+  --jin-font-family: 'Helvetica Neue', Helvetica, 'Inter', Arial, sans-serif;
+  --jin-font-display: 'Helvetica Neue', Helvetica, 'Inter', Arial, sans-serif;
+  --jin-font-mono: 'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 22px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.45;
+  --jin-letter-spacing: -0.01em;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='minimalism-and-swiss-style'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

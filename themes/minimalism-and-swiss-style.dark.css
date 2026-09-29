@@ -1,0 +1,124 @@
+/*
+ * Jin theme: minimalism & Swiss style (dark).
+ *
+ * The full contract is restated here so nothing leaks from the light file.
+ * Black takes the page and white takes the type — the inversion is total,
+ * which is the point: this style has no mid-tones to preserve. The focus ring
+ * flips to white for the same reason it is black in the light mode.
+ *
+ * ---
+ * Style definition: the "minimalism & swiss style" entry in
+ * nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='minimalism-and-swiss-style'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text */
+  --jin-bg: #0d0d0d;
+  --jin-surface: #141414;
+  --jin-surface-raised: #1c1c1c;
+  --jin-surface-sunken: #050505;
+  --jin-surface-translucent: #1c1c1c;
+  --jin-scrim: rgba(0, 0, 0, 0.72);
+  --jin-text: #ffffff;
+  --jin-text-muted: #d0d0d0;
+  --jin-text-subtle: #b8b8b8;
+  --jin-text-on-accent: #1a0505;
+
+  /* border & shape */
+  --jin-border-color: #2c2c2c;
+  --jin-border-color-strong: #6e6e6e;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 0px;
+  --jin-radius-md: 0px;
+  --jin-radius-lg: 0px;
+  --jin-radius-full: 0px;
+  --jin-control-height-sm: 28px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth */
+  --jin-elevation-1: none;
+  --jin-elevation-2: none;
+  --jin-elevation-3: none;
+  --jin-elevation-4: none;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #ff6b6b;
+  --jin-accent-hover: #ff8a8a;
+  --jin-accent-active: #e85555;
+  --jin-danger: #ff6b6b;
+  --jin-warning: #e0a33a;
+  --jin-success: #4caf7d;
+  --jin-info: #6aa9f0;
+  --jin-danger-text: #ff9c9c;
+  --jin-warning-text: #efc176;
+  --jin-success-text: #7fd0a5;
+  --jin-info-text: #9cc6f5;
+  --jin-danger-bg: #2a1212;
+  --jin-warning-bg: #2a2113;
+  --jin-success-bg: #10251c;
+  --jin-info-bg: #101f2e;
+
+  /* focus */
+  --jin-focus-ring-color: #ffffff;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 200ms;
+  --jin-duration-base: 250ms;
+  --jin-duration-slow: 300ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --jin-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* typography */
+  --jin-font-family: 'Helvetica Neue', Helvetica, 'Inter', Arial, sans-serif;
+  --jin-font-display: 'Helvetica Neue', Helvetica, 'Inter', Arial, sans-serif;
+  --jin-font-mono: 'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 22px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.45;
+  --jin-letter-spacing: -0.01em;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='minimalism-and-swiss-style'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

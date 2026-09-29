@@ -1,0 +1,136 @@
+/*
+ * Jin theme: glassmorphism (light).
+ *
+ * Frosted glass over a coloured ground: surfaces are translucent, the page
+ * behind them stays visible, and the 1px edge is a light line rather than a
+ * dark one. Depth comes from a wide, low-opacity shadow plus a diagonal sheen
+ * — never from a hard drop shadow.
+ *
+ * --jin-blur is what makes this style readable: without it a translucent panel
+ * is simply see-through, and the controls inside it sit on whatever happens to
+ * scroll underneath. The base stylesheet applies it to floating layers.
+ *
+ * ---
+ * Style definition: the "glassmorphism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='glassmorphism'] {
+  color-scheme: light;
+
+  /* surface & text */
+  --jin-bg: #e8edfb;
+  --jin-surface: rgba(255, 255, 255, 0.55);
+  --jin-surface-raised: rgba(255, 255, 255, 0.72);
+  --jin-surface-sunken: rgba(233, 238, 250, 0.66);
+  --jin-surface-translucent: rgba(255, 255, 255, 0.55);
+  --jin-scrim: rgba(23, 32, 61, 0.35);
+  --jin-text: #0e1731;
+  --jin-text-muted: #3c4a6b;
+  /* Measured against the darkest surface the hint text lands on, not against
+     the page: glass composites lighter, and a hint colour tuned on white alone
+     reads as a failure over a tinted panel. */
+  --jin-text-subtle: #4b5a7d;
+  --jin-text-on-accent: #ffffff;
+
+  /* border & shape */
+  --jin-border-color: #c6d2ec;
+  --jin-border-color-strong: #ffffff;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 8px;
+  --jin-radius-md: 14px;
+  --jin-radius-lg: 18px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 38px;
+  --jin-control-height-lg: 46px;
+
+  /* depth */
+  --jin-elevation-1: 0 2px 8px rgba(31, 41, 84, 0.08), 0 1px 2px rgba(31, 41, 84, 0.06);
+  --jin-elevation-2: 0 6px 18px rgba(31, 41, 84, 0.12), 0 2px 6px rgba(31, 41, 84, 0.07);
+  --jin-elevation-3: 0 12px 32px rgba(31, 41, 84, 0.18), 0 4px 10px rgba(31, 41, 84, 0.1);
+  --jin-elevation-4: 0 24px 56px rgba(31, 41, 84, 0.26), 0 8px 18px rgba(31, 41, 84, 0.12);
+  --jin-shadow-inset: inset 0 1px 2px rgba(31, 41, 84, 0.08);
+  --jin-blur: 16px;
+  --jin-surface-gradient: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.1) 55%,
+    rgba(255, 255, 255, 0.42) 100%
+  );
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #3b46c4;
+  --jin-accent-hover: #3039a5;
+  --jin-accent-active: #262d86;
+  --jin-danger: #c62a4f;
+  --jin-warning: #9a5b00;
+  --jin-success: #0f7a52;
+  --jin-info: #0b63ce;
+  --jin-danger-text: #a81c3d;
+  --jin-warning-text: #7d4a00;
+  --jin-success-text: #0a6142;
+  --jin-info-text: #0b56b0;
+  --jin-danger-bg: #ffe7ed;
+  --jin-warning-bg: #fff2da;
+  --jin-success-bg: #e0f7ee;
+  --jin-info-bg: #e3eeff;
+
+  /* focus — the one element that never becomes translucent: a blurred ring
+     over a blurred panel is exactly the state a keyboard user cannot see */
+  --jin-focus-ring-color: #3b46c4;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 140ms;
+  --jin-duration-base: 220ms;
+  --jin-duration-slow: 300ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --jin-easing-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* typography */
+  --jin-font-family: 'Inter', 'SF Pro Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --jin-font-display: 'Inter', 'SF Pro Display', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 17px;
+  --jin-font-size-xl: 22px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 600;
+  --jin-line-height: 1.5;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='glassmorphism'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

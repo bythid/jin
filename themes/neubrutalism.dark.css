@@ -1,0 +1,124 @@
+/*
+ * Jin theme: neubrutalism (dark).
+ *
+ * The full contract is restated here so nothing leaks from the light file.
+ * The outlines and the offsets invert to white and the poster colour becomes
+ * the accent's opposite: a bright yellow fill carrying black text, which is
+ * how this style behaves in the dark — the loudest possible surface, at the
+ * smallest possible area.
+ *
+ * ---
+ * Style definition: the "neubrutalism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='neubrutalism'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text */
+  --jin-bg: #141414;
+  --jin-surface: #1d1d1d;
+  --jin-surface-raised: #262626;
+  --jin-surface-sunken: #0f0f0f;
+  --jin-surface-translucent: #262626;
+  --jin-scrim: rgba(0, 0, 0, 0.72);
+  --jin-text: #fafafa;
+  --jin-text-muted: #c9c9c9;
+  --jin-text-subtle: #b0b0b0;
+  --jin-text-on-accent: #141414;
+
+  /* border & shape */
+  --jin-border-color: #fafafa;
+  --jin-border-color-strong: #fafafa;
+  --jin-border-width: 3px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 0px;
+  --jin-radius-md: 0px;
+  --jin-radius-lg: 0px;
+  --jin-radius-full: 0px;
+  --jin-control-height-sm: 34px;
+  --jin-control-height-md: 42px;
+  --jin-control-height-lg: 50px;
+
+  /* depth */
+  --jin-elevation-1: 4px 4px 0 #fafafa;
+  --jin-elevation-2: 5px 5px 0 #fafafa;
+  --jin-elevation-3: 7px 7px 0 #fafafa;
+  --jin-elevation-4: 9px 9px 0 #fafafa;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #ffd54f;
+  --jin-accent-hover: #ffe082;
+  --jin-accent-active: #ffca28;
+  --jin-danger: #ff5252;
+  --jin-warning: #ffb74d;
+  --jin-success: #4ade80;
+  --jin-info: #60a5fa;
+  --jin-danger-text: #ff9b9b;
+  --jin-warning-text: #ffd08a;
+  --jin-success-text: #86efac;
+  --jin-info-text: #a5c8ff;
+  --jin-danger-bg: #3a1414;
+  --jin-warning-bg: #3a2a12;
+  --jin-success-bg: #10301e;
+  --jin-info-bg: #14243f;
+
+  /* focus */
+  --jin-focus-ring-color: #ffd54f;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 100ms;
+  --jin-duration-base: 150ms;
+  --jin-duration-slow: 200ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --jin-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* typography */
+  --jin-font-family: 'Archivo', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --jin-font-display: 'Archivo', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --jin-font-mono: 'Space Mono', ui-monospace, 'Courier New', monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 17px;
+  --jin-font-size-xl: 24px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 700;
+  --jin-font-weight-bold: 800;
+  --jin-line-height: 1.45;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='neubrutalism'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

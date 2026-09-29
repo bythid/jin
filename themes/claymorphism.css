@@ -1,0 +1,128 @@
+/*
+ * Jin theme: claymorphism (light) — pressed clay, not paper.
+ *
+ * Chunky and soft: 3px borders in a tint of the fill, 20px radii, a matte
+ * gradient, and depth made of two parts — a solid offset that reads as the
+ * object's thickness, then a diffuse shadow under it. The inner shadow shapes
+ * the surface the way a thumb shapes clay: a soft highlight bottom-right, a
+ * soft shade top-left, mirrored from neumorphism's light.
+ *
+ * The 3px border is deliberate and is the one thing here that costs layout: a
+ * clay object has a visible edge, and 1px would read as a hairline drawn on
+ * top of a pastel panel instead of the rim of a soft object.
+ *
+ * ---
+ * Style definition: the "claymorphism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='claymorphism'] {
+  color-scheme: light;
+
+  /* surface & text */
+  --jin-bg: #f6f1fa;
+  --jin-surface: #fbf7fe;
+  --jin-surface-raised: #ffffff;
+  --jin-surface-sunken: #ece2f6;
+  --jin-surface-translucent: #ffffff;
+  --jin-scrim: rgba(46, 32, 66, 0.4);
+  --jin-text: #241a33;
+  --jin-text-muted: #4e4160;
+  --jin-text-subtle: #5b4d70;
+  --jin-text-on-accent: #ffffff;
+
+  /* border & shape */
+  --jin-border-color: #e3d6f4;
+  --jin-border-color-strong: #c9b3e8;
+  --jin-border-width: 3px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 14px;
+  --jin-radius-md: 20px;
+  --jin-radius-lg: 24px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 32px;
+  --jin-control-height-md: 40px;
+  --jin-control-height-lg: 48px;
+
+  /* depth — thickness first, then a soft shadow under it */
+  --jin-elevation-1: 0 3px 0 rgba(126, 87, 194, 0.12), 0 6px 14px rgba(126, 87, 194, 0.14);
+  --jin-elevation-2: 0 5px 0 rgba(126, 87, 194, 0.12), 0 10px 22px rgba(126, 87, 194, 0.18);
+  --jin-elevation-3: 0 8px 0 rgba(126, 87, 194, 0.12), 0 16px 32px rgba(126, 87, 194, 0.22);
+  --jin-elevation-4: 0 12px 0 rgba(126, 87, 194, 0.14), 0 24px 48px rgba(126, 87, 194, 0.26);
+  --jin-shadow-inset: inset -3px -3px 8px rgba(255, 255, 255, 0.9), inset 4px 4px 10px rgba(126, 87, 194, 0.16);
+  --jin-blur: 0px;
+  --jin-surface-gradient: linear-gradient(160deg, rgba(255, 255, 255, 0.95) 0%, rgba(236, 226, 246, 0.9) 100%);
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #6d28d9;
+  --jin-accent-hover: #5b21b6;
+  --jin-accent-active: #4c1d95;
+  --jin-danger: #c62348;
+  --jin-warning: #96601a;
+  --jin-success: #1f7a52;
+  --jin-info: #2f5fd0;
+  --jin-danger-text: #a81a3c;
+  --jin-warning-text: #7c4d0d;
+  --jin-success-text: #186b47;
+  --jin-info-text: #2748a8;
+  --jin-danger-bg: #ffe4ec;
+  --jin-warning-bg: #fff2d8;
+  --jin-success-bg: #dff5e8;
+  --jin-info-bg: #e6e9ff;
+
+  /* focus */
+  --jin-focus-ring-color: #6d28d9;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — the bounce is the style: an object with give in it */
+  --jin-duration-fast: 180ms;
+  --jin-duration-base: 240ms;
+  --jin-duration-slow: 320ms;
+  --jin-easing-standard: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --jin-easing-emphasized: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* typography */
+  --jin-font-family: 'Nunito', 'Quicksand', ui-rounded, 'Segoe UI', system-ui, sans-serif;
+  --jin-font-display: 'Nunito', 'Quicksand', ui-rounded, 'Segoe UI', system-ui, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 14px;
+  --jin-font-size-md: 15px;
+  --jin-font-size-lg: 18px;
+  --jin-font-size-xl: 24px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 800;
+  --jin-line-height: 1.55;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='claymorphism'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

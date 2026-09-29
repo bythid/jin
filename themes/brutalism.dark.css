@@ -1,0 +1,121 @@
+/*
+ * Jin theme: brutalism (dark) — neon on black, still zero radius / zero motion.
+ *
+ *
+ * The full contract is restated here so nothing leaks from the light file.
+ *
+ * ---
+ * Style definition: the "brutalism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='brutalism'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text */
+  --jin-bg: #000000;
+  --jin-surface: #111111;
+  --jin-surface-raised: #1a1a1a;
+  --jin-surface-sunken: #0a0a0a;
+  --jin-surface-translucent: #111111;
+  --jin-scrim: rgba(0, 0, 0, 0.72);
+  --jin-text: #ffffff;
+  --jin-text-muted: #d4d4d4;
+  --jin-text-subtle: #a3a3a3;
+  --jin-text-on-accent: #000000;
+
+  /* border & shape */
+  --jin-border-color: #ffffff;
+  --jin-border-color-strong: #ffffff;
+  --jin-border-width: 3px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 0px;
+  --jin-radius-md: 0px;
+  --jin-radius-lg: 0px;
+  --jin-radius-full: 0px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 40px;
+  --jin-control-height-lg: 48px;
+
+  /* depth */
+  --jin-elevation-1: none;
+  --jin-elevation-2: none;
+  --jin-elevation-3: none;
+  --jin-elevation-4: none;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #ffe600;
+  --jin-accent-hover: #fff05c;
+  --jin-accent-active: #e6cf00;
+  --jin-danger: #ff3b3b;
+  --jin-warning: #ffb300;
+  --jin-success: #00e05a;
+  --jin-info: #00c2ff;
+  --jin-danger-text: #ff8f8f;
+  --jin-warning-text: #ffd166;
+  --jin-success-text: #6ef2a5;
+  --jin-info-text: #7fdcff;
+  --jin-danger-bg: #3a0d0d;
+  --jin-warning-bg: #3a2a00;
+  --jin-success-bg: #04331a;
+  --jin-info-bg: #002b3d;
+
+  /* focus */
+  --jin-focus-ring-color: #ffe600;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 0s;
+  --jin-duration-base: 0s;
+  --jin-duration-slow: 0s;
+  --jin-easing-standard: linear;
+  --jin-easing-emphasized: linear;
+
+  /* typography */
+  --jin-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --jin-font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --jin-font-mono: 'Courier New', ui-monospace, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 14px;
+  --jin-font-size-md: 15px;
+  --jin-font-size-lg: 18px;
+  --jin-font-size-xl: 24px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 800;
+  --jin-line-height: 1.4;
+  --jin-letter-spacing: 0.02em;
+  --jin-text-transform: uppercase;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='brutalism'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

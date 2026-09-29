@@ -1,0 +1,130 @@
+/*
+ * Jin theme: neubrutalism (light).
+ *
+ * Brutalism's borders without its austerity: same 3px black outline and same
+ * refusal of gradients, but the page is a warm block colour instead of grey,
+ * and every raised surface sits on a hard offset shadow. The shadow is solid —
+ * no blur radius at all — which is what makes it read as a printed sticker
+ * rather than as depth.
+ *
+ * The accent cannot be the style's signature yellow: --jin-accent is also the
+ * colour of links, selected text and the current row, and a yellow that is
+ * only readable as a fill would fail the contrast audit on all four surfaces.
+ * So the accent is the crimson, and the yellow lives where it belongs — in the
+ * page colour and the warning tint.
+ *
+ * ---
+ * Style definition: the "neubrutalism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='neubrutalism'] {
+  color-scheme: light;
+
+  /* surface & text */
+  --jin-bg: #fff8e1;
+  --jin-surface: #ffffff;
+  --jin-surface-raised: #ffffff;
+  --jin-surface-sunken: #f7efd2;
+  --jin-surface-translucent: #ffffff;
+  --jin-scrim: rgba(10, 10, 10, 0.5);
+  --jin-text: #0a0a0a;
+  --jin-text-muted: #3a3a3a;
+  --jin-text-subtle: #4a4a4a;
+  --jin-text-on-accent: #ffffff;
+
+  /* border & shape */
+  --jin-border-color: #0a0a0a;
+  --jin-border-color-strong: #0a0a0a;
+  --jin-border-width: 3px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 0px;
+  --jin-radius-md: 0px;
+  --jin-radius-lg: 0px;
+  --jin-radius-full: 0px;
+  --jin-control-height-sm: 34px;
+  --jin-control-height-md: 42px;
+  --jin-control-height-lg: 50px;
+
+  /* depth — hard offsets, no blur anywhere */
+  --jin-elevation-1: 4px 4px 0 #0a0a0a;
+  --jin-elevation-2: 5px 5px 0 #0a0a0a;
+  --jin-elevation-3: 7px 7px 0 #0a0a0a;
+  --jin-elevation-4: 9px 9px 0 #0a0a0a;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #be123c;
+  --jin-accent-hover: #a10f33;
+  --jin-accent-active: #830c29;
+  --jin-danger: #d32f2f;
+  --jin-warning: #a35c00;
+  --jin-success: #1b7f3b;
+  --jin-info: #1565c0;
+  --jin-danger-text: #a3182a;
+  --jin-warning-text: #7a4300;
+  --jin-success-text: #146030;
+  --jin-info-text: #0d4d9e;
+  --jin-danger-bg: #ffd9dd;
+  --jin-warning-bg: #ffeab8;
+  --jin-success-bg: #c9f0d4;
+  --jin-info-bg: #cfe4ff;
+
+  /* focus */
+  --jin-focus-ring-color: #0a0a0a;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — snappy, and deliberately without a bounce */
+  --jin-duration-fast: 100ms;
+  --jin-duration-base: 150ms;
+  --jin-duration-slow: 200ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --jin-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* typography */
+  --jin-font-family: 'Archivo', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --jin-font-display: 'Archivo', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --jin-font-mono: 'Space Mono', ui-monospace, 'Courier New', monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 17px;
+  --jin-font-size-xl: 24px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 700;
+  --jin-font-weight-bold: 800;
+  --jin-line-height: 1.45;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='neubrutalism'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

@@ -1,0 +1,46 @@
+name: publish
+
+# Cutting a release stays exactly as CHANGELOG.md describes: one commit on
+# main that bumps package.json and adds the entry, tagged vX.Y.Z. The dual
+# push carries the tag here, and this workflow is the publish button.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  # OIDC token for npm trusted publishing and --provenance. No npm token is
+  # stored anywhere; the package's trusted-publisher setting names this file.
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      # The version comes from package.json's `devEngines.packageManager`, which
+      # this action reads, so it is stated once and in one place. It must run
+      # before setup-node, whose `cache: pnpm` needs the store path to exist.
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      # Node 22 bundles npm 10.9.x, and trusted publishing needs npm CLI 11.5.1
+      # or later. Without this the OIDC exchange has no client that can perform
+      # it, and the publish fails with no other auth channel configured.
+      - run: npm install -g npm@^11.5.1
+
+      - run: pnpm install --frozen-lockfile
+
+      # prepublishOnly runs `verify && smoke` first, so the gates still
+      # cannot be skipped — they just run here instead of on a laptop.
+      - run: npm publish --provenance --access public

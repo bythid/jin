@@ -1,0 +1,109 @@
+{
+  "name": "@bythid/jin",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Jin (锦) — a token-driven Vue 3 control library. Style axes: data-jin-style + data-jin-mode.",
+  "license": "MIT",
+  "author": "bythid",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/bythid/jin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bythid/jin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bythid/jin/issues"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "component-library",
+    "design-tokens",
+    "theming",
+    "desktop",
+    "accessibility"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "themes",
+    "contracts",
+    "styles.css.d.ts",
+    "README.md",
+    "CREDITS.md",
+    "CHANGELOG.md"
+  ],
+  "main": "./dist/jin.js",
+  "module": "./dist/jin.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "source": "./src/index.ts",
+        "default": "./dist/index.d.ts"
+      },
+      "source": "./src/index.ts",
+      "import": "./dist/jin.js",
+      "default": "./dist/jin.js"
+    },
+    "./styles.css": {
+      "types": "./styles.css.d.ts",
+      "default": "./src/styles/jin.css"
+    },
+    "./themes/*": "./themes/*",
+    "./contracts/*": "./contracts/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "build": "vite build",
+    "check": "python tools/check_tokens.py && python tools/check_contrast.py",
+    "check:pack": "publint && attw --pack . --ignore-rules cjs-resolves-to-esm",
+    "verify": "pnpm run check && pnpm run test && pnpm run typecheck && pnpm run check:pack",
+    "smoke": "python tools/smoke_pack.py",
+    "prepare": "pnpm run build",
+    "prepublishOnly": "pnpm run verify && pnpm run smoke",
+    "hooks": "husky",
+    "gallery": "python start_gallery.py",
+    "gallery:build": "python start_gallery.py --build",
+    "gallery:tauri": "python start_gallery.py --tauri",
+    "check:tokens": "python tools/check_tokens.py",
+    "check:contrast": "python tools/check_contrast.py"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
+    "@microsoft/api-extractor": "^7.59.1",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "@vitest/coverage-v8": "^5.0.1",
+    "@vue/test-utils": "^2.5.0",
+    "husky": "^9.1.7",
+    "jsdom": "^30.0.1",
+    "publint": "^0.3.24",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.0",
+    "vite-plugin-dts": "^5.1.0",
+    "vitest": "^5.0.0",
+    "vue": "^3.5.42",
+    "vue-tsc": "^3.3.11"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.22.0",
+      "onFail": "warn"
+    }
+  }
+}

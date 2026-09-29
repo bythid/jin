@@ -1,0 +1,133 @@
+/*
+ * Jin theme: neumorphism (light) — soft UI.
+ *
+ * One material, extruded and pressed: a panel is the same colour as the page,
+ * and only a light-from-the-top-left pair of shadows says whether it stands
+ * above the surface or is sunk into it. There are no hard lines anywhere, so
+ * --jin-border-color sits one step from the surface rather than on top of it.
+ *
+ * The catalogue marks neumorphism's accessibility risk as high, and the reason
+ * is visible in the values below: the style's own low-contrast greys are not
+ * usable for text, so body text and muted text are darkened until they pass.
+ * The softness lives in the shadows, never in the words.
+ *
+ * ---
+ * Style definition: the "neumorphism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='neumorphism'] {
+  color-scheme: light;
+
+  /* surface & text */
+  --jin-bg: #e7ebf3;
+  --jin-surface: #e9edf5;
+  --jin-surface-raised: #eef2f9;
+  --jin-surface-sunken: #dfe4ee;
+  /* Not a glass style: the floating layers keep the raised panel's colour. */
+  --jin-surface-translucent: #eef2f9;
+  --jin-scrim: rgba(28, 36, 51, 0.4);
+  --jin-text: #1d2430;
+  --jin-text-muted: #4b5468;
+  --jin-text-subtle: #59637a;
+  --jin-text-on-accent: #ffffff;
+
+  /* border & shape */
+  --jin-border-color: #d5dbe6;
+  --jin-border-color-strong: #a9b3c6;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 10px;
+  --jin-radius-md: 14px;
+  --jin-radius-lg: 18px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 38px;
+  --jin-control-height-lg: 46px;
+
+  /* depth — two shadows, one per light direction; never a single hard drop */
+  --jin-elevation-1: -3px -3px 8px #ffffff, 4px 4px 10px rgba(163, 177, 198, 0.45);
+  --jin-elevation-2: -4px -4px 10px #ffffff, 6px 6px 14px rgba(163, 177, 198, 0.5);
+  --jin-elevation-3: -6px -6px 14px #ffffff, 9px 9px 20px rgba(163, 177, 198, 0.55);
+  --jin-elevation-4: -8px -8px 18px #ffffff, 12px 12px 28px rgba(163, 177, 198, 0.6);
+  /* The pressed state: the same light, read from inside. */
+  --jin-shadow-inset: inset -2px -2px 6px #ffffff, inset 3px 3px 8px rgba(163, 177, 198, 0.45);
+  --jin-blur: 0px;
+  --jin-surface-gradient: linear-gradient(145deg, #f2f5fb 0%, #dee4f0 100%);
+  --jin-surface-texture: none;
+
+  /* status */
+  /* One step darker than the style's own indigo: the sunken surface is the
+     darkest thing the accent is measured against, and it has to clear 4.5:1
+     there, not only on white. */
+  --jin-accent: #414fca;
+  --jin-accent-hover: #3744b0;
+  --jin-accent-active: #2e3a95;
+  --jin-danger: #c9304a;
+  --jin-warning: #96601a;
+  --jin-success: #1a7f5a;
+  --jin-info: #1667c7;
+  --jin-danger-text: #a51e36;
+  --jin-warning-text: #7c4d0d;
+  --jin-success-text: #14654a;
+  --jin-info-text: #12569f;
+  --jin-danger-bg: #f7dfe3;
+  --jin-warning-bg: #f6ead4;
+  --jin-success-bg: #dcefe6;
+  --jin-info-bg: #dde8f8;
+
+  /* focus */
+  --jin-focus-ring-color: #4b5bd6;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 150ms;
+  --jin-duration-base: 200ms;
+  --jin-duration-slow: 260ms;
+  --jin-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --jin-easing-emphasized: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* typography */
+  --jin-font-family: 'Nunito Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --jin-font-display: 'Nunito Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 20px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.5;
+  --jin-letter-spacing: 0.01em;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='neumorphism'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

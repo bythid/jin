@@ -1,0 +1,125 @@
+/*
+ * Jin theme: brutalism (light) — the stress test for the token contract
+ * (milestone 2).
+ *
+ * Every value here is the opposite of dimensional-layering:
+ * radius 0, elevation none, duration 0s, thick visible borders, flat colour.
+ *
+ * --jin-radius-full is 0 as well (a brutalist pill is a rectangle); controls
+ * that must stay circular (spinner ring) use a geometric 50%.
+ *
+ * ---
+ * Style definition: the "brutalism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='brutalism'] {
+  color-scheme: light;
+
+  /* surface & text */
+  --jin-bg: #f4f4ef;
+  --jin-surface: #ffffff;
+  --jin-surface-raised: #ffffff;
+  --jin-surface-sunken: #ececdf;
+  --jin-surface-translucent: #ffffff;
+  --jin-scrim: rgba(0, 0, 0, 0.55);
+  --jin-text: #000000;
+  --jin-text-muted: #33322c;
+  --jin-text-subtle: #5c5a52;
+  --jin-text-on-accent: #ffffff;
+
+  /* border & shape */
+  --jin-border-color: #000000;
+  --jin-border-color-strong: #000000;
+  --jin-border-width: 3px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 0px;
+  --jin-radius-md: 0px;
+  --jin-radius-lg: 0px;
+  --jin-radius-full: 0px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 40px;
+  --jin-control-height-lg: 48px;
+
+  /* depth */
+  --jin-elevation-1: none;
+  --jin-elevation-2: none;
+  --jin-elevation-3: none;
+  --jin-elevation-4: none;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #0000ee;
+  --jin-accent-hover: #0000c4;
+  --jin-accent-active: #00009a;
+  --jin-danger: #d40000;
+  --jin-warning: #8a6a00;
+  --jin-success: #00703c;
+  --jin-info: #005f8f;
+  --jin-danger-text: #b00000;
+  --jin-warning-text: #6f5500;
+  --jin-success-text: #005c31;
+  --jin-info-text: #004f77;
+  --jin-danger-bg: #ffe3e3;
+  --jin-warning-bg: #fff3bf;
+  --jin-success-bg: #d9f7e3;
+  --jin-info-bg: #d9ecff;
+
+  /* focus */
+  --jin-focus-ring-color: #000000;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — brutalism does not animate */
+  --jin-duration-fast: 0s;
+  --jin-duration-base: 0s;
+  --jin-duration-slow: 0s;
+  --jin-easing-standard: linear;
+  --jin-easing-emphasized: linear;
+
+  /* typography */
+  --jin-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --jin-font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --jin-font-mono: 'Courier New', ui-monospace, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 14px;
+  --jin-font-size-md: 15px;
+  --jin-font-size-lg: 18px;
+  --jin-font-size-xl: 24px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 800;
+  --jin-line-height: 1.4;
+  --jin-letter-spacing: 0.02em;
+  --jin-text-transform: uppercase;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='brutalism'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

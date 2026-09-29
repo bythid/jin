@@ -1,0 +1,155 @@
+/*
+ * Jin theme — dark mode: 玄锦 (dark brocade). This is the signature mode.
+ * Style axis: data-jin-style="jin"  ·  Mode axis: data-jin-mode="dark"
+ *
+ * 玄青 ground, near-neutral light text, and 金 reserved for focus, strong
+ * boundaries and emphasis — not for every border.
+ *
+ * Two things are deliberate here and easy to get wrong:
+ *
+ * 1. --jin-accent on a dark ground is NOT the same red as in the light theme.
+ *    A deep 朱红 (#b3402a) on #12171d would measure only ~2.6:1 — fine as a
+ *    fill under white text, unusable as text or as a thin icon stroke. So the
+ *    dark mode lifts the red until it reads as 朱红 while still passing 4.5:1
+ *    as text.
+ *
+ * 2. --jin-text-on-accent is dark, not light, because the dark-mode fill is
+ *    now light enough that dark text on it is the readable pairing.
+ *
+ * Everyday borders are neutral thread lines at low alpha — the warp and weft
+ * you only notice when you look for them. Gold appears where it carries
+ * meaning: strong boundaries and the focus ring.
+ *
+ * ---
+ * Original work: this theme is the library's own visual identity, not drawn from the
+ * style catalogue the other themes reference. See CREDITS.md.
+*/
+:root[data-jin-style='jin'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text — 玄青 ground, near-neutral light text (not sepia) */
+  --jin-bg: #12171d;
+  --jin-surface: #171e26;
+  --jin-surface-raised: #1e2731;
+  --jin-surface-sunken: #0d1217;
+  /* Floating layers read this one. Jin is not a glass style, so it repeats the
+     raised panel: the overlays keep the exact colour they had before the token
+     became load-bearing. */
+  --jin-surface-translucent: #1e2731;
+  --jin-scrim: rgba(3, 6, 9, 0.62);
+  --jin-text: #eceae4;
+  --jin-text-muted: #b0aba0;
+  /* Lifted so it still clears 4.5:1 on --jin-surface-raised, not just on the
+    page background — raised panels are where muted text usually lands. */
+  --jin-text-subtle: #969084;
+  /* The fill is a lifted red, so dark text is the readable pairing. */
+  --jin-text-on-accent: #1a1206;
+
+  /* border & shape — 经纬线 thread lines; 金线 only on strong boundaries */
+  --jin-border-color: rgba(236, 234, 228, 0.14);
+  --jin-border-color-strong: rgba(216, 181, 74, 0.6);
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 6px;
+  --jin-radius-md: 8px;
+  --jin-radius-lg: 12px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth — clean diffuse shadows on dark cloth, no top-edge highlight */
+  --jin-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --jin-elevation-2: 0 2px 8px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.3);
+  --jin-elevation-3: 0 4px 14px rgba(0, 0, 0, 0.45), 0 14px 32px rgba(0, 0, 0, 0.35);
+  --jin-elevation-4: 0 8px 24px rgba(0, 0, 0, 0.5), 0 24px 56px rgba(0, 0, 0, 0.45);
+  --jin-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  /* No glass, no neon: matte woven silk only. */
+  --jin-blur: 0px;
+  /* 丝光: a whisper of light from above, then the cloth falls away. */
+  --jin-surface-gradient: linear-gradient(
+    180deg,
+    rgba(236, 234, 228, 0.04) 0%,
+    rgba(236, 234, 228, 0) 40%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
+  /* 地纹: the warp/weft grid, reading as thread woven into the dark cloth. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cg fill='none' stroke='%23eceae4' stroke-opacity='.05'%3E%3Cpath d='M0 .5h8M0 4.5h8'/%3E%3Cpath d='M.5 0v8M4.5 0v8'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* status — lifted for text legibility on a dark ground (see the header note) */
+  --jin-accent: #e0705a;
+  --jin-accent-hover: #ec846f;
+  /* The pressed state deepens the fill. It is used only as a fill (the primary
+    button's background), so what must stay readable is --jin-text-on-accent
+    over it — 4.87:1 — rather than this value against the page. */
+  --jin-accent-active: #d1614b;
+  --jin-danger: #e2706f;
+  --jin-warning: #dda23f;
+  --jin-success: #6cbd80;
+  --jin-info: #6aa8cd;
+  --jin-danger-text: #eb9a94;
+  --jin-warning-text: #e3b563;
+  --jin-success-text: #86c99a;
+  --jin-info-text: #8dbdd9;
+  --jin-danger-bg: rgba(190, 70, 70, 0.18);
+  --jin-warning-bg: rgba(190, 140, 40, 0.16);
+  --jin-success-bg: rgba(70, 150, 95, 0.18);
+  --jin-info-bg: rgba(70, 130, 170, 0.18);
+
+  /* focus — 金, bright enough to read against the dark cloth */
+  --jin-focus-ring-color: #d8b54a;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 150ms;
+  --jin-duration-base: 200ms;
+  --jin-duration-slow: 250ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --jin-easing-emphasized: cubic-bezier(0.16, 0.84, 0.24, 1);
+
+  /* typography */
+  --jin-font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei',
+    'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+  --jin-font-display: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'Songti TC', Georgia,
+    'Times New Roman', 'SimSun', serif;
+  --jin-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, SFMono-Regular, Consolas,
+    'Noto Sans Mono CJK SC', monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 20px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.55;
+  --jin-letter-spacing: 0.01em;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='jin'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

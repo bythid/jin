@@ -1,0 +1,126 @@
+/*
+ * Jin theme: claymorphism (dark) — the same clay, under a violet night light.
+ *
+ * The catalogue marks this style's dark mode as conditional, and the reason is
+ * the same one neumorphism has: clay's volume comes from light, and on a dark
+ * ground the highlight has to be rebuilt from a much smaller amount of white
+ * while the thickness offset goes black. The pastel identity survives in the
+ * accent and the tints, not in the surfaces.
+ *
+ * The full contract is restated here so nothing leaks from the light file.
+ *
+ * ---
+ * Style definition: the "claymorphism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='claymorphism'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text */
+  --jin-bg: #1e1730;
+  --jin-surface: #241b38;
+  --jin-surface-raised: #2c2142;
+  --jin-surface-sunken: #191227;
+  --jin-surface-translucent: #2c2142;
+  --jin-scrim: rgba(10, 6, 18, 0.68);
+  --jin-text: #f4eefc;
+  --jin-text-muted: #cdbfe4;
+  --jin-text-subtle: #b9a9d4;
+  --jin-text-on-accent: #221733;
+
+  /* border & shape */
+  --jin-border-color: #3a2c56;
+  --jin-border-color-strong: #5a4680;
+  --jin-border-width: 3px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 14px;
+  --jin-radius-md: 20px;
+  --jin-radius-lg: 24px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 32px;
+  --jin-control-height-md: 40px;
+  --jin-control-height-lg: 48px;
+
+  /* depth */
+  --jin-elevation-1: 0 3px 0 rgba(0, 0, 0, 0.35), 0 8px 18px rgba(0, 0, 0, 0.4);
+  --jin-elevation-2: 0 5px 0 rgba(0, 0, 0, 0.35), 0 12px 26px rgba(0, 0, 0, 0.45);
+  --jin-elevation-3: 0 8px 0 rgba(0, 0, 0, 0.4), 0 18px 38px rgba(0, 0, 0, 0.5);
+  --jin-elevation-4: 0 12px 0 rgba(0, 0, 0, 0.42), 0 28px 56px rgba(0, 0, 0, 0.55);
+  --jin-shadow-inset: inset -3px -3px 8px rgba(255, 255, 255, 0.06), inset 4px 4px 10px rgba(0, 0, 0, 0.35);
+  --jin-blur: 0px;
+  --jin-surface-gradient: linear-gradient(160deg, rgba(255, 255, 255, 0.07) 0%, rgba(0, 0, 0, 0.14) 100%);
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #b9a2ff;
+  --jin-accent-hover: #c9b6ff;
+  --jin-accent-active: #a68cf0;
+  --jin-danger: #ff8fa6;
+  --jin-warning: #ffc078;
+  --jin-success: #6ee0ac;
+  --jin-info: #93b8ff;
+  --jin-danger-text: #ffaabc;
+  --jin-warning-text: #ffd39b;
+  --jin-success-text: #9cebc4;
+  --jin-info-text: #b6cdff;
+  --jin-danger-bg: #3a1a2a;
+  --jin-warning-bg: #38280f;
+  --jin-success-bg: #14352a;
+  --jin-info-bg: #1b2440;
+
+  /* focus */
+  --jin-focus-ring-color: #b9a2ff;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 180ms;
+  --jin-duration-base: 240ms;
+  --jin-duration-slow: 320ms;
+  --jin-easing-standard: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --jin-easing-emphasized: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* typography */
+  --jin-font-family: 'Nunito', 'Quicksand', ui-rounded, 'Segoe UI', system-ui, sans-serif;
+  --jin-font-display: 'Nunito', 'Quicksand', ui-rounded, 'Segoe UI', system-ui, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 14px;
+  --jin-font-size-md: 15px;
+  --jin-font-size-lg: 18px;
+  --jin-font-size-xl: 24px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 800;
+  --jin-line-height: 1.55;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='claymorphism'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

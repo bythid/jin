@@ -1,0 +1,30 @@
+{
+  "name": "jin-gallery",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Jin (锦) component gallery — browses every control, switches style/mode live, and inspects the token contract.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.11.1",
+    "@tauri-apps/plugin-dialog": "^2.4.1",
+    "@tauri-apps/plugin-opener": "^2.5.5",
+    "@bythid/jin": "file:..",
+    "vue": "^3.5.42"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.4",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.0",
+    "vue-tsc": "^3.3.11"
+  }
+}

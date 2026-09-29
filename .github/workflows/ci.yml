@@ -1,0 +1,35 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # The discipline checkers (tools/*.py) are Python; npm scripts invoke
+      # them as `python`, which only setup-python guarantees on the runner.
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      # The version comes from package.json's `devEngines.packageManager`, which
+      # this action reads, so it is stated once and in one place. It must run
+      # before setup-node, whose `cache: pnpm` needs the store path to exist.
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run verify

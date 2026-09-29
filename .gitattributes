@@ -1,0 +1,19 @@
+# Normalise line endings in the repository to LF, regardless of the platform a
+# contributor happens to use. The library targets Windows and Linux, so
+# without this a file edited on Linux would show up as a whole-file change on
+# Windows, and vice versa.
+* text=auto eol=lf
+
+# Binary formats must not be touched by the normaliser.
+*.png binary
+*.ico binary
+*.icns binary
+*.jpg binary
+
+# Shell scripts and Windows command files keep the endings their platform needs.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Lockfiles are generated; keep them out of diffs and merge noise.
+package-lock.json -diff linguist-generated
+Cargo.lock -diff linguist-generated

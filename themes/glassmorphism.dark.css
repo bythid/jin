@@ -1,0 +1,130 @@
+/*
+ * Jin theme: glassmorphism (dark) — smoked glass over a midnight ground.
+ *
+ * The full contract is restated here so nothing leaks from the light file.
+ *
+ * The translucent surfaces are declared as rgba() over a dark triple rather
+ * than as near-transparent white. Both render the same, but only this one
+ * tells the truth about what text sits on: a white pixel triple at 8% alpha
+ * measures as white, and every contrast audit of it is theatre.
+ *
+ * ---
+ * Style definition: the "glassmorphism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='glassmorphism'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text */
+  --jin-bg: #0b1020;
+  --jin-surface: rgba(22, 30, 51, 0.72);
+  --jin-surface-raised: rgba(30, 39, 66, 0.78);
+  --jin-surface-sunken: rgba(12, 18, 34, 0.8);
+  --jin-surface-translucent: rgba(30, 39, 66, 0.6);
+  --jin-scrim: rgba(4, 8, 18, 0.6);
+  --jin-text: #eef2ff;
+  --jin-text-muted: #bcc7e0;
+  --jin-text-subtle: #a7b3cf;
+  --jin-text-on-accent: #0a1020;
+
+  /* border & shape */
+  --jin-border-color: rgba(255, 255, 255, 0.16);
+  --jin-border-color-strong: rgba(255, 255, 255, 0.42);
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 8px;
+  --jin-radius-md: 14px;
+  --jin-radius-lg: 18px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 38px;
+  --jin-control-height-lg: 46px;
+
+  /* depth */
+  --jin-elevation-1: 0 2px 10px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --jin-elevation-2: 0 6px 20px rgba(0, 0, 0, 0.36), 0 2px 6px rgba(0, 0, 0, 0.24);
+  --jin-elevation-3: 0 14px 36px rgba(0, 0, 0, 0.44), 0 4px 12px rgba(0, 0, 0, 0.28);
+  --jin-elevation-4: 0 28px 64px rgba(0, 0, 0, 0.54), 0 8px 20px rgba(0, 0, 0, 0.32);
+  --jin-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.32);
+  --jin-blur: 20px;
+  --jin-surface-gradient: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.02) 55%,
+    rgba(255, 255, 255, 0.07) 100%
+  );
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #8ab4ff;
+  --jin-accent-hover: #a3c4ff;
+  --jin-accent-active: #6f9cf0;
+  --jin-danger: #ff7a90;
+  --jin-warning: #ffc46b;
+  --jin-success: #4fd39a;
+  --jin-info: #7fb2ff;
+  --jin-danger-text: #ff9daf;
+  --jin-warning-text: #ffd08a;
+  --jin-success-text: #7ee0b4;
+  --jin-info-text: #a3c6ff;
+  --jin-danger-bg: #3a1220;
+  --jin-warning-bg: #3a2a08;
+  --jin-success-bg: #0a2e22;
+  --jin-info-bg: #10233f;
+
+  /* focus */
+  --jin-focus-ring-color: #7dd3fc;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 140ms;
+  --jin-duration-base: 220ms;
+  --jin-duration-slow: 300ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --jin-easing-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* typography */
+  --jin-font-family: 'Inter', 'SF Pro Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --jin-font-display: 'Inter', 'SF Pro Display', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 17px;
+  --jin-font-size-xl: 22px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 600;
+  --jin-line-height: 1.5;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='glassmorphism'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

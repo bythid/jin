@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+coverage/
+
+# scratch project the package smoke test builds in
+.smoke/
+
+# Rust build artefacts (Tauri shell)
+gallery/src-tauri/target/
+
+# local machine state
+*.local
+.DS_Store
+*.log
+
+# Python bytecode from the tools/ checkers and the gallery launcher
+__pycache__/
+*.py[cod]
+
+# local scratch space, not project history
+.workbuddy/
+
+# per-checkout files, never published
+docs/*prompt.md
+tools/check_tokens.local.json

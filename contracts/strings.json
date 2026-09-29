@@ -1,0 +1,31 @@
+{
+  "$comment": "The UI strings the library needs. The library ships no interface strings of its own beyond these readable English defaults; applications override them with `app.use(JinUI, { t })`. Keys must stay business-free.",
+  "version": "0.1.0",
+  "keys": {
+    "a11y.close": { "default": "Close", "description": "Close button / dismiss affordance on any overlay" },
+    "a11y.dismiss": { "default": "Dismiss", "description": "Dismiss a transient message (toast)" },
+    "a11y.expand": { "default": "Expand", "description": "Expand a collapsed branch" },
+    "a11y.collapse": { "default": "Collapse", "description": "Collapse an expanded branch" },
+    "a11y.expandAll": { "default": "Expand all", "description": "Expand every branch" },
+    "a11y.collapseAll": { "default": "Collapse all", "description": "Collapse every branch" },
+    "a11y.loading": { "default": "Loading", "description": "Generic busy announcement" },
+    "a11y.clear": { "default": "Clear", "description": "Clear the current value of an input" },
+    "a11y.remove": { "default": "Remove", "description": "Remove a removable chip / row" },
+    "a11y.search": { "default": "Search", "description": "Search input landmark / icon label" },
+    "a11y.menu": { "default": "Menu", "description": "Menu trigger when no visible label exists" },
+    "a11y.moreActions": { "default": "More actions", "description": "Overflow trigger" },
+    "a11y.selected": { "default": "Selected", "description": "Announces the selected option" },
+    "a11y.breadcrumb": { "default": "Breadcrumb", "description": "Landmark label for breadcrumb navigation" },
+    "a11y.toolbar": { "default": "Toolbar", "description": "Landmark label for a toolbar" },
+    "a11y.navigation": { "default": "Navigation", "description": "Landmark label for a navigation list" },
+    "a11y.tabs": { "default": "Tabs", "description": "Accessible name for a tab list without a visible label" },
+    "a11y.toasts": { "default": "Notifications and messages", "description": "Landmark label for the toast region" },
+    "a11y.notifications": { "default": "Notifications", "description": "Landmark label for the notification region" },
+    "a11y.confirm": { "default": "Confirm", "description": "Confirm button in a popconfirm" },
+    "a11y.cancel": { "default": "Cancel", "description": "Cancel button in a popconfirm" },
+    "empty.noData": { "default": "No data", "description": "Empty state title when nothing is available" },
+    "select.noOptions": { "default": "No options", "description": "Shown in an empty select listbox" },
+    "tree.empty": { "default": "No items", "description": "Shown when a tree has no nodes" },
+    "tree.loadFailed": { "default": "Failed to load", "description": "Inline failure text next to a tree row whose load rejected" }
+  }
+}

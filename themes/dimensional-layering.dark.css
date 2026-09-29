@@ -1,0 +1,128 @@
+/*
+ * Jin theme: dimensional-layering (dark).
+ *
+ *
+ * Applies only when BOTH axes are set: style=dimensional-layering, mode=dark.
+ * Defines the full token contract so the mode can be switched without a
+ * single value leaking through from the light file.
+ *
+ * Note --jin-text-on-accent: accents are lightened for dark surfaces, so the
+ * text on top of them is dark. 818cf8 on 0b1017 measures 6.3:1.
+ *
+ * ---
+ * Style definition: the "dimensional layering" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='dimensional-layering'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text */
+  --jin-bg: #0b1017;
+  --jin-surface: #121926;
+  --jin-surface-raised: #1a2233;
+  --jin-surface-sunken: #0d131e;
+  --jin-surface-translucent: rgba(18, 25, 38, 0.72);
+  --jin-scrim: rgba(2, 6, 16, 0.62);
+  --jin-text: #eef2f8;
+  --jin-text-muted: #a8b3c5;
+  /* Lifted from #7c8899 so it still clears 4.5:1 on raised panels. */
+  --jin-text-subtle: #8894a5;
+  --jin-text-on-accent: #0b1017;
+
+  /* border & shape */
+  --jin-border-color: rgba(255, 255, 255, 0.1);
+  --jin-border-color-strong: rgba(255, 255, 255, 0.22);
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 6px;
+  --jin-radius-md: 10px;
+  --jin-radius-lg: 14px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 28px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth */
+  --jin-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --jin-elevation-2: 0 2px 6px -1px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --jin-elevation-3: 0 8px 20px -4px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --jin-elevation-4: 0 20px 48px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.07);
+  --jin-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  --jin-blur: 12px;
+  --jin-surface-gradient: linear-gradient(180deg, #1b2433 0%, #141b28 100%);
+  --jin-surface-texture: none;
+
+  /* status */
+  --jin-accent: #818cf8;
+  --jin-accent-hover: #a5b4fc;
+  /* Pressed fill: --jin-text-on-accent stays readable on top of it (4.89:1). */
+  --jin-accent-active: #6f72f3;
+  --jin-danger: #f97066;
+  --jin-warning: #fdb022;
+  --jin-success: #32d583;
+  --jin-info: #53b1fd;
+  --jin-danger-text: #fda29b;
+  --jin-warning-text: #fec84b;
+  --jin-success-text: #75e0a7;
+  --jin-info-text: #84caff;
+  --jin-danger-bg: rgba(240, 68, 56, 0.14);
+  --jin-warning-bg: rgba(247, 144, 9, 0.16);
+  --jin-success-bg: rgba(18, 183, 106, 0.16);
+  --jin-info-bg: rgba(46, 144, 250, 0.16);
+
+  /* focus */
+  --jin-focus-ring-color: #a5b4fc;
+  --jin-focus-ring-width: 3px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 120ms;
+  --jin-duration-base: 200ms;
+  --jin-duration-slow: 320ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --jin-easing-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+
+  /* typography */
+  --jin-font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --jin-font-display: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, SFMono-Regular, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 20px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.5;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='dimensional-layering'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}
