@@ -111,10 +111,9 @@ languages, and for a release a `CHANGELOG.md` entry plus a `package.json` bump i
 
 - The checkers and the gallery launcher are Python (`python tools/check_tokens.py`,
   `python start_gallery.py`); the test runner is vitest. Both are already wired into pnpm scripts.
-- GitHub (`bythid/jin`) is the canonical repository and `origin`; CI, Dependabot and publishing run
-  there, and its `publish.yml` fires on any `v*` tag, so pushing a tag is a publish — see Packaging
-  in the README before pushing one. Gitee is a read-only mirror of branches, tags and commits:
-  issues and pull requests are not mirrored, so contributions belong on GitHub.
+- GitHub (`bythid/jin`) is the repository and `origin`; CI, Dependabot and publishing run there, and
+  its `publish.yml` fires on any `v*` tag, so pushing a tag is a publish — see Packaging in the
+  README before pushing one.
 
 ## Conventions
 

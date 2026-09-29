@@ -350,13 +350,10 @@ convenience, and the reverse order of robustness. Hand someone the tarball: it c
 so it installs with no build step and no lifecycle scripts. A git dependency is built by
 `prepare` on install, which `ignore-scripts` and script-approval policies switch off.
 
-The canonical repository is GitHub (`bythid/jin`): `origin` points at it, and CI, Dependabot and
+There is one repository, on GitHub (`bythid/jin`), and `origin` points at it. CI, Dependabot and
 publishing all run there — every push and pull request executes `pnpm run verify`
-(`.github/workflows/ci.yml`). Gitee is a **read-only mirror** carrying branches, tags and commits
-only; issues and pull requests are not mirrored, so contributions belong on GitHub. The mirror is
-kept by Gitee's own pull mirror; where that is unavailable, the local `gitee` remote is the
-fallback (`git push gitee main --tags`) — use one or the other, never both, or the mirror
-overwrites what Gitee holds.
+(`.github/workflows/ci.yml`). Issues and pull requests live there too: there is no second copy to
+keep in sync.
 
 Cutting a release stays exactly as [CHANGELOG.md](../CHANGELOG.md) describes: one commit on
 `main` that bumps `package.json` and adds the entry, tagged `vX.Y.Z`. Pushing such a tag runs
