@@ -112,8 +112,8 @@ languages, and for a release a `CHANGELOG.md` entry plus a `package.json` bump i
 - The checkers and the gallery launcher are Python (`python tools/check_tokens.py`,
   `python start_gallery.py`); the test runner is vitest. Both are already wired into pnpm scripts.
 - GitHub (`bythid/jin`) is the repository and `origin`; CI, Dependabot and publishing run there, and
-  its `publish.yml` fires on any `v*` tag, so pushing a tag is a publish — see Packaging in the
-  README before pushing one.
+  its `publish.yml` fires on any `v*` tag, so pushing a tag stages a release — the version still
+  needs a maintainer's `npm stage approve` before it reaches anyone. See Packaging in the README.
 
 ## Conventions
 

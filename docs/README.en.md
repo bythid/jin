@@ -357,18 +357,28 @@ keep in sync.
 
 Cutting a release stays exactly as [CHANGELOG.md](../CHANGELOG.md) describes: one commit on
 `main` that bumps `package.json` and adds the entry, tagged `vX.Y.Z`. Pushing such a tag runs
-`.github/workflows/publish.yml` on GitHub, which publishes with `--provenance` using npm
-trusted publishing (OIDC) — no npm token is stored anywhere. The first publish is the one
-exception: it is done by hand to establish the package and its scope, and the trusted-publisher
-setting (this repository, `publish.yml`) is configured on npmjs.com afterwards. Until that is
-in place, release tags stay local so the tag-triggered workflow is not fired without anything
-to authenticate with. The first release is therefore never tagged: `v0.1.0` is the version
-published by hand, and tag-driven publishing starts at the next one — pushing that tag would only
-ask the workflow to publish a version that is already on the registry.
+`.github/workflows/publish.yml` on GitHub, which uses npm trusted publishing (OIDC) to put the
+version in the **stage queue** rather than releasing it — no npm token is stored anywhere, and
+provenance rides on the OIDC token. Releasing takes one approval from a maintainer on a trusted
+device:
 
-The publish workflow runs on Node 22, whose bundled npm is 10.9.x, and trusted publishing needs npm
-CLI 11.5.1 or later — so the workflow installs npm explicitly before it touches dependencies.
-Without that step a tag-triggered publish fails with no auth channel left to try.
+```bash
+npm stage list @bythid/jin          # find the stage id
+npm stage view <stage-id>           # inspect it
+npm stage approve <stage-id>        # a 2FA challenge, and the version goes live
+```
+
+The same queue is visible on the package page at npmjs.com. That step is the point: an action
+compromised inside the workflow can reach the queue but never the consumers. The first publish is
+the one exception — it is done by hand to establish the package and its scope, and the
+trusted-publisher setting (this repository, `publish.yml`, staged publishing only) is configured
+on npmjs.com afterwards. `v0.1.0` is that hand-published version and is therefore never tagged;
+tag-driven publishing starts at the next one.
+
+The publish workflow runs on Node 22, whose bundled npm is 10.9.x; trusted publishing needs npm CLI
+11.5.1 or later and staged publishing needs 11.15.0 — so the workflow installs npm explicitly
+before it touches dependencies. Without that step a tag-triggered publish fails with no auth
+channel left to try.
 
 The name is settled for when that changes: **`@bythid/jin`**. It is scoped because npm is out of
 good names at this end of the alphabet — `jin` has been taken since 2012 and `jin-ui` since 2022 by
