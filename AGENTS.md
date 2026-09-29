@@ -115,6 +115,19 @@ languages, and for a release a `CHANGELOG.md` entry plus a `package.json` bump i
   its `publish.yml` fires on any `v*` tag, so pushing a tag stages a release — the version still
   needs a maintainer's `npm stage approve` before it reaches anyone. See Packaging in the README.
 
+## Repository protection
+
+Two rulesets guard the release path — `bythid/jin` → Settings → Rules. `protect-main` targets the
+default branch: deletions and force pushes are refused, and every change has to arrive as a pull
+request whose `verify` check passed against the current tip of `main`, with a linear history, so no
+merge commits. `protect-release-tags` targets `refs/tags/v*`: creating, moving, deleting or
+force-pushing such a tag is refused.
+
+Each ruleset carries its own bypass list, and the lists are not shared, so the release flow in
+Definition of done — one commit straight to `main`, then a `vX.Y.Z` tag — works only for an account
+on both. A rejected `git push origin vX.Y.Z` means the bypass list failed, not `publish.yml`:
+nothing is staged.
+
 ## Conventions
 
 - Code, comments, filenames and commit messages are English, including when the conversation about
