@@ -322,12 +322,9 @@ tarball、以及一个 git tag——按便利程度从高到低，按健壮性�
 `dist/`，所以安装时没有构建步骤、没有生命周期脚本。git 依赖会在安装时由 `prepare` 构建，而
 `ignore-scripts` 和脚本审批策略会把它关掉。
 
-仓库以 GitHub（`bythid/jin`）为原版：`origin` 指向它，CI、Dependabot 与发布都在那里，每次 push
-和每个 pull request 都会执行 `pnpm run verify`（`.github/workflows/ci.yml`）。Gitee 是**只读
-镜像**，只同步分支、标签与提交——Issue 和 PR 不在其中，所以贡献请提到 GitHub。镜像交给 Gitee 的
-「仓库镜像管理（Pull 方向）」自动从 GitHub 拉取；该功能若在你的账号下不可用，本地 `gitee` 远端可
-手动推送（`git push gitee main --tags`）作为退路——两者只选其一，同时写两边会让镜像覆盖掉 Gitee
-上的改动。
+仓库只有一份，在 GitHub（`bythid/jin`），`origin` 指向它。CI、Dependabot 与发布都在那里，每次
+push 和每个 pull request 都会执行 `pnpm run verify`（`.github/workflows/ci.yml`）。Issue 与 PR
+也都在 GitHub——没有第二份副本需要同步。
 
 发版流程与 [CHANGELOG.md](CHANGELOG.md) 描述的完全一致：在 `main` 上一个提交，bump
 `package.json` 并加入条目，打上 `vX.Y.Z` 标签。推送这样的标签会在 GitHub 上触发
