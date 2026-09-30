@@ -32,10 +32,16 @@ jobs:
       # before setup-node, whose `cache: pnpm` needs the store path to exist.
       - uses: pnpm/action-setup@v6
 
+      # No `registry-url` here, deliberately: setup-node turns it into an .npmrc
+      # with an unresolvable `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}`
+      # placeholder (no secret is stored in this repo), and both v0.2.0 attempts
+      # hung in exactly the registry-touching steps — install, then the stage
+      # upload — while ci.yml, which runs without that file, sailed through the
+      # same commits. Trusted publishing needs no token file: npm obtains the
+      # OIDC token itself from Actions.
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-          registry-url: https://registry.npmjs.org
           cache: pnpm
 
       # Node 22 bundles npm 10.9.x. Trusted publishing needs npm CLI 11.5.1 or
