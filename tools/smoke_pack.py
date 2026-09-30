@@ -17,6 +17,7 @@ import json
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tarfile
@@ -111,28 +112,51 @@ def binary(name: str) -> str:
     return str(ROOT / "node_modules" / ".bin" / f"{name}{suffix}")
 
 
-def run(label: str, command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
+def run(label: str, command: list[str], cwd: Path, timeout: int = 300) -> subprocess.CompletedProcess[str]:
     print(f"  {DIM}{label}{RESET}")
     # Encoding pinned deliberately: `text=True` alone decodes with the locale
     # codec, which is GBK on a Chinese Windows and mangles any non-ASCII byte a
     # child prints. The decode then raises inside the reader thread, so the
     # failure surfaces as a hang rather than as an error worth reading.
-    result = subprocess.run(
+    #
+    # The whole tree is killed on timeout, not just the direct child: on Linux
+    # a step can leave a live grandchild (the first CI run sat 20 minutes in
+    # `vite build` with `sh -> node` both alive) holding the captured pipes,
+    # and communicate() waits on the pipes until every writer closes — killing
+    # only `sh` would keep the hang. start_new_session makes the killpg below
+    # cover the whole tree; on Windows taskkill /T does the same.
+    process = subprocess.Popen(
         command,
         cwd=cwd,
-        capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
         text=True,
         encoding="utf-8",
         errors="replace",
         shell=True,
+        start_new_session=os.name == "posix",
     )
-    if result.returncode != 0:
-        print(f"{RED}FAIL{RESET} {label}")
-        for stream in (result.stdout, result.stderr):
+    try:
+        stdout, stderr = process.communicate(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        if os.name == "posix":
+            os.killpg(process.pid, signal.SIGKILL)
+        else:
+            subprocess.run(["taskkill", "/F", "/T", "/PID", str(process.pid)], capture_output=True)
+        stdout, stderr = process.communicate()
+        print(f"{RED}FAIL{RESET} {label} — timed out after {timeout}s; output so far:")
+        for stream in (stdout, stderr):
             for line in (stream or "").splitlines():
                 if line.strip():
                     print(f"    {line}")
-    return result
+        return subprocess.CompletedProcess(command, 124, stdout, stderr)
+    if process.returncode != 0:
+        print(f"{RED}FAIL{RESET} {label}")
+        for stream in (stdout, stderr):
+            for line in (stream or "").splitlines():
+                if line.strip():
+                    print(f"    {line}")
+    return subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
 
 
 def fail(message: str) -> int:
