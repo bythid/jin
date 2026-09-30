@@ -5,7 +5,7 @@
  */
 import { getCurrentInstance, onBeforeUnmount, readonly, ref, type App, type InjectionKey } from 'vue'
 import { createOverlayStack, type DismissReason, type OverlayEntry, type OverlayEntryInput, type OverlayStack } from '../core/overlay-stack'
-import { readNumericToken, type Layer } from '../core/layer'
+import { readNumericToken } from '../core/layer'
 
 export const PORTAL_CLASS = 'jin-portal'
 

@@ -7,7 +7,6 @@
  * a loading button stays focusable so keyboard users keep their place.
  */
 import { computed, useAttrs } from 'vue'
-import JinIcon from './JinIcon.vue'
 import JinSpinner from './JinSpinner.vue'
 import type { Size } from '../core/types'
 

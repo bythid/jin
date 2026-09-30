@@ -37,7 +37,6 @@ const overlay = useOverlay()
 const wrapper = ref<HTMLElement | null>(null)
 /** The menu itself (ported into the shared portal), not the surface it opens from. */
 const layer = ref<HTMLElement | null>(null)
-const menu = ref<InstanceType<typeof JinMenu> | null>(null)
 const open = ref(false)
 const x = ref(0)
 const y = ref(0)
@@ -166,7 +165,6 @@ onBeforeUnmount(() => {
       >
         <JinMenu
           :id="menuId"
-          ref="menu"
           :items="props.items"
           :aria-label="props.ariaLabel"
           @select="onSelect"

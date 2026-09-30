@@ -21,7 +21,13 @@ downstream an afternoon.
 
 ## [Unreleased]
 
-Nothing yet. Add entries here as work lands; they move under the next version when it is cut.
+Fixed:
+
+- Removed ten unused declarations (leftover imports, locals and an unexported
+  positioning helper) that consumers' `noUnusedLocals` / `noUnusedParameters`
+  flag when they typecheck the library through the `source` export condition.
+  The library's own typecheck now runs with both flags set, so this class of
+  drift cannot come back.
 
 ## [0.2.0] — 2026-09-30
 

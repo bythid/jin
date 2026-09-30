@@ -31,7 +31,6 @@ const emit = defineEmits<{
 
 const open = ref(false)
 const trigger = ref<HTMLElement | null>(null)
-const menu = ref<InstanceType<typeof JinMenu> | null>(null)
 const menuId = `jin-dropdown-${Math.random().toString(36).slice(2, 8)}`
 
 function show(): void {
@@ -104,7 +103,6 @@ const triggerAttrs = computed(() => ({
     >
       <JinMenu
         :id="menuId"
-        ref="menu"
         :items="props.items"
         :aria-label="props.ariaLabel"
         @select="onSelect"

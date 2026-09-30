@@ -84,7 +84,6 @@ const buffer = createTypeaheadBuffer()
 const state = ref(createTreeState({ expanded: props.expanded ? [...props.expanded] : [] }))
 const internalSelection = ref<string[]>([])
 
-const isExpandedControlled = computed(() => props.expanded !== undefined)
 const isSelectedControlled = computed(() => props.selected !== undefined)
 
 watch(

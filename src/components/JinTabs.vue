@@ -41,12 +41,7 @@ const generated = useId()
 const activeIndex = ref(-1)
 const tabNodes = ref<HTMLElement[]>([])
 
-const enabled = computed(() => props.items.filter((item) => !item.disabled))
 const currentValue = computed(() => props.modelValue)
-
-function valueAt(index: number): string | null {
-  return props.items[index]?.value ?? null
-}
 
 function select(index: number, focus = false): void {
   const item = props.items[index]

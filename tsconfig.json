@@ -7,6 +7,11 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
     "strict": true,
+    // Consumers that enable these two flags typecheck the library's src when
+    // they take the `source` export condition — dead declarations here become
+    // their errors, so the gate lives here too.
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noFallthroughCasesInSwitch": true,

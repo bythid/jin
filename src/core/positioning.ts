@@ -131,14 +131,6 @@ function mainAxisOverflow(side: Side, coord: { x: number; y: number }, floating:
   }
 }
 
-function crossAxisOverflow(side: Side, coord: { x: number; y: number }, floating: Rect, boundary: Size2D, padding: number): number {
-  const horizontal = side === 'top' || side === 'bottom'
-  if (horizontal) {
-    return Math.max(padding - coord.x, coord.x + floating.width - (boundary.width - padding))
-  }
-  return Math.max(padding - coord.y, coord.y + floating.height - (boundary.height - padding))
-}
-
 function clamp(value: number, min: number, max: number): number {
   if (max < min) return min
   return Math.min(Math.max(value, min), max)

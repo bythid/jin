@@ -9,7 +9,6 @@
 import { computed, ref, useId } from 'vue'
 import JinIcon from './JinIcon.vue'
 import {
-  describeHotkey,
   findHotkeyConflicts,
   fromKeyboardEvent,
   isModifierKey,
