@@ -16,9 +16,11 @@ body,
 #app {
   height: 100%;
   margin: 0;
-  /* The shell has no horizontal motion to express; WebView2 otherwise
-     rubber-bands the viewport on the drift component of a touchpad pan. */
-  overscroll-behavior-x: none;
+  /* The shell has no motion to express at the viewport level; WebView2
+     otherwise rubber-bands it on a touchpad pan — horizontally on the drift
+     component, vertically whenever a gesture chains up from a column that
+     cannot use it (the sidebar nav, for one). */
+  overscroll-behavior: none;
 }
 
 .gallery-root {
@@ -110,6 +112,10 @@ body,
   background: var(--jin-surface);
   overflow: auto;
   min-width: 0;
+  /* Same rule as .gallery-main: a pan the nav column cannot use — it rarely
+     overflows, and is at its end the moment it does — ends here instead of
+     chaining to the viewport. */
+  overscroll-behavior: contain;
 }
 
 .gallery-sidebar__group {
