@@ -404,6 +404,10 @@ size the wrapper there (`display: block; min-height: 100%` inside a panel of def
 `inline-block`. Note the default `keyboardAccessible` makes that wrapper a tab stop; set it to
 `false` for a panel-wide surface that should not be one.
 
+An `#item` slot (`{ entry, row }`) forwards to the inner `JinMenu`'s row content, so a host can
+render its own row innards (hint glyphs, badges) in a pointer-anchored menu. The fallback replicates
+JinMenu's default label span: a host that passes no slot sees no change.
+
 ### JinBreadcrumb
 
 `items: BreadcrumbItem[]` (`{ label, href?, onClick?, current? }`), `ariaLabel`, `maxItems`, and a

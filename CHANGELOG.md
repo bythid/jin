@@ -21,7 +21,11 @@ downstream an afternoon.
 
 ## [Unreleased]
 
-Nothing yet. Add entries here as work lands; they move under the next version when it is cut.
+Added:
+
+- `JinContextMenu` now forwards the `#item` slot to its inner `JinMenu`, so hosts can render their
+  own row content (hint glyphs, badges) in a pointer-anchored menu. Without the slot the rendering
+  is byte-for-byte what it was — the fallback replicates JinMenu's default label span.
 
 ## [0.1.0] — 2026-09-29
 

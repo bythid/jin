@@ -171,7 +171,18 @@ onBeforeUnmount(() => {
           :aria-label="props.ariaLabel"
           @select="onSelect"
           @close="hide"
-        />
+        >
+          <!--
+            Forward the item slot so hosts can render their own row content
+            (badges, hint glyphs). The fallback matches JinMenu's own exactly:
+            a context menu that receives no slot must look untouched.
+          -->
+          <template #item="{ entry, row }">
+            <slot name="item" :entry="entry" :row="row">
+              <span class="jin-menu__label">{{ entry.label }}</span>
+            </slot>
+          </template>
+        </JinMenu>
       </div>
     </Teleport>
   </span>
