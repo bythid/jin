@@ -21,6 +21,10 @@ downstream an afternoon.
 
 ## [Unreleased]
 
+Nothing yet. Add entries here as work lands; they move under the next version when it is cut.
+
+## [0.2.0] — 2026-09-30
+
 Added:
 
 - `JinContextMenu` now forwards the `#item` slot to its inner `JinMenu`, so hosts can render their
