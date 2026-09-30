@@ -399,22 +399,34 @@ Remove the `./styles.css` export, or drop `src` from `files`, and it fails with 
 
 ### Starting the gallery
 
+Two entry points, and the name says the surface: `start_gallery_web.py` opens the **browser**
+checkpoint — a page in a browser tab — while `start_gallery_desktop.py` opens the **Tauri desktop
+shell**, a real window.
+
 ```bash
-python start_gallery.py              # dev server, opens the browser
-python start_gallery.py --tauri      # the desktop shell
-python start_gallery.py --build      # production build, then serve it
-python start_gallery.py --port 5300  # a different port
-python start_gallery.py --no-browser # don't open a window
+python start_gallery_web.py              # web: dev server, opens the browser
+python start_gallery_web.py --build      # web: production build, then serve it
+python start_gallery_web.py --port 5300  # web: a different port
+python start_gallery_web.py --no-browser # web: don't open a window
+
+python start_gallery_desktop.py          # desktop: rebuilds the release exe when stale, then starts it
+python start_gallery_desktop.py --rebuild# desktop: force a release rebuild, then start
+python start_gallery_desktop.py --dev    # desktop: dev hot reload (for working on it, not verifying it)
 ```
 
-`pnpm run gallery` / `gallery:tauri` / `gallery:build` are equivalent — they call the same script.
+`pnpm run gallery:web` / `gallery:web:build` / `gallery:desktop` / `gallery:desktop:dev` map onto
+these calls one to one.
 
-The script checks the prerequisites before starting (and says which one is missing), reuses a
-gallery that is already running on the port instead of starting a second one, moves to the next
-free port if something unrelated holds it, and kills the **whole process tree** on Ctrl+C. That
-last part matters more than it sounds: `npm` spawns `node`, which spawns `vite`, so interrupting
-only the parent leaves an orphan holding the port, and the next start then fails with "port already
-in use".
+Both scripts check the prerequisites before starting (and say which one is missing) and kill the
+**whole process tree** on Ctrl+C. That last part matters more than it sounds: `npm` spawns `node`,
+which spawns `vite`, so interrupting only the parent leaves an orphan holding the port, and the
+next start then fails with "port already in use". The web script additionally reuses a gallery
+already running on the port and moves past ports held by something unrelated. The desktop script
+works under a different constraint: `tauri build` embeds the built frontend **into the binary**, so
+the exe goes stale the moment a source file changes — the default mode compares timestamps and
+rebuilds first when anything is newer. Portal, positioning or theme changes have to be seen in the
+real window (jsdom measures no layout, and a dev session hides compositor differences), and where
+antivirus breaks up cargo subprocess trees, starting the already-built exe is the reliable path.
 
 ### The gallery is bilingual
 

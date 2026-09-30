@@ -93,7 +93,7 @@ breaks one gets reverted rather than adjusted.
 ```bash
 pnpm run verify     # check_tokens.py + check_contrast.py + vitest + vue-tsc + publint/attw
 pnpm run smoke      # packs the library and builds a consumer against the tarball (before publish)
-pnpm run gallery    # browser checkpoint — required for portal, positioning or theme changes
+pnpm run gallery:web    # browser checkpoint — required for portal, positioning or theme changes
 ```
 
 - `pnpm run verify` must pass. `tools/check_tokens.py` prints the offending file and line for each of
@@ -109,8 +109,9 @@ languages, and for a release a `CHANGELOG.md` entry plus a `package.json` bump i
 
 ## Environment gotchas
 
-- The checkers and the gallery launcher are Python (`python tools/check_tokens.py`,
-  `python start_gallery.py`); the test runner is vitest. Both are already wired into pnpm scripts.
+- The checkers and the gallery launchers are Python (`python tools/check_tokens.py`,
+  `python start_gallery_web.py` for the browser checkpoint, `python start_gallery_desktop.py` for
+  the Tauri shell); the test runner is vitest. All are already wired into pnpm scripts.
 - GitHub (`bythid/jin`) is the repository and `origin`; CI, Dependabot and publishing run there, and
   its `publish.yml` fires on any `v*` tag, so pushing a tag stages a release — the version still
   needs a maintainer's `npm stage approve` before it reaches anyone. See Packaging in the README.

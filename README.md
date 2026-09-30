@@ -363,20 +363,30 @@ push 和每个 pull request 都会执行 `pnpm run verify`（`.github/workflows/
 
 ### 启动 Gallery
 
+两个入口，名字即表面：`start_gallery_web.py` 打开的是**浏览器网页**（检查点页面），`start_gallery_desktop.py`
+打开的是 **Tauri 桌面外壳**（真实窗口）。
+
 ```bash
-python start_gallery.py              # dev server，自动打开浏览器
-python start_gallery.py --tauri      # 桌面外壳
-python start_gallery.py --build      # 生产构建，然后把它 serve 起来
-python start_gallery.py --port 5300  # 换一个端口
-python start_gallery.py --no-browser # 不打开窗口
+python start_gallery_web.py              # 网页：dev server，自动打开浏览器
+python start_gallery_web.py --build      # 网页：生产构建，然后把它 serve 起来
+python start_gallery_web.py --port 5300  # 网页：换一个端口
+python start_gallery_web.py --no-browser # 网页：不打开窗口
+
+python start_gallery_desktop.py          # 桌面壳：源码比 exe 新就先重建 release 再启动
+python start_gallery_desktop.py --rebuild# 桌面壳：强制重建 release 再启动
+python start_gallery_desktop.py --dev    # 桌面壳：dev 热更新（用来开发，不用来验证）
 ```
 
-`pnpm run gallery` / `gallery:tauri` / `gallery:build` 等价——它们调的是同一个脚本。
+`pnpm run gallery:web` / `gallery:web:build` / `gallery:desktop` / `gallery:desktop:dev` 与上面的
+调用一一等价。
 
-脚本启动前会检查前置条件（并说明缺的是哪一个），如果端口上已经有一个 Gallery 在跑就直接复用而不是
-再起一个，如果端口被无关程序占着就顺延到下一个空闲端口，并且在 Ctrl+C 时杀掉**整棵进程树**。最后
-一点比听起来重要：`npm` 生出 `node`，`node` 再生出 `vite`，只中断父进程会留下一个占着端口的孤儿，
-下一次启动就会报「端口已被占用」。
+两个脚本启动前都会检查前置条件（并说明缺的是哪一个），并且在 Ctrl+C 时杀掉**整棵进程树**。最后一点
+比听起来重要：`npm` 生出 `node`，`node` 再生出 `vite`，只中断父进程会留下一个占着端口的孤儿，下一次
+启动就会报「端口已被占用」。网页脚本在此之外还会复用端口上已在跑的 Gallery、顺延被无关程序占用的
+端口。桌面壳则是另一套约束：`tauri build` 把构建好的前端**嵌进二进制**，exe 在源码一变时就过期了，
+所以默认模式先比对时间戳、过期先重建——portal、定位或主题的改动必须在真实窗口里亲眼看过（jsdom
+量不出布局，dev 热更也看不出合成器差异），而杀毒软件会拦 cargo 子进程树的环境里，直接启动编译产物
+正是那条稳路。
 
 ### Gallery 是双语的
 

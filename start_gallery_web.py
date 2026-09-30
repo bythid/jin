@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Start the Jin gallery with one command.
+"""Start the Jin gallery in a browser with one command.
 
-    python start_gallery.py            # browser at http://localhost:5180
-    python start_gallery.py --tauri    # the Tauri desktop shell
-    python start_gallery.py --build    # production build, then serve it
+This is the *web* checkpoint — the gallery as a page in a browser tab. The
+Tauri desktop shell has its own entry point, start_gallery_desktop.py; the
+split exists so a script name says which surface it opens.
+
+    python start_gallery_web.py            # browser at http://localhost:5180
+    python start_gallery_web.py --build    # production build, then serve it
 
 Three things this does that a bare `pnpm run dev` does not:
 
@@ -87,12 +90,6 @@ def pnpm_run(*args: str) -> list[str]:
     return [pnpm_command(), "--pm-on-fail=ignore", *args]
 
 
-def cargo_available() -> bool:
-    from shutil import which
-
-    return which("cargo") is not None
-
-
 def require() -> None:
     """Fail early, with the actual missing piece named."""
     pnpm_command()  # exits with a clear message when pnpm is absent
@@ -107,8 +104,6 @@ def require() -> None:
             "the gallery's dependencies are not installed.",
             f"Run:  cd {GALLERY} && pnpm install",
         )
-    if not (GALLERY / "src-tauri").is_dir():
-        fail("gallery/src-tauri is missing, so --tauri cannot run.")
 
 
 # --------------------------------------------------------------------------
@@ -287,15 +282,6 @@ def run_dev(port: int, open_browser: bool) -> int:
     return stream(child)
 
 
-def run_tauri(port: int) -> int:
-    require()
-    if not cargo_available():
-        fail("cargo is not on PATH, so the Tauri shell cannot be built.", "Install Rust: https://rustup.rs")
-    say("building and starting the desktop shell (the first build takes a while)")
-    child = spawn(pnpm_run("run", "tauri:dev"), GALLERY)
-    return stream(child)
-
-
 def run_build(port: int, open_browser: bool) -> int:
     say("building the gallery for production")
     build = subprocess.run(
@@ -321,21 +307,21 @@ def run_build(port: int, open_browser: bool) -> int:
 # --------------------------------------------------------------------------
 def main() -> int:
     parser = argparse.ArgumentParser(
-        prog="start_gallery.py",
-        description="Start the Jin gallery (browser or desktop shell).",
+        prog="start_gallery_web.py",
+        description="Start the Jin gallery in a browser (the web checkpoint).",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "examples:\n"
-            "  python start_gallery.py                 # dev server, opens the browser\n"
-            "  python start_gallery.py --no-browser    # dev server only\n"
-            "  python start_gallery.py --port 5300     # a different port\n"
-            "  python start_gallery.py --tauri         # desktop shell\n"
-            "  python start_gallery.py --build         # production build, served\n"
+            "  python start_gallery_web.py                 # dev server, opens the browser\n"
+            "  python start_gallery_web.py --no-browser    # dev server only\n"
+            "  python start_gallery_web.py --port 5300     # a different port\n"
+            "  python start_gallery_web.py --build         # production build, served\n"
+            "\n"
+            "the Tauri desktop shell is start_gallery_desktop.py\n"
         ),
     )
     parser.add_argument("--port", type=int, default=DEFAULT_PORT, help=f"port to use (default {DEFAULT_PORT})")
     parser.add_argument("--no-browser", action="store_true", help="do not open a browser window")
-    parser.add_argument("--tauri", action="store_true", help="start the Tauri desktop shell instead")
     parser.add_argument("--build", action="store_true", help="build for production, then serve the build")
     args = parser.parse_args()
 
@@ -361,8 +347,6 @@ def main() -> int:
         if install.returncode != 0:
             fail("pnpm install failed.")
 
-    if args.tauri:
-        return run_tauri(args.port)
     if args.build:
         return run_build(args.port, not args.no_browser)
     return run_dev(args.port, not args.no_browser)

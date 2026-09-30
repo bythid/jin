@@ -72,9 +72,10 @@
     "prepare": "pnpm run build",
     "prepublishOnly": "pnpm run verify && pnpm run smoke",
     "hooks": "husky",
-    "gallery": "python start_gallery.py",
-    "gallery:build": "python start_gallery.py --build",
-    "gallery:tauri": "python start_gallery.py --tauri",
+    "gallery:web": "python start_gallery_web.py",
+    "gallery:web:build": "python start_gallery_web.py --build",
+    "gallery:desktop": "python start_gallery_desktop.py",
+    "gallery:desktop:dev": "python start_gallery_desktop.py --dev",
     "check:tokens": "python tools/check_tokens.py",
     "check:contrast": "python tools/check_contrast.py"
   },
