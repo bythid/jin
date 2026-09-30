@@ -22,6 +22,13 @@ body,
 }
 
 .gallery-root {
+  /* Positioning this box is what makes its overflow: hidden bind the
+     absolutely positioned helpers the library renders inside it (visually
+     hidden labels and the like): with a static ancestor their containing
+     block is the document, they escape every clip, and they stretch the
+     root scroller — dragging the whole shell, sidebar included, when a
+     gesture chains up from the main column. */
+  position: relative;
   height: 100vh;
   background: var(--jin-bg);
   color: var(--jin-text);
