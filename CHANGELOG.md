@@ -21,6 +21,10 @@ downstream an afternoon.
 
 ## [Unreleased]
 
+Nothing yet. Add entries here as work lands; they move under the next version when it is cut.
+
+## [0.2.1] — 2026-09-30
+
 Fixed:
 
 - Removed ten unused declarations (leftover imports, locals and an unexported
