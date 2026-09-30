@@ -16,6 +16,10 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Local wall time for verify + smoke is ~2 minutes; 20 covers cold CI
+    # caches with slack. The point is to fail loudly instead of hanging for
+    # the 6-hour default — the first v0.2.0 run sat in this step unseen.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
 
@@ -48,4 +52,11 @@ jobs:
       # reach the queue but never the consumers. Provenance rides on the OIDC
       # token, and a maintainer approves the staged version from a trusted
       # device with `npm stage approve`.
-      - run: npm stage publish --access public
+      #
+      # PYTHONUNBUFFERED: the smoke script's step labels are python prints, and
+      # on CI stdout is block-buffered — a hung step showed nothing after the
+      # pnpm banner, so "which step" was invisible. notice-level npm logging
+      # exposes the staging upload itself.
+      - run: npm stage publish --access public --loglevel notice
+        env:
+          PYTHONUNBUFFERED: '1'
