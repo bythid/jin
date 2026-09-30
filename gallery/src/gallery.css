@@ -4,6 +4,20 @@
  * not write `.jin-*` selectors, and this file does not.
  */
 
+/*
+ * The viewport chain: document, body, mount point — each exactly the viewport.
+ * The library never styles <html> or <body>, so this block is the host's job;
+ * without it the UA's 8px body margin leaves the root scroller a gutter around
+ * the shell, and a gesture the inner scrollers hand back drags the whole page,
+ * sidebar included.
+ */
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
 .gallery-root {
   height: 100vh;
   background: var(--jin-bg);
