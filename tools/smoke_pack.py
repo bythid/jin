@@ -125,6 +125,12 @@ def run(label: str, command: list[str], cwd: Path, timeout: int = 300) -> subpro
     # and communicate() waits on the pipes until every writer closes — killing
     # only `sh` would keep the hang. start_new_session makes the killpg below
     # cover the whole tree; on Windows taskkill /T does the same.
+    #
+    # Shell only on Windows: there a sequence is joined into one command line,
+    # which .cmd entries need. On POSIX `shell=True` with a sequence feeds the
+    # first item to the shell as the command string and turns the rest into
+    # shell positionals — `["vite", "build"]` executed `vite`, swallowed
+    # `build`, and the dev server held the pipes until the job died.
     process = subprocess.Popen(
         command,
         cwd=cwd,
@@ -133,7 +139,7 @@ def run(label: str, command: list[str], cwd: Path, timeout: int = 300) -> subpro
         text=True,
         encoding="utf-8",
         errors="replace",
-        shell=True,
+        shell=os.name == "nt",
         start_new_session=os.name == "posix",
     )
     try:
