@@ -16,6 +16,9 @@ body,
 #app {
   height: 100%;
   margin: 0;
+  /* The shell has no horizontal motion to express; WebView2 otherwise
+     rubber-bands the viewport on the drift component of a touchpad pan. */
+  overscroll-behavior-x: none;
 }
 
 .gallery-root {
@@ -120,6 +123,9 @@ body,
   min-width: 0;
   padding: var(--jin-space-5) var(--jin-space-6) var(--jin-space-8);
   overflow: auto;
+  /* A pan this column cannot use ends here instead of chaining to the root
+     scroller, where it would wobble the whole shell. */
+  overscroll-behavior: contain;
 }
 
 .gallery-page__title {
