@@ -63,8 +63,9 @@ export function usePositioning(options: UsePositioningOptions): UsePositioningRe
   const position = ref<PositionResult>(EMPTY)
   const floatingStyle = ref<Record<string, string>>({})
   let frame = 0
-  let listenersAttached = false
   let lastRun = 0
+  let listenersAttached = false
+  let sizeObserver: ResizeObserver | null = null
 
   function boundary(): Size2D {
     if (typeof window === 'undefined') return { width: 0, height: 0 }
@@ -131,17 +132,34 @@ export function usePositioning(options: UsePositioningOptions): UsePositioningRe
     scheduleUpdate()
   }
 
+  function observeFloating(): void {
+    // Content-driven size changes (async data, view switches) move the box as
+    // surely as a scroll does; without this a panel that grows while open keeps
+    // its open-time coordinates and can leave the viewport. The observer
+    // already batches per frame, so the throttle is skipped on this path.
+    if (typeof ResizeObserver === 'undefined') return
+    sizeObserver ??= new ResizeObserver(() => scheduleUpdate())
+    const el = options.floating.value
+    if (el) sizeObserver.observe(el)
+  }
+
+  function unobserveFloating(): void {
+    sizeObserver?.disconnect()
+  }
+
   function attach(): void {
     if (listenersAttached || typeof window === 'undefined') return
     window.addEventListener('scroll', onScroll, { passive: true, capture: true })
     window.addEventListener('resize', onScroll, { passive: true })
+    observeFloating()
     listenersAttached = true
   }
 
   function detach(): void {
-    if (!listenersAttached || typeof window === 'undefined') return
+    if (!listenersAttached) return
     window.removeEventListener('scroll', onScroll, { capture: true })
     window.removeEventListener('resize', onScroll)
+    unobserveFloating()
     listenersAttached = false
   }
 
@@ -150,6 +168,13 @@ export function usePositioning(options: UsePositioningOptions): UsePositioningRe
     (enabled) => (enabled ? attach() : detach()),
     { immediate: true },
   )
+
+  // A replaced floating element needs re-observing, not just re-measuring.
+  watch(options.floating, () => {
+    if (!listenersAttached) return
+    unobserveFloating()
+    observeFloating()
+  })
 
   if (options.immediate !== false) scheduleUpdate()
 

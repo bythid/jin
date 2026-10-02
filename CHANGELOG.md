@@ -21,7 +21,16 @@ downstream an afternoon.
 
 ## [Unreleased]
 
-Nothing yet. Add entries here as work lands; they move under the next version when it is cut.
+Fixed:
+
+- **Positioned panels now follow their own content growing or shrinking while
+  open.** `usePositioning` only re-measured on scroll and window resize, so a
+  popover whose content got taller after opening — an async list filling in, a
+  view switch inside the panel — kept its open-time coordinates and could
+  leave the viewport at the bottom. A `ResizeObserver` on the floating element
+  now feeds the same update path; placement is recomputed (flip and shift
+  included) whenever the panel's box changes. Applications that worked around
+  this by calling `update()` after content changes can drop that workaround.
 
 ## [0.3.1] — 2026-10-02
 
