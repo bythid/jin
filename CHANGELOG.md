@@ -32,6 +32,15 @@ Fixed:
   included) whenever the panel's box changes. Applications that worked around
   this by calling `update()` after content changes can drop that workaround.
 
+Added:
+
+- `closeButtonSide` is now exported from the package root. It is the decision
+  behind JinModal's corner close control (`'left'` on Apple platforms,
+  `'right'` elsewhere), and applications that draw their own dialog chrome —
+  a popover styled as a window, a custom header with a close or back control —
+  should place that control on the same side so it matches the window
+  conventions their users already know.
+
 ## [0.3.1] — 2026-10-02
 
 Fixed:

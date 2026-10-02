@@ -562,6 +562,8 @@ import {
   flattenTree, navigateTree, applyLoadFailure,
   fromKeyboardEvent, serializeHotkey, findHotkeyConflicts,
   createQueue,
+  // platform conventions
+  closeButtonSide,
 } from '@bythid/jin'
 ```
 
@@ -569,6 +571,11 @@ The distinction worth keeping in mind: `useOverlay`, `usePositioning` and `useFo
 halves, and the functions beside them are the decisions. If you build a control the library does not
 ship, use the decision functions directly — that is how the behaviour stays identical to the built-in
 controls instead of merely similar.
+
+`closeButtonSide(userAgent)` is the one decision behind the modal's corner close control:
+`'left'` on Apple platforms (the traffic-light corner), `'right'` elsewhere. An application that
+draws its own dialog chrome — a popover styled as a window, a custom header — should put its close
+or back control on the same side, so the corner users reach for matches the window they are in.
 
 ---
 

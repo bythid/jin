@@ -95,6 +95,8 @@ export type { QueueEntry, QueueInput, QueuePosition, QueueOptions } from './core
 export { LAYERS, LAYER_TOKEN, layerZIndex, readNumericToken } from './core/layer'
 export type { Layer } from './core/layer'
 export { createId } from './core/id'
+export { closeButtonSide } from './core/platform'
+export type { CloseSide } from './core/platform'
 export type {
   Alignment,
   Orientation,
