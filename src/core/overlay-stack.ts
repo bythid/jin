@@ -4,7 +4,7 @@
  * listeners live here, so the whole thing is unit-testable.
  *
  * Responsibilities:
- *  - assign z-index from the layer token plus a small ordering offset
+ *  - assign z-index from the layer token, never decreasing along the stack
  *  - answer "who is topmost" for Escape / outside-click routing
  *  - report whether a modal is open (scroll lock, background inert)
  */
@@ -73,9 +73,25 @@ export function createOverlayStack(options: OverlayStackOptions = {}): OverlaySt
     for (const listener of [...listeners]) listener()
   }
 
-  /** z-index = layer base + position in the stack (keeps within-layer order). */
+  /**
+   * z-index = the entry's layer base, but never less than the entry below it:
+   * opening an overlay always puts it on top of everything already open.
+   *
+   * The base alone is not enough, because a layer's base is fixed and a nested
+   * overlay belongs to a lower-numbered layer than its host — a select inside a
+   * modal is a `dropdown` (1000) inside a `modal` (1200). Ranked by base only, it
+   * painted behind the dialog that opened it: visible to the DOM, hit-tested onto
+   * the dialog, and therefore unclickable. Stack order is what the rest of this
+   * module already treats as truth (`topmost()`, Escape, outside-click), so the
+   * z-index has to agree with it.
+   */
   function reindex(): void {
-    entries = entries.map((entry, index) => ({ ...entry, zIndex: layerZIndex(entry.layer, readToken) + index }))
+    let previous = Number.NEGATIVE_INFINITY
+    entries = entries.map((entry) => {
+      const zIndex = Math.max(layerZIndex(entry.layer, readToken), previous + 1)
+      previous = zIndex
+      return { ...entry, zIndex }
+    })
   }
 
   return {

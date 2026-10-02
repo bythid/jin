@@ -58,9 +58,14 @@ close() → removes it and fires its dismissal callback
 ```
 
 The layer tokens come from the contract (`--jin-z-dropdown` … `--jin-z-tooltip`), so z-index is a
-design decision expressed in the theme, not a number an application invents in a hurry. Within a
-layer, the stack order breaks ties, which is why two stacked modals order correctly without either
-knowing about the other.
+design decision expressed in the theme, not a number an application invents in a hurry. A layer's
+token is a **floor**, not a rank: the stack never decreases its z-index along the stack, so whatever
+opens later is above whatever was already open. Ranked by the token alone, a nested overlay would
+sit under its own host — a select inside a dialog is a `dropdown` (1000) inside a `modal` (1200), so
+it painted behind the dialog, hit-tested onto the dialog, and could not be clicked at all. Stack
+order is also what `topmost()`, Escape and outside-click routing already treat as truth; the
+z-index has to agree with them. Within one layer the order still breaks ties, which is why two
+stacked modals order correctly without either knowing about the other.
 
 The scrim is a single shared element. Opening a second dialog does not darken the page twice; the
 second dialog sets `noScrim` and the first one's scrim stays put.

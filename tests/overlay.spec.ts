@@ -93,6 +93,68 @@ describe('overlay stack', () => {
   })
 })
 
+describe('overlay stack · layer tokens', () => {
+  /** The real contract values, so the layer bases differ as they do in a theme. */
+  const TOKENS: Record<string, string> = {
+    '--jin-z-dropdown': '1000',
+    '--jin-z-sticky': '900',
+    '--jin-z-overlay': '1100',
+    '--jin-z-modal': '1200',
+    '--jin-z-toast': '1400',
+    '--jin-z-tooltip': '1500',
+  }
+  let stack: ReturnType<typeof createOverlayStack>
+
+  beforeEach(() => {
+    stack = createOverlayStack({ readToken: (token) => TOKENS[token] ?? null })
+  })
+
+  it('puts an overlay opened inside a modal above that modal', () => {
+    // A select inside a dialog: the popover is a dropdown (1000), the dialog is a
+    // modal (1200). Ranked by base it painted behind the dialog and took no
+    // clicks; stack order has to win.
+    const modal = stack.open({ layer: 'modal', id: 'dialog' })
+    const select = stack.open({ layer: 'dropdown', id: 'select' })
+    expect(select.zIndex).toBeGreaterThan(modal.zIndex)
+  })
+
+  it('never decreases the z-index along the stack', () => {
+    const zs = [
+      stack.open({ layer: 'modal' }),
+      stack.open({ layer: 'dropdown' }),
+      stack.open({ layer: 'dropdown' }),
+      stack.open({ layer: 'modal' }),
+      stack.open({ layer: 'tooltip' }),
+      stack.open({ layer: 'dropdown' }),
+    ].map((entry) => entry.zIndex)
+    for (let index = 1; index < zs.length; index += 1) {
+      expect(zs[index]).toBeGreaterThan(zs[index - 1]!)
+    }
+  })
+
+  it('keeps the layer base as a floor', () => {
+    const dropdown = stack.open({ layer: 'dropdown' })
+    expect(dropdown.zIndex).toBe(1000)
+    // Opened later, a lower base must not drag it under the entry before it…
+    const second = stack.open({ layer: 'dropdown' })
+    expect(second.zIndex).toBe(1001)
+    // …while a later higher layer still lands on its own base.
+    const modal = stack.open({ layer: 'modal' })
+    expect(modal.zIndex).toBe(1200)
+    const toast = stack.open({ layer: 'toast' })
+    expect(toast.zIndex).toBe(1400)
+  })
+
+  it('re-indexes the survivors when the top entry closes', () => {
+    stack.open({ layer: 'dropdown', id: 'a' })
+    const modal = stack.open({ layer: 'modal', id: 'b' })
+    stack.close(modal.id)
+    const remaining = stack.entries()
+    expect(remaining).toHaveLength(1)
+    expect(remaining[0]!.zIndex).toBe(1000)
+  })
+})
+
 describe('dismiss rules', () => {
   const base = { closeOnEsc: true, closeOnOutside: true, isTopmost: true }
 
