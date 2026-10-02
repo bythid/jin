@@ -23,6 +23,24 @@ downstream an afternoon.
 
 Nothing yet. Add entries here as work lands; they move under the next version when it is cut.
 
+## [0.3.0] — 2026-10-02
+
+Changed:
+
+- **`JinModal`: the corner close button now floats over the panel chrome** —
+  top-left on Apple platforms (mirroring the system traffic lights, decided
+  from the user agent and not mirroring with the document direction) and
+  top-right elsewhere (inline end, mirrors in RTL). It previously flowed after
+  the footer with no positioning at all, which read as a stray button below
+  the dialog's own action row. Hosts that render their own close affordance
+  keep `hideClose`; hosts that want the old flow position can override the
+  new `position: absolute` on `.jin-modal__close` from their side.
+
+Added:
+
+- `core/platform.ts` — `closeButtonSide(userAgent)` decides that placement as
+  a pure, tested decision.
+
 ## [0.2.1] — 2026-09-30
 
 Fixed:
