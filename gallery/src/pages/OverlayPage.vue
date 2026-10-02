@@ -53,6 +53,19 @@ const sizeOptions = computed(() => [
   { value: 'full', label: t('overlays.size.full') },
 ])
 
+/**
+ * A control that opens an overlay of its own, from inside a dialog: a select's
+ * listbox is a `dropdown` (a lower layer than the `modal` hosting it). The
+ * gallery's other selects all sit on the page, where that nesting cannot be
+ * seen — this one is the checkpoint for it.
+ */
+const modalChannel = ref('stable')
+const modalChannelOptions = computed(() => [
+  { value: 'stable', label: t('overlays.modal.channelStable') },
+  { value: 'beta', label: t('overlays.modal.channelBeta') },
+  { value: 'nightly', label: t('overlays.modal.channelNightly') },
+])
+
 async function simulateSave(): Promise<void> {
   modalBusy.value = true
   await new Promise((resolve) => setTimeout(resolve, 1400))
@@ -162,6 +175,9 @@ const outerModal = ref(false)
         </JinField>
         <JinField :label="t('overlays.modal.notifyLabel')">
           <JinSwitch :label="t('overlays.modal.notifySwitch')" />
+        </JinField>
+        <JinField :label="t('overlays.modal.channelLabel')" :hint="t('overlays.modal.channelHint')">
+          <JinSelect v-model="modalChannel" :options="modalChannelOptions" />
         </JinField>
       </div>
 
