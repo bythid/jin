@@ -281,6 +281,14 @@ def run_dev() -> int:
 
 # --------------------------------------------------------------------------
 def main() -> int:
+    # A Windows console defaults to a legacy code page (GBK on a Chinese
+    # system), which cannot encode the ✓/✗ this script prints — the run died on
+    # its first status line, after the child it started was already up, and the
+    # orphaned server then held the port. Pin both streams to UTF-8.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+
     parser = argparse.ArgumentParser(
         prog="start_gallery_desktop.py",
         description="Start the Jin gallery as the Tauri desktop shell.",
