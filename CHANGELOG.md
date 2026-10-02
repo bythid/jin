@@ -23,6 +23,37 @@ downstream an afternoon.
 
 Nothing yet. Add entries here as work lands; they move under the next version when it is cut.
 
+## [0.3.1] — 2026-10-02
+
+Fixed:
+
+- **A nested overlay now stacks above the overlay that opened it.** The stack
+  assigned `z-index = layer token + position`, and the token is a fixed base, so
+  a lower-numbered layer could never outrank a higher one: a select inside a
+  dialog is a `dropdown` (1000) inside a `modal` (1200), and it painted *behind*
+  the dialog — the listbox was open, hit-testing landed on the dialog, and the
+  list could not be clicked at all. The token is now a **floor**: the z-index
+  never decreases along the stack, which is what `topmost()`, Escape and
+  outside-click routing already assumed. Layer bases, and therefore the visual
+  order of unrelated surfaces, are unchanged. Applications that worked around
+  this by raising `--jin-z-dropdown` above `--jin-z-modal` themselves can drop
+  that override after upgrading.
+
+- **Injection keys are now in the global symbol registry.** Every control
+  reaches the shared overlay stack, theme controller, translation context and
+  feedback stores through an `InjectionKey`, and a plain `Symbol('jin-overlay')`
+  is unique per module evaluation. A host that loaded two copies of the library —
+  a bundler pre-bundling one and serving the other from source, two versions in
+  a monorepo, a micro-frontend — therefore had two keys that merely look alike:
+  the plugin provided its controller under one, a component from the other copy
+  looked up the second, missed, and silently fell back to a private one. Nothing
+  threw; overlays stopped being layered (a select inside a dialog painted behind
+  it and took no clicks), Escape stopped reaching the topmost overlay, and
+  translations and theme reverted to the library defaults. The keys are
+  `Symbol.for('jin.…')` now, which is one symbol in every copy. Applications are
+  unaffected: `app.provide` is still per app, so two Vue apps on one page keep
+  their own controllers.
+
 ## [0.3.0] — 2026-10-02
 
 Changed:
