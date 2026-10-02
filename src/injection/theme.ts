@@ -3,7 +3,8 @@
  * requests anything: it reads/writes the two axes on <html> and tells the host
  * about changes so the host can persist them.
  */
-import { computed, inject, ref, type App, type ComputedRef, type InjectionKey, type Ref } from 'vue'
+import { computed, inject, ref, type App, type ComputedRef, type Ref } from 'vue'
+import { injectionKey } from './key'
 
 export const JIN_STYLE_ATTRIBUTE = 'data-jin-style'
 export const JIN_MODE_ATTRIBUTE = 'data-jin-mode'
@@ -26,7 +27,7 @@ export interface ThemeController {
   sync(target?: HTMLElement | null): void
 }
 
-export const themeKey: InjectionKey<ThemeController> = Symbol('jin-theme')
+export const themeKey = injectionKey<ThemeController>('theme')
 
 /**
  * The house style. Jin is the library's own visual identity; the others are

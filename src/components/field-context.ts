@@ -5,7 +5,8 @@
  * A control used inside a field picks these up automatically; used standalone it
  * falls back to its own generated ids.
  */
-import { inject, type InjectionKey, type Ref } from 'vue'
+import { inject, type Ref } from 'vue'
+import { injectionKey } from '../injection/key'
 
 export interface FieldContext {
   labelId: string
@@ -18,7 +19,7 @@ export interface FieldContext {
   required: Ref<boolean>
 }
 
-export const fieldContextKey: InjectionKey<FieldContext> = Symbol('jin-field')
+export const fieldContextKey = injectionKey<FieldContext>('field')
 
 export function useFieldContext(): FieldContext | null {
   return inject(fieldContextKey, null)

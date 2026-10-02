@@ -3,7 +3,8 @@
  * beyond the readable English defaults declared in contracts/strings.json; an
  * application overrides them with `app.use(JinUI, { t })`.
  */
-import type { App, InjectionKey } from 'vue'
+import type { App } from 'vue'
+import { injectionKey } from './key'
 import defaults from '../../contracts/strings.json'
 
 export type TranslateVars = Record<string, string | number>
@@ -55,7 +56,7 @@ export function createTranslation(t?: TranslateFn): TranslationContext {
   }
 }
 
-export const translationKey: InjectionKey<TranslationContext> = Symbol('jin-translation')
+export const translationKey = injectionKey<TranslationContext>('translation')
 
 export function provideTranslation(app: App, translation: TranslationContext): void {
   app.provide(translationKey, translation)

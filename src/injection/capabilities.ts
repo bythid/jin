@@ -3,7 +3,7 @@
  * degrades gracefully when a capability is absent: a browser that cannot pick
  * folders simply does not render the "Browse…" affordance.
  */
-import type { InjectionKey } from 'vue'
+import { injectionKey } from './key'
 
 export interface JinCapabilities {
   /** Returns an absolute path, or null when the user cancelled. */
@@ -16,7 +16,7 @@ export interface JinCapabilities {
   readClipboard?: () => Promise<string | null>
 }
 
-export const capabilitiesKey: InjectionKey<JinCapabilities> = Symbol('jin-capabilities')
+export const capabilitiesKey = injectionKey<JinCapabilities>('capabilities')
 
 export const EMPTY_CAPABILITIES: JinCapabilities = {}
 

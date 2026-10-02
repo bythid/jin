@@ -3,9 +3,10 @@
  * Positioning and focus have exactly one implementation each, and this is
  * where every layered component registers.
  */
-import { getCurrentInstance, onBeforeUnmount, readonly, ref, type App, type InjectionKey } from 'vue'
+import { getCurrentInstance, onBeforeUnmount, readonly, ref, type App } from 'vue'
 import { createOverlayStack, type DismissReason, type OverlayEntry, type OverlayEntryInput, type OverlayStack } from '../core/overlay-stack'
 import { readNumericToken } from '../core/layer'
+import { injectionKey } from '../injection/key'
 
 export const PORTAL_CLASS = 'jin-portal'
 
@@ -24,7 +25,7 @@ export interface OverlayController {
   entryZIndex(id: string | null): number | null
 }
 
-export const overlayKey: InjectionKey<OverlayController> = Symbol('jin-overlay')
+export const overlayKey = injectionKey<OverlayController>('overlay')
 
 function readToken(token: string): string | null {
   if (typeof document === 'undefined') return null

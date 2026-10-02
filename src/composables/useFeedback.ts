@@ -9,10 +9,11 @@
  * The store owns the clock through a single interval so every component that
  * uses it shares one timeline.
  */
-import { computed, getCurrentInstance, onBeforeUnmount, readonly, ref, type App, type ComputedRef, type InjectionKey, type Ref } from 'vue'
+import { computed, getCurrentInstance, onBeforeUnmount, readonly, ref, type App, type ComputedRef, type Ref } from 'vue'
 import { createQueue, type QueueEntry, type QueuePosition } from '../core/queue'
 import type { Tone } from '../core/types'
 import { createId } from '../core/id'
+import { injectionKey } from '../injection/key'
 
 export interface FeedbackAction {
   /** Visible label; the host supplies the text. */
@@ -165,8 +166,8 @@ function onScopeCleanup(cleanup: () => void): void {
   if (instance) onBeforeUnmount(cleanup)
 }
 
-export const toastsKey: InjectionKey<FeedbackStore> = Symbol('jin-toasts')
-export const notificationsKey: InjectionKey<FeedbackStore> = Symbol('jin-notifications')
+export const toastsKey = injectionKey<FeedbackStore>('toasts')
+export const notificationsKey = injectionKey<FeedbackStore>('notifications')
 
 export function provideFeedbackStores(app: App): void {
   app.provide(toastsKey, createFeedbackStore({ defaultDuration: 5000, maxVisible: 5 }))
