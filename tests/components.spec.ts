@@ -565,6 +565,35 @@ describe('JinModal', () => {
     expect(scrim?.getAttribute('data-jin-visible')).toBeNull()
     expect(scrim?.style.display).toBe('none')
   })
+
+  it('places the corner close at the inline end by default', async () => {
+    withPlugin(JinModal, { props: { modelValue: true, title: 'Confirm' }, attachTo: document.body })
+    await nextTick()
+    const button = document.querySelector('.jin-modal__close')
+    expect(button).not.toBeNull()
+    expect(button?.classList.contains('jin-modal__close--left')).toBe(false)
+  })
+
+  it('places the corner close at the top-left for Apple user agents', async () => {
+    vi.stubGlobal(
+      'navigator',
+      { userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15' },
+    )
+    try {
+      withPlugin(JinModal, { props: { modelValue: true, title: 'Confirm' }, attachTo: document.body })
+      await nextTick()
+      const button = document.querySelector('.jin-modal__close')
+      expect(button?.classList.contains('jin-modal__close--left')).toBe(true)
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+
+  it('renders no corner close when hideClose is set', async () => {
+    withPlugin(JinModal, { props: { modelValue: true, title: 'Confirm', hideClose: true }, attachTo: document.body })
+    await nextTick()
+    expect(document.querySelector('.jin-modal__close')).toBeNull()
+  })
 })
 
 describe('JinDrawer', () => {

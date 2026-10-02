@@ -10,6 +10,7 @@
 import { computed, onBeforeUnmount, ref, useSlots, watch, type CSSProperties } from 'vue'
 import JinIcon from './JinIcon.vue'
 import { createId } from '../core/id'
+import { closeButtonSide } from '../core/platform'
 import { useT } from '../composables/useT'
 import { useOverlay } from '../composables/useOverlay'
 import { useDismissable } from '../composables/useDismissable'
@@ -71,6 +72,11 @@ const labelledBy = computed(() => (props.title || slots.header ? titleId : undef
 const describedBy = computed(() => (props.description ? descriptionId : undefined))
 const role = computed(() => (props.busy ? 'alertdialog' : 'dialog'))
 const rtl = ref(false)
+
+// Apple window chrome keeps the close control at the top-left (traffic
+// lights); elsewhere it sits at the inline end. Physical side on purpose —
+// the macOS convention does not mirror with the document direction.
+const closeSide = closeButtonSide(typeof navigator === 'undefined' ? '' : navigator.userAgent)
 
 function requestClose(): void {
   if (props.busy) return
@@ -188,6 +194,7 @@ defineExpose({ focus: () => panel.value?.focus() })
           v-if="!props.hideClose"
           type="button"
           class="jin-modal__close jin-button jin-button--ghost jin-button--icon jin-button--sm jin-focus-ring"
+          :class="closeSide === 'left' ? 'jin-modal__close--left' : undefined"
           :aria-label="t('a11y.close')"
           :disabled="props.busy"
           @click="requestClose"

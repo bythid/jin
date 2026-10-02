@@ -699,6 +699,22 @@
   border-top: var(--jin-border-width, 1px) var(--jin-border-style, solid) var(--jin-border-color, #d3dae7);
 }
 
+/* Corner close: floats over the panel chrome instead of flowing after the
+   footer. Apple window chrome keeps the close at the top-left (traffic
+   lights) and the component tags that case with `--left` — physical `left`,
+   not the logical inset, so it does not mirror in RTL. Everywhere else it
+   sits at the inline end and mirrors with the document direction. */
+.jin-modal__close {
+  position: absolute;
+  top: var(--jin-space-2, 8px);
+  inset-inline-end: var(--jin-space-2, 8px);
+}
+
+.jin-modal__close--left {
+  inset-inline-end: auto;
+  left: var(--jin-space-2, 8px);
+}
+
 .jin-drawer {
   align-items: stretch;
 }

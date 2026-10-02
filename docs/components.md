@@ -177,6 +177,10 @@ always reaches only the topmost entry.
 
 Emits: `update:modelValue`, `open`, `close`, `afterClose`. Slots: `header`, `footer`, default.
 
+The corner close button floats over the panel chrome: top-left on Apple platforms (mirroring the
+system traffic lights) and top-right elsewhere, mirroring with the document direction. `hideClose`
+removes it for hosts that render their own close affordance.
+
 On open, focus moves into the panel; Tab cycles within it; on close, focus returns to the element
 that opened it. A `busy` dialog is a deliberate exception to "always dismissable" — that is what
 prevents a half-finished save from being dismissed by a stray keystroke.
