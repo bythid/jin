@@ -188,6 +188,11 @@ body,
 
 .gallery-demo--stack {
   flex-direction: column;
+  /* Column + wrap makes Chrome size the child grid's hypothetical height at
+     its min-content width — one option column — so every stacked grid renders
+     with rows stretched by hundreds of pixels of distributed slack. A column
+     stack has one line anyway. */
+  flex-wrap: nowrap;
   align-items: stretch;
 }
 
