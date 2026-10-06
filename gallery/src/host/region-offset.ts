@@ -13,4 +13,7 @@ export interface RegionOffsetState {
   unit: 'px' | 'percent'
 }
 
-export const regionOffset = ref<RegionOffsetState>({ x: 0, y: 0, unit: 'px' })
+// 56px clears the gallery's sticky header (~55px) with a breath of gap. The
+// feedback page's controls edit this state from there — zero it to watch the
+// overlap come back.
+export const regionOffset = ref<RegionOffsetState>({ x: 0, y: 56, unit: 'px' })

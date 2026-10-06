@@ -31,6 +31,7 @@ import {
   useToasts,
   type MenuEntry,
   type NavItem,
+  type QueuePosition,
 } from '@bythid/jin'
 import { AVAILABLE_STYLES } from './host/preferences'
 import { regionOffset } from './host/region-offset'
@@ -56,6 +57,12 @@ const navItems = computed<NavItem[]>(() => [
     icon: page.icon,
   })),
 ])
+
+// The toast/notification sequences yield the sticky header: the top regions
+// carry the offset, the bottom regions stay pinned. Disjoint position
+// subsets, so no message renders twice.
+const TOP_POSITIONS: QueuePosition[] = ['top-start', 'top', 'top-end']
+const BOTTOM_POSITIONS: QueuePosition[] = ['bottom-start', 'bottom', 'bottom-end']
 
 const current = ref<string>('tokens')
 const currentPage = computed(() => PAGES.find((page) => page.id === current.value) ?? null)
@@ -279,8 +286,10 @@ onMounted(() => {
     </div>
 
     <!-- Both regions are part of the page, not of any single control. -->
-    <JinToastRegion :offset="regionOffset" />
-    <JinNotificationRegion :offset="regionOffset" />
+    <JinToastRegion :positions="TOP_POSITIONS" :offset="regionOffset" />
+    <JinToastRegion :positions="BOTTOM_POSITIONS" />
+    <JinNotificationRegion :positions="TOP_POSITIONS" :offset="regionOffset" />
+    <JinNotificationRegion :positions="BOTTOM_POSITIONS" />
 
     <JinDrawer v-model="aboutOpen" :title="t('app.menu.about')" side="right" size="md">
       <div class="gallery-grid">

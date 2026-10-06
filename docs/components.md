@@ -140,7 +140,9 @@ rightward, `+y` always downward, with no RTL mirroring — the values are explic
 flow-relative ones. `percent` resolves against the viewport (the region's fixed containing block),
 so a ratio offset follows window resizes. An offset may push messages off-screen; the queue neither
 reflows around it nor clamps it — the caller owns the values. The decision is reusable:
-`regionTransform(position, offset)` from the package root returns the inline transform.
+`regionTransform(position, offset)` from the package root returns the inline transform. Because the
+direction is absolute, a host that only wants *some* corners shifted (a top sequence yielding a
+sticky header) splits its regions by `positions` — disjoint subsets never double-render a message.
 
 Store methods: `push` (returns the id), `update`, `dismiss`, `clear`, `pause`, `resume`, plus the
 reactive `items` and `byPosition`.

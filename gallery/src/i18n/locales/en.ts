@@ -273,7 +273,7 @@ export const EN_MESSAGES = {
   'feedback.toast.undo': 'Undo',
   'feedback.toast.restoredTitle': 'Restored',
   'feedback.toast.positionsNote': 'Six positions, chosen per message:',
-  'feedback.toast.offsetNote': 'The whole sequence — toasts and notifications alike — shifts by this signed amount from its corner; % is of the viewport.',
+  'feedback.toast.offsetNote': 'The whole sequence — toasts and notifications alike — shifts by this signed amount from its corner; % is of the viewport. The top regions default to clearing the sticky header.',
   'feedback.toast.offsetAxisX': 'Offset X',
   'feedback.toast.offsetAxisY': 'Offset Y',
   'feedback.toast.offsetUnit': 'Offset unit',
