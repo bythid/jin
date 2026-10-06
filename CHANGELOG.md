@@ -19,9 +19,57 @@ what it contains. Entries are written for the application that has to react — 
 that only shows up in an unusual host layout, because that is the kind of change that costs
 downstream an afternoon.
 
-## [Unreleased]
+## [0.4.0] — 2026-10-06
+
+Added:
+
+- **`JinCombobox` — a type-to-filter select with optional free-form entry.** A
+  text input whose value filters a listbox of options (case- and
+  diacritic-insensitive substring match, highlighted in the default rows),
+  following the WAI-ARIA combobox pattern: the input is the trigger and keeps
+  focus while the popup is open, `aria-activedescendant` moves through the
+  options, arrows navigate (skipping disabled rows), `Enter` commits,
+  `Home`/`End` address the list while it is open, and `Escape` closes the
+  popup first and clears the value after. `freeEntry` makes the committed value
+  independent of `options`: with it, a typed value that matches nothing
+  commits on `Enter` or blur (whitespace-trimmed); without it, the list is
+  authoritative and unmatched text reverts on blur. `update:modelValue` fires
+  on commit — option picked, `Enter`, or blur with a changed value — never per
+  keystroke. Same `SelectOption[]` props as JinSelect (including the `#option`
+  slot for rich rows), plus `size`, `placeholder`, `disabled`, `invalid`,
+  `block`, `ariaLabel`, and `openOnFocus` (default `true`). The popup rides the
+  shared portal/overlay stack like every other anchored control; the popup is
+  **custom-only** — `<datalist>` cannot carry custom rows or the free-entry
+  affordance. Several-hundred-row lists are deliberately not windowed:
+  measured in the gallery, opening with 500 options costs ~65 ms to first
+  paint and a filter keystroke 1–6 ms (see docs/components.md). Applications
+  that need the matching decisions directly get `filterIndices`, `foldText`
+  and `matchSegments` exported from the package root.
+
+- Two new keys in the strings contract (`version` is now `0.2.0`):
+  `combobox.noMatches` ("No matches") for the restricted empty-filter state,
+  and `combobox.useTypedValue` (`Use "{value}"`) for the free-entry commit
+  affordance — the first contract key that carries a `{value}` variable, so a
+  host `t` that returns its own template must interpolate the vars it
+  receives. Applications aligning dictionaries against `contracts/strings.json`
+  add the two keys.
+
+- `closeButtonSide` is now exported from the package root. It is the decision
+  behind JinModal's corner close control (`'left'` on Apple platforms,
+  `'right'` elsewhere), and applications that draw their own dialog chrome —
+  a popover styled as a window, a custom header with a close or back control —
+  should place that control on the same side so it matches the window
+  conventions their users already know.
 
 Fixed:
+
+- **A closed overlay no longer swallows Escape.** `useDismissable` kept the
+  document-level key listener attached after its overlay unregistered from the
+  stack: with the overlay id gone it considered itself "open" and re-armed, and
+  its `stopPropagation` then intercepted every Escape on the page — so a
+  mounted-but-closed popover, select, popconfirm or context menu silently
+  prevented Escape from reaching a modal behind it (and the combobox's
+  second-Escape clear). Listeners now detach when the stack entry is gone.
 
 - **Positioned panels now follow their own content growing or shrinking while
   open.** `usePositioning` only re-measured on scroll and window resize, so a
@@ -31,15 +79,6 @@ Fixed:
   now feeds the same update path; placement is recomputed (flip and shift
   included) whenever the panel's box changes. Applications that worked around
   this by calling `update()` after content changes can drop that workaround.
-
-Added:
-
-- `closeButtonSide` is now exported from the package root. It is the decision
-  behind JinModal's corner close control (`'left'` on Apple platforms,
-  `'right'` elsewhere), and applications that draw their own dialog chrome —
-  a popover styled as a window, a custom header with a close or back control —
-  should place that control on the same side so it matches the window
-  conventions their users already know.
 
 ## [0.3.1] — 2026-10-02
 
