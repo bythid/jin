@@ -7,7 +7,7 @@ disagree, they win.
 ## What this is
 
 Jin (锦) — a token-driven Vue 3 control library, published as `@bythid/jin` (0.1.0, MIT, peer
-`vue ^3.5`). 36 components, 12 pure decision modules, 9 DOM composables, 181 tests. Two ideas carry
+`vue ^3.5`). 37 components, 13 pure decision modules, 9 DOM composables, 220 tests. Two ideas carry
 everything:
 
 1. **Behaviour lives in plain TypeScript; components only render.** `src/core/` imports no Vue and
@@ -109,6 +109,14 @@ languages, and for a release a `CHANGELOG.md` entry plus a `package.json` bump i
 
 ## Environment gotchas
 
+- The ZCode Windows sandbox re-stamps the workspace with a Low integrity label per session
+  (recurrence confirmed on this machine; diagnosis and fix in
+  `../TauriVueStackNotes/docs/zcode-sandbox-integrity-label.md`). Anything built in the tree then
+  runs at Low IL: executables cannot write outside the workspace, and a Tauri shell fails
+  **silently** — the process lives, no window, no stderr. When a locally built exe "starts but does
+  nothing", check `icacls <exe>` for `Low Mandatory Level`, then
+  `MSYS_NO_PATHCONV=1 icacls "D:\Flora\ProgramProjects\jin" /setintegritylevel "(OI)(CI)M"` and
+  re-verify by actually launching, not by label alone.
 - The checkers and the gallery launchers are Python (`python tools/check_tokens.py`,
   `python start_gallery_web.py` for the browser checkpoint, `python start_gallery_desktop.py` for
   the Tauri shell); the test runner is vitest. All are already wired into pnpm scripts.
