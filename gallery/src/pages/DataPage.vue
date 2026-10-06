@@ -77,7 +77,7 @@ const composedDetails = computed<DetailItem[]>(() => [
 
 <template>
   <DemoPage :title="t('data.title')" :lead="t('data.lead')">
-    <DemoSection :title="t('data.badge.title')" :note="t('data.badge.note')">
+    <DemoSection id="badge" :title="t('data.badge.title')" :note="t('data.badge.note')">
       <div style="display: flex; flex-direction: column; gap: var(--jin-space-4)">
         <div style="display: flex; flex-wrap: wrap; gap: var(--jin-space-2); align-items: center">
           <JinBadge tone="neutral" :label="t('common.tone.neutral')" />
@@ -104,7 +104,7 @@ const composedDetails = computed<DetailItem[]>(() => [
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('data.tag.title')" :note="t('data.tag.note')" stacked>
+    <DemoSection id="tag" :title="t('data.tag.title')" :note="t('data.tag.note')" stacked>
       <div class="jin-cluster">
         <JinTag
           v-for="(tag, index) in tags"
@@ -131,7 +131,7 @@ const composedDetails = computed<DetailItem[]>(() => [
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('data.detail.title')" :note="t('data.detail.note')" stacked>
+    <DemoSection id="detail-list" :title="t('data.detail.title')" :note="t('data.detail.note')" stacked>
       <div class="gallery-grid gallery-grid--two">
         <JinDetailList :items="fileDetails" />
         <JinDetailList :items="fileDetails.slice(0, 4)" striped :bordered="false" />
@@ -163,7 +163,7 @@ const composedDetails = computed<DetailItem[]>(() => [
       />
     </DemoSection>
 
-    <DemoSection :title="t('data.link.title')" :note="t('data.link.note')">
+    <DemoSection id="link" :title="t('data.link.title')" :note="t('data.link.note')">
       <JinLink href="#section">{{ t('data.link.plain') }}</JinLink>
       <JinLink href="#section" muted>{{ t('data.link.muted') }}</JinLink>
       <JinLink href="https://example.com" external>{{ t('data.link.external') }}</JinLink>
@@ -178,7 +178,7 @@ const composedDetails = computed<DetailItem[]>(() => [
       <JinLink>{{ t('data.link.noHref') }}</JinLink>
     </DemoSection>
 
-    <DemoSection :title="t('data.icon.title')" :note="t('data.icon.note')" stacked>
+    <DemoSection id="icon" :title="t('data.icon.title')" :note="t('data.icon.note')" stacked>
       <div
         style="
           display: grid;

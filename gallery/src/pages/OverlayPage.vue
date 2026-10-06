@@ -116,7 +116,7 @@ const outerModal = ref(false)
 
 <template>
   <DemoPage :title="t('overlays.title')" :lead="t('overlays.lead')">
-    <DemoSection :title="t('overlays.modal.title')" :note="t('overlays.modal.note')" stacked>
+    <DemoSection id="modal" :title="t('overlays.modal.title')" :note="t('overlays.modal.note')" stacked>
       <div style="display: flex; flex-wrap: wrap; gap: var(--jin-space-4); align-items: flex-end">
         <JinSelect
           v-model="modalSize"
@@ -231,7 +231,7 @@ const outerModal = ref(false)
       </template>
     </JinModal>
 
-    <DemoSection :title="t('overlays.drawer.title')" :note="t('overlays.drawer.note')" stacked>
+    <DemoSection id="drawer" :title="t('overlays.drawer.title')" :note="t('overlays.drawer.note')" stacked>
       <div style="display: flex; flex-wrap: wrap; gap: var(--jin-space-3); align-items: flex-end">
         <JinSelect
           v-model="drawerSide"
@@ -291,7 +291,7 @@ const outerModal = ref(false)
       </template>
     </JinDrawer>
 
-    <DemoSection :title="t('overlays.popover.title')" :note="t('overlays.popover.note')" stacked>
+    <DemoSection id="popover" :title="t('overlays.popover.title')" :note="t('overlays.popover.note')" stacked>
       <div style="display: flex; flex-wrap: wrap; gap: var(--jin-space-3); align-items: center">
         <JinSelect
           v-model="popoverPlacement"
@@ -331,7 +331,7 @@ const outerModal = ref(false)
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('overlays.tooltip.title')" :note="t('overlays.tooltip.note')">
+    <DemoSection id="tooltip" :title="t('overlays.tooltip.title')" :note="t('overlays.tooltip.note')">
       <JinTooltip :content="t('overlays.tooltip.saved')" placement="top">
         <JinButton variant="ghost" size="sm">
           <template #icon><JinIcon name="clock" /></template>
@@ -362,7 +362,7 @@ const outerModal = ref(false)
       </JinTooltip>
     </DemoSection>
 
-    <DemoSection :title="t('overlays.popconfirm.title')" :note="t('overlays.popconfirm.note')" stacked>
+    <DemoSection id="popconfirm" :title="t('overlays.popconfirm.title')" :note="t('overlays.popconfirm.note')" stacked>
       <div style="display: flex; flex-wrap: wrap; gap: var(--jin-space-3)">
         <JinPopconfirm
           :title="t('overlays.popconfirm.removeTitle')"

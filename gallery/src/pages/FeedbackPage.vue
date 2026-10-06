@@ -127,7 +127,7 @@ const progressLabel = computed(() => t('feedback.progressLinear.uploading', { pe
 <template>
   <DemoPage :title="t('feedback.title')" :lead="t('feedback.lead')">
     <!-- ------------------------------------------------------------ spinner -->
-    <DemoSection :title="t('feedback.spinner.title')" :note="t('feedback.spinner.note')">
+    <DemoSection id="spinner" :title="t('feedback.spinner.title')" :note="t('feedback.spinner.note')">
       <JinSpinner size="sm" />
       <JinSpinner size="md" />
       <JinSpinner size="lg" />
@@ -137,7 +137,7 @@ const progressLabel = computed(() => t('feedback.progressLinear.uploading', { pe
     </DemoSection>
 
     <!-- ----------------------------------------------------------- progress -->
-    <DemoSection :title="t('feedback.progressLinear.title')" :note="t('feedback.progressLinear.note')">
+    <DemoSection id="progress" :title="t('feedback.progressLinear.title')" :note="t('feedback.progressLinear.note')">
       <div style="display: flex; flex-direction: column; gap: var(--jin-space-4); width: 100%">
         <JinProgress :value="determinate" :label="progressLabel" />
         <JinProgress :value="10" :label="t('feedback.progressLinear.small')" size="sm" />
@@ -165,7 +165,7 @@ const progressLabel = computed(() => t('feedback.progressLinear.uploading', { pe
     </DemoSection>
 
     <!-- ----------------------------------------------------------- skeleton -->
-    <DemoSection :title="t('feedback.skeleton.title')" :note="t('feedback.skeleton.note')" stacked>
+    <DemoSection id="skeleton" :title="t('feedback.skeleton.title')" :note="t('feedback.skeleton.note')" stacked>
       <div style="display: grid; gap: var(--jin-space-5); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))">
         <div class="gallery-grid">
           <JinSkeleton variant="text" width="70%" />
@@ -189,7 +189,7 @@ const progressLabel = computed(() => t('feedback.progressLinear.uploading', { pe
     </DemoSection>
 
     <!-- -------------------------------------------------------------- alert -->
-    <DemoSection :title="t('feedback.alert.title')" :note="t('feedback.alert.note')" stacked>
+    <DemoSection id="alert" :title="t('feedback.alert.title')" :note="t('feedback.alert.note')" stacked>
       <div class="gallery-grid">
         <JinAlert
           tone="info"
@@ -225,7 +225,7 @@ const progressLabel = computed(() => t('feedback.progressLinear.uploading', { pe
     </DemoSection>
 
     <!-- -------------------------------------------------------------- toast -->
-    <DemoSection :title="t('feedback.toast.title')" :note="t('feedback.toast.note')" stacked>
+    <DemoSection id="toast" :title="t('feedback.toast.title')" :note="t('feedback.toast.note')" stacked>
       <div style="display: flex; flex-wrap: wrap; gap: var(--jin-space-2)">
         <JinButton size="sm" @click="spawnToast('neutral')">{{ t('common.tone.neutral') }}</JinButton>
         <JinButton size="sm" @click="spawnToast('info')">{{ t('common.tone.info') }}</JinButton>
@@ -251,7 +251,7 @@ const progressLabel = computed(() => t('feedback.progressLinear.uploading', { pe
     </DemoSection>
 
     <!-- ------------------------------------------------------- notification -->
-    <DemoSection :title="t('feedback.notification.title')" :note="t('feedback.notification.note')" stacked>
+    <DemoSection id="notification" :title="t('feedback.notification.title')" :note="t('feedback.notification.note')" stacked>
       <div style="display: flex; flex-wrap: wrap; gap: var(--jin-space-2)">
         <JinButton size="sm" @click="spawnNotification('plain')">
           {{ t('feedback.notification.plainButton') }}
@@ -274,7 +274,7 @@ const progressLabel = computed(() => t('feedback.progressLinear.uploading', { pe
     </DemoSection>
 
     <!-- ------------------------------------------------------------- result -->
-    <DemoSection :title="t('feedback.result.title')" :note="t('feedback.result.note')" stacked>
+    <DemoSection id="result" :title="t('feedback.result.title')" :note="t('feedback.result.note')" stacked>
       <StateGrid :columns="2">
         <div class="gallery-demo gallery-demo--stack gallery-demo--plain">
           <JinResult

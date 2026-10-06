@@ -196,7 +196,7 @@ const cardClicks = ref(0)
 
 <template>
   <DemoPage :title="t('navigation.title')" :lead="t('navigation.lead')">
-    <DemoSection :title="t('navigation.tabs.title')" :note="t('navigation.tabs.note')" stacked>
+    <DemoSection id="tabs" :title="t('navigation.tabs.title')" :note="t('navigation.tabs.note')" stacked>
       <JinTabs v-model="tab" :items="tabs" :aria-label="t('navigation.tabs.aria')">
         <template #overview>
           <p class="gallery-muted">{{ t('navigation.tabs.overviewPanel') }}</p>
@@ -275,7 +275,7 @@ const cardClicks = ref(0)
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('navigation.menu.title')" :note="t('navigation.menu.note')" stacked>
+    <DemoSection id="menu" :title="t('navigation.menu.title')" :note="t('navigation.menu.note')" stacked>
       <div class="gallery-grid gallery-grid--two">
         <div>
           <p class="gallery-muted" style="margin-bottom: var(--jin-space-2)">
@@ -305,7 +305,7 @@ const cardClicks = ref(0)
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('navigation.dropdown.title')" :note="t('navigation.dropdown.note')">
+    <DemoSection id="dropdown" :title="t('navigation.dropdown.title')" :note="t('navigation.dropdown.note')">
       <JinDropdown :items="dropdownItems" :aria-label="t('navigation.dropdown.aria')" @select="onDropdownSelect">
         <template #trigger>
           <JinButton variant="secondary">
@@ -334,7 +334,7 @@ const cardClicks = ref(0)
       <span class="gallery-muted">{{ t('navigation.dropdown.onlyIcon') }}</span>
     </DemoSection>
 
-    <DemoSection :title="t('navigation.context.title')" :note="t('navigation.context.note')" stacked>
+    <DemoSection id="context-menu" :title="t('navigation.context.title')" :note="t('navigation.context.note')" stacked>
       <JinContextMenu :items="contextItems" :aria-label="t('navigation.context.aria')" @select="onMenuSelect">
         <div
           style="
@@ -353,7 +353,7 @@ const cardClicks = ref(0)
       <JinAlert v-if="menuEvents.length > 0" tone="neutral" :title="menuEventText" />
     </DemoSection>
 
-    <DemoSection :title="t('navigation.breadcrumb.title')" :note="t('navigation.breadcrumb.note')" stacked>
+    <DemoSection id="breadcrumb" :title="t('navigation.breadcrumb.title')" :note="t('navigation.breadcrumb.note')" stacked>
       <JinBreadcrumb :items="crumbs" />
       <JinBreadcrumb :items="crumbsWithHref" />
       <JinBreadcrumb :items="crumbs.slice(0, 2)" :aria-label="t('navigation.breadcrumb.shortTrail')">
@@ -368,7 +368,7 @@ const cardClicks = ref(0)
       />
     </DemoSection>
 
-    <DemoSection :title="t('navigation.divider.title')" :note="t('navigation.divider.note')" stacked>
+    <DemoSection id="divider" :title="t('navigation.divider.title')" :note="t('navigation.divider.note')" stacked>
       <div style="display: flex; flex-direction: column; gap: var(--jin-space-3); width: 100%">
         <p>{{ t('navigation.divider.above') }}</p>
         <JinDivider />
@@ -387,7 +387,7 @@ const cardClicks = ref(0)
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('navigation.card.title')" :note="t('navigation.card.note')" stacked>
+    <DemoSection id="card" :title="t('navigation.card.title')" :note="t('navigation.card.note')" stacked>
       <div class="gallery-grid gallery-grid--two">
         <JinCard
           :title="t('navigation.card.baseTitle')"
@@ -440,7 +440,7 @@ const cardClicks = ref(0)
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('navigation.toolbar.title')" :note="t('navigation.toolbar.note')">
+    <DemoSection id="toolbar" :title="t('navigation.toolbar.title')" :note="t('navigation.toolbar.note')">
       <JinToolbar :aria-label="t('navigation.toolbar.aria')">
         <JinTooltip :content="t('navigation.toolbar.bold')" placement="top">
           <JinButton
@@ -503,6 +503,7 @@ const cardClicks = ref(0)
     </DemoSection>
 
     <DemoSection
+      id="nav"
       :title="t('navigation.nav.title')"
       :note="t('navigation.nav.note')"
       stacked

@@ -12,7 +12,7 @@
  * what makes the library's own strings follow: the translation passed to
  * `JinUI` is the same dictionary (see src/i18n).
  */
-import { computed, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref } from 'vue'
 import {
   JinAlert,
   JinButton,
@@ -69,6 +69,25 @@ function selectItem(item: { id: string }): void {
 function selectChild(pageId: string, childId: string): void {
   current.value = pageId
   activeChild.value = childId
+  // The section rows are jump links: bring the tagged section into view. On a
+  // page switch the section mounts with the new page, so the lookup waits a
+  // tick for the DOM to settle.
+  //
+  // Scrolled directly on the main column, never via the target's
+  // scrollIntoView(): that walks every ancestor scroll container, and this
+  // shell has one — .gallery-root is overflow:hidden but carries thousands of
+  // pixels of scrollable overflow from the page content, so scrollIntoView
+  // scrolled the header row out of view (fixed only by the clamping that
+  // happens on the next page switch).
+  void nextTick(() => {
+    const main = document.querySelector('.gallery-main')
+    const target = document.getElementById(childId)
+    if (!main || !target) return
+    const delta = target.getBoundingClientRect().top - main.getBoundingClientRect().top
+    const margin = Number.parseFloat(getComputedStyle(target).scrollMarginTop) || 0
+    const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
+    main.scrollTo({ top: main.scrollTop + delta - margin, behavior: reduced ? 'auto' : 'smooth' })
+  })
 }
 
 const styleOptions = computed(() =>

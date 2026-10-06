@@ -155,6 +155,9 @@ body,
 
 .gallery-section {
   margin-bottom: var(--jin-space-6);
+  /* Sidebar section rows jump here via scrollIntoView; the margin keeps the
+     section title from parking flush against the top of the scroll port. */
+  scroll-margin-top: var(--jin-space-3);
 }
 
 .gallery-section__title {
