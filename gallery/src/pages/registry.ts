@@ -69,6 +69,7 @@ export const PAGES: PageEntry[] = [
       { id: 'text-field', labelKey: 'nav.forms.textField' },
       { id: 'search-field', labelKey: 'nav.forms.searchField' },
       { id: 'select', labelKey: 'nav.forms.select' },
+      { id: 'combobox', labelKey: 'nav.forms.combobox' },
       { id: 'checkbox', labelKey: 'nav.forms.checkbox' },
       { id: 'radio', labelKey: 'nav.forms.radio' },
       { id: 'switch', labelKey: 'nav.forms.switch' },

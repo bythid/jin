@@ -290,6 +290,57 @@ Custom mode is a `role="combobox"` trigger plus a `role="listbox"`, with arrow-k
 type-ahead, disabled-option skipping and `aria-activedescendant`. Native mode is the platform
 control — the right choice when fidelity matters more than styling.
 
+### JinCombobox
+
+A text input whose value filters a listbox of options — the WAI-ARIA combobox pattern with
+optional free-form entry. **Custom-only by design**: there is no `native` mode. The closest
+native analogue, `<datalist>`, cannot render custom option rows, cannot offer the
+commit-typed-value affordance, and leaves the filtering itself to the user agent — so a native
+mode would not be the same control.
+
+| Prop | Type | Notes |
+| --- | --- | --- |
+| `modelValue` | `string \| null` | |
+| `options` | `SelectOption[]` | Same `{ value, label, disabled?, data? }` shape as JinSelect |
+| `freeEntry` | `boolean` | Default `false`. `false` (restricted) commits only listed options; `true` commits the typed text, whether or not it is listed |
+| `openOnFocus` | `boolean` | Default `true`; set `false` to open only on typing or `ArrowDown` |
+| `placeholder`, `size`, `disabled`, `invalid`, `block`, `ariaLabel` | | |
+
+Emits `update:modelValue` and `change(value, option)`. Slot: `option` for rich rows (receives
+`{ option, selected }`; the default row highlights the matched substring). The popup is a
+`JinPopover`, so it shares the one portal, positioning, overlay stack and dismissal.
+
+**Commit moments.** `update:modelValue` fires on commit, never per keystroke:
+
+1. an option is picked — click, or `Enter` on the active option;
+2. `Enter` with no active option — the typed text commits under the mode's rules;
+3. blur with a changed value — in free entry the typed text commits (surrounding whitespace
+   trimmed); in restricted mode a text that names a listed option commits that option, anything
+   else reverts silently.
+
+A typed text that exactly names a listed option always commits *that option* (so `change` carries
+it and the value stays canonical), in both modes. `Escape` closes the popup first, and — with the
+popup already closed and something to clear — clears the value, emitting `null`. An Escape that
+does nothing local still reaches the overlay behind the combobox.
+
+**Keyboard.** The input is the trigger and keeps focus while the popup is open;
+`aria-activedescendant` moves through the options (`role="combobox"`, `aria-expanded`,
+`aria-controls`, `aria-autocomplete="list"`; options carry `aria-selected`). `ArrowUp`/`ArrowDown`
+navigate (skipping disabled rows, opening the popup from closed), `Home`/`End` jump to first/last
+while the popup is open and stay caret keys when it is closed, `Enter` commits, `Escape` closes
+then clears. Typing filters.
+
+**Filtering.** Case-insensitive and diacritic-insensitive substring match on the label, anywhere
+in it — `foldText`, `filterIndices` and `matchSegments` in `src/core/filter.ts` are the decision,
+and an application building its own control can reuse them from the package root.
+
+**Large lists, deliberately not windowed.** Options run to several hundred and every filtered row
+is rendered. Measured in the gallery (dev build): opening the popup with 500 options costs
+roughly 65 ms to first paint, and a filter keystroke against the full 500 — matching, diffing and
+re-rendering the rows — lands between 1 and 6 ms. That is well inside interactive budget, so no
+virtualisation: consistent with the architecture's stance, a windowing layer would complicate
+focus, `scrollIntoView` and the `#option` slot for a problem the measurements do not show.
+
 ### JinCheckbox
 
 | Prop | Type | Notes |
@@ -558,6 +609,7 @@ import {
   createOverlayStack, useOverlay,
   useFocusTrap, stepIndex, resolveFocusReturn,
   nextRovingIndex, createTypeaheadBuffer,
+  filterIndices, foldText, matchSegments,
   flattenMenu, menuNavigate,
   flattenTree, navigateTree, applyLoadFailure,
   fromKeyboardEvent, serializeHotkey, findHotkeyConflicts,

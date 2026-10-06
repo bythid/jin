@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
- * Form catalogue: field, text field, search field, select, checkbox, radio,
- * switch, hotkey recorder.
+ * Form catalogue: field, text field, search field, select, combobox, checkbox,
+ * radio, switch, hotkey recorder.
  *
  * Every control demonstrates its states, including the ones that are easy to
  * forget: disabled, read-only, invalid, long text, and inside a field wrapper.
@@ -17,6 +17,7 @@ import {
   JinAlert,
   JinButton,
   JinCheckbox,
+  JinCombobox,
   JinDivider,
   JinField,
   JinHotkeyRecorder,
@@ -49,6 +50,10 @@ const searchResult = ref<{ key: string; vars?: TranslateVars } | null>(null)
 const selectValue = ref<string | null>('fold')
 const nativeSelectValue = ref<string | null>('fold')
 const richSelectValue = ref<string | null>('md')
+const comboboxValue = ref<string | null>('cerulean')
+const freeComboboxValue = ref<string | null>(null)
+const richComboboxValue = ref<string | null>('amber-glow')
+const largeComboboxValue = ref<string | null>(null)
 const checked = ref(true)
 const unchecked = ref(false)
 const indeterminate = ref(false)
@@ -71,6 +76,29 @@ const richOptions = computed(() => [
   { value: 'md', label: t('forms.select.optionMedium') },
   { value: 'lg', label: t('forms.select.optionLarge') },
 ])
+
+// Static on purpose: filterable lists usually arrive from the application
+// (colour swatches here, a fetched list elsewhere), so the labels do not
+// follow the language switcher.
+const comboboxOptions = [
+  { value: 'amber', label: 'Amber' },
+  { value: 'amber-glow', label: 'Amber Glow' },
+  { value: 'burgundy', label: 'Burgundy', disabled: true },
+  { value: 'burnt-orange', label: 'Burnt Orange' },
+  { value: 'cardinal', label: 'Cardinal' },
+  { value: 'cerulean', label: 'Cerulean' },
+  { value: 'chartreuse', label: 'Chartreuse' },
+  { value: 'coral', label: 'Coral' },
+]
+
+// The large-list demo: a filterable list long enough to judge how the popup
+// renders it in full.
+const largeComboboxOptions = computed(() =>
+  Array.from({ length: 500 }, (_, index) => ({
+    value: `preset-${index + 1}`,
+    label: `${t('forms.combobox.largeOption')} ${String(index + 1).padStart(3, '0')}`,
+  })),
+)
 
 const radioOptions = computed(() => [
   { value: 'normal', label: t('forms.radio.optionNormal'), hint: t('forms.radio.optionNormalHint') },
@@ -147,7 +175,7 @@ const searchHint = computed(() =>
 
 <template>
   <DemoPage :title="t('forms.title')" :lead="t('forms.lead')">
-    <DemoSection :title="t('forms.field.title')" :note="t('forms.field.note')" stacked>
+    <DemoSection id="field" :title="t('forms.field.title')" :note="t('forms.field.note')" stacked>
       <div class="gallery-grid gallery-grid--two">
         <JinField :label="t('forms.field.plainLabel')">
           <JinTextField :placeholder="t('forms.field.noHintPlaceholder')" />
@@ -195,7 +223,7 @@ const searchHint = computed(() =>
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('forms.text.title')" :note="t('forms.text.note')" stacked>
+    <DemoSection id="text-field" :title="t('forms.text.title')" :note="t('forms.text.note')" stacked>
       <div class="gallery-grid gallery-grid--two">
         <JinField :label="t('forms.text.emptyWithPlaceholder')">
           <JinTextField v-model="basicText" :placeholder="t('forms.text.typeSomething')" clearable />
@@ -260,7 +288,7 @@ const searchHint = computed(() =>
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('forms.search.title')" :note="t('forms.search.note')" stacked>
+    <DemoSection id="search-field" :title="t('forms.search.title')" :note="t('forms.search.note')" stacked>
       <div class="gallery-grid gallery-grid--two">
         <JinField :label="t('forms.search.debounced')" :hint="searchHint">
           <JinSearchField
@@ -284,7 +312,7 @@ const searchHint = computed(() =>
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('forms.select.title')" :note="t('forms.select.note')" stacked>
+    <DemoSection id="select" :title="t('forms.select.title')" :note="t('forms.select.note')" stacked>
       <div class="gallery-grid gallery-grid--two">
         <JinField :label="t('forms.select.custom')" :hint="t('forms.select.customHint')">
           <JinSelect v-model="selectValue" :options="selectOptions" />
@@ -331,7 +359,39 @@ const searchHint = computed(() =>
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('forms.checkbox.title')" :note="t('forms.checkbox.note')">
+    <DemoSection id="combobox" :title="t('forms.combobox.title')" :note="t('forms.combobox.note')" stacked>
+      <div class="gallery-grid gallery-grid--two">
+        <JinField :label="t('forms.combobox.filter')" :hint="t('forms.combobox.filterHint')">
+          <JinCombobox v-model="comboboxValue" :options="comboboxOptions" />
+        </JinField>
+
+        <JinField :label="t('forms.combobox.freeEntry')" :hint="t('forms.combobox.freeHint')">
+          <JinCombobox v-model="freeComboboxValue" :options="comboboxOptions" free-entry />
+        </JinField>
+
+        <JinField :label="t('forms.combobox.richRows')" :hint="t('forms.combobox.richHint')">
+          <JinCombobox v-model="richComboboxValue" :options="comboboxOptions.slice(0, 4)">
+            <template #option="{ option, selected }">
+              <span style="display: inline-flex; align-items: center; gap: var(--jin-space-2)">
+                <JinIcon name="sparkle" :size="0.9" />
+                {{ option.label }}
+                <JinTag v-if="selected" :label="t('forms.combobox.chosen')" />
+              </span>
+            </template>
+          </JinCombobox>
+        </JinField>
+
+        <JinField :label="t('forms.combobox.largeList')" :hint="t('forms.combobox.largeHint')">
+          <JinCombobox
+            v-model="largeComboboxValue"
+            :options="largeComboboxOptions"
+            :placeholder="t('forms.combobox.largePlaceholder')"
+          />
+        </JinField>
+      </div>
+    </DemoSection>
+
+    <DemoSection id="checkbox" :title="t('forms.checkbox.title')" :note="t('forms.checkbox.note')">
       <div style="display: flex; flex-direction: column; gap: var(--jin-space-3)">
         <JinCheckbox v-model="checked" :label="t('forms.checkbox.checked')" />
         <JinCheckbox v-model="unchecked" :label="t('forms.checkbox.unchecked')" />
@@ -348,7 +408,7 @@ const searchHint = computed(() =>
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('forms.radio.title')" :note="t('forms.radio.note')">
+    <DemoSection id="radio" :title="t('forms.radio.title')" :note="t('forms.radio.note')">
       <div class="gallery-grid gallery-grid--two">
         <JinRadioGroup
           v-model="radio"
@@ -383,7 +443,7 @@ const searchHint = computed(() =>
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('forms.switch.title')" :note="t('forms.switch.note')">
+    <DemoSection id="switch" :title="t('forms.switch.title')" :note="t('forms.switch.note')">
       <div style="display: flex; flex-direction: column; gap: var(--jin-space-3)">
         <JinSwitch v-model="toggledOn" :label="t('forms.switch.enabled')" />
         <JinSwitch v-model="toggledOff" :label="t('forms.switch.offState')" />
@@ -394,7 +454,7 @@ const searchHint = computed(() =>
       </div>
     </DemoSection>
 
-    <DemoSection :title="t('forms.hotkey.title')" :note="t('forms.hotkey.note')" stacked>
+    <DemoSection id="hotkey" :title="t('forms.hotkey.title')" :note="t('forms.hotkey.note')" stacked>
       <div class="gallery-grid gallery-grid--two">
         <JinField :label="t('forms.hotkey.shortcut')" :hint="t('forms.hotkey.shortcutHint')">
           <JinHotkeyRecorder

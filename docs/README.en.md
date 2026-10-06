@@ -249,8 +249,8 @@ accent near its own background would otherwise erase it.
 **Feedback** — `JinSpinner` `JinProgress` `JinSkeleton` `JinAlert` `JinToastRegion`
 `JinNotificationRegion` `JinResult`
 **Overlays** — `JinModal` `JinDrawer` `JinPopover` `JinTooltip` `JinPopconfirm`
-**Forms** — `JinField` `JinTextField` `JinSearchField` `JinSelect` `JinCheckbox` `JinRadioGroup`
-`JinSwitch` `JinHotkeyRecorder`
+**Forms** — `JinField` `JinTextField` `JinSearchField` `JinSelect` `JinCombobox` `JinCheckbox`
+`JinRadioGroup` `JinSwitch` `JinHotkeyRecorder`
 **Navigation** — `JinTabs` `JinMenu` `JinDropdown` `JinContextMenu` `JinBreadcrumb` `JinDivider`
 `JinCard` `JinToolbar` `JinNav` `JinTree`
 **Data** — `JinBadge` `JinTag` `JinDetailList` `JinLink` `JinIcon`

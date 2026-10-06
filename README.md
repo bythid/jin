@@ -231,7 +231,7 @@ Jin 是本库的自有风格与默认，以标志性的**深色**模式（玄锦
 **反馈** —— `JinSpinner` `JinProgress` `JinSkeleton` `JinAlert` `JinToastRegion`
 `JinNotificationRegion` `JinResult`
 **浮层** —— `JinModal` `JinDrawer` `JinPopover` `JinTooltip` `JinPopconfirm`
-**表单** —— `JinField` `JinTextField` `JinSearchField` `JinSelect` `JinCheckbox`
+**表单** —— `JinField` `JinTextField` `JinSearchField` `JinSelect` `JinCombobox` `JinCheckbox`
 `JinRadioGroup` `JinSwitch` `JinHotkeyRecorder`
 **导航** —— `JinTabs` `JinMenu` `JinDropdown` `JinContextMenu` `JinBreadcrumb` `JinDivider`
 `JinCard` `JinToolbar` `JinNav` `JinTree`

@@ -170,6 +170,10 @@ app.use(JinUI, {
 
 The library never throws on an unknown key and never renders a raw key into the interface.
 
+A few contract keys carry variables — `combobox.useTypedValue` is `Use "{value}"` — so when the
+mapping hits, the returned template must be interpolated with the `vars` the library passed in
+before it goes back. A host dictionary hit that ignores `vars` renders the raw `{value}`.
+
 This mapping is worth writing against the contract rather than by hand: a dictionary keyed by key —
 the way this one is — passes the keys straight through, but it still needs one entry per key the
 library declares. The Gallery does exactly that in `gallery/src/i18n/library.ts`, where the Chinese

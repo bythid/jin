@@ -43,6 +43,8 @@ export const LIBRARY_STRINGS_ZH: Record<LibraryKey, string> = {
   'a11y.cancel': '取消',
   'empty.noData': '暂无数据',
   'select.noOptions': '无选项',
+  'combobox.noMatches': '无匹配项',
+  'combobox.useTypedValue': '使用“{value}”',
   'tree.empty': '暂无条目',
   'tree.loadFailed': '加载失败',
 }

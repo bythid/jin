@@ -1490,7 +1490,8 @@
   cursor: not-allowed;
 }
 
-.jin-select__option-label {
+.jin-select__option-label,
+.jin-combobox__option-label {
   flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;
@@ -1498,10 +1499,118 @@
   white-space: nowrap;
 }
 
-.jin-select__empty {
+.jin-select__empty,
+.jin-combobox__empty {
   padding: var(--jin-space-2, 8px) var(--jin-space-3, 12px);
   color: var(--jin-text-subtle, #667085);
   font-size: var(--jin-font-size-sm, 13px);
+}
+
+/* --------------------------------------------------------------- combobox */
+
+.jin-combobox {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 0;
+  font-family: var(--jin-font-family, sans-serif);
+}
+
+.jin-combobox--block {
+  width: 100%;
+}
+
+.jin-combobox__input {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--jin-surface-sunken, #e9edf5);
+  color: var(--jin-text, #101828);
+  border: var(--jin-border-width, 1px) var(--jin-border-style, solid) var(--jin-border-color, #d3dae7);
+  border-radius: var(--jin-radius-md, 10px);
+  font-family: inherit;
+  font-size: var(--jin-font-size-md, 14px);
+  line-height: var(--jin-line-height, 1.5);
+  appearance: none;
+}
+
+.jin-combobox__input::placeholder {
+  color: var(--jin-text-subtle, #667085);
+}
+
+.jin-combobox--sm .jin-combobox__input {
+  min-height: var(--jin-control-height-sm, 28px);
+  padding: 0 var(--jin-space-2, 8px);
+  font-size: var(--jin-font-size-sm, 13px);
+}
+
+.jin-combobox--md .jin-combobox__input {
+  min-height: var(--jin-control-height-md, 36px);
+  padding: 0 var(--jin-space-3, 12px);
+}
+
+.jin-combobox--lg .jin-combobox__input {
+  min-height: var(--jin-control-height-lg, 44px);
+  padding: 0 var(--jin-space-4, 16px);
+  font-size: var(--jin-font-size-lg, 16px);
+}
+
+.jin-combobox--invalid .jin-combobox__input {
+  border-color: var(--jin-danger, #dc2626);
+}
+
+.jin-combobox--disabled .jin-combobox__input {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.jin-combobox__listbox {
+  /* Inside the popover panel, which is the positioned, z-indexed element —
+     the listbox stays in flow so the panel's box tracks the option rows. */
+  margin: var(--jin-space-1, 4px) 0 0;
+  padding: var(--jin-space-1, 4px);
+  list-style: none;
+  max-height: calc(var(--jin-control-height-md, 36px) * 8);
+  overflow: auto;
+  background: var(--jin-surface-raised, #fff);
+  background-image: var(--jin-surface-gradient, none);
+  border: var(--jin-border-width, 1px) var(--jin-border-style, solid) var(--jin-border-color, #d3dae7);
+  border-radius: var(--jin-radius-md, 10px);
+  box-shadow: var(--jin-elevation-3, none);
+  color: var(--jin-text, #101828);
+  outline: none;
+}
+
+.jin-combobox__option {
+  display: flex;
+  align-items: center;
+  gap: var(--jin-space-2, 8px);
+  padding: var(--jin-space-2, 8px) var(--jin-space-3, 12px);
+  border-radius: var(--jin-radius-sm, 6px);
+  cursor: pointer;
+  font-size: var(--jin-font-size-md, 14px);
+}
+
+.jin-combobox__option--active {
+  background: var(--jin-surface-sunken, #e9edf5);
+}
+
+.jin-combobox__option--selected {
+  color: var(--jin-accent, #4f46e5);
+  font-weight: var(--jin-font-weight-medium, 500);
+}
+
+.jin-combobox__option--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.jin-combobox__option-match {
+  color: var(--jin-accent, #4f46e5);
+  font-weight: var(--jin-font-weight-medium, 500);
+}
+
+.jin-combobox__option--typed {
+  color: var(--jin-text-subtle, #667085);
 }
 
 /* --------------------------------------------------------------- checkbox */

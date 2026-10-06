@@ -1,6 +1,6 @@
 {
   "$comment": "The UI strings the library needs. The library ships no interface strings of its own beyond these readable English defaults; applications override them with `app.use(JinUI, { t })`. Keys must stay business-free.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "keys": {
     "a11y.close": { "default": "Close", "description": "Close button / dismiss affordance on any overlay" },
     "a11y.dismiss": { "default": "Dismiss", "description": "Dismiss a transient message (toast)" },
@@ -25,6 +25,8 @@
     "a11y.cancel": { "default": "Cancel", "description": "Cancel button in a popconfirm" },
     "empty.noData": { "default": "No data", "description": "Empty state title when nothing is available" },
     "select.noOptions": { "default": "No options", "description": "Shown in an empty select listbox" },
+    "combobox.noMatches": { "default": "No matches", "description": "Shown when the filter of a combobox matches nothing" },
+    "combobox.useTypedValue": { "default": "Use \"{value}\"", "description": "Offer to commit the typed value in a free-entry combobox when nothing matches it" },
     "tree.empty": { "default": "No items", "description": "Shown when a tree has no nodes" },
     "tree.loadFailed": { "default": "Failed to load", "description": "Inline failure text next to a tree row whose load rejected" }
   }

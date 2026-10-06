@@ -91,8 +91,13 @@ export function createGalleryI18n(options: GalleryI18nOptions = {}): GalleryI18n
 
   // A host that knows a library key overrides it; otherwise the library's own
   // default stands, so a partial dictionary degrades to readable English
-  // rather than to a missing string.
-  const jin: TranslateFn = (key, vars) => LIBRARY_DICTIONARIES[locale.value][key] ?? defaultTranslate(key, vars)
+  // rather than to a missing string. Vars are interpolated here: the library
+  // hands them over with the key, and a dictionary template such as
+  // `使用“{value}”` is meaningless without them.
+  const jin: TranslateFn = (key, vars) => {
+    const template = LIBRARY_DICTIONARIES[locale.value][key]
+    return template === undefined ? defaultTranslate(key, vars) : interpolate(template, vars)
+  }
 
   function apply(): void {
     if (typeof document !== 'undefined') {
