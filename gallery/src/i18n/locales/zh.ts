@@ -265,6 +265,10 @@ export const ZH_MESSAGES: Record<MessageKey, string> = {
   'feedback.toast.undo': '撤销',
   'feedback.toast.restoredTitle': '已恢复',
   'feedback.toast.positionsNote': '六种位置，逐条消息选择：',
+  'feedback.toast.offsetNote': '整个序列——toast 与通知一样——从各自的角落整体平移这个带符号的量；% 相对视口。',
+  'feedback.toast.offsetAxisX': '偏移 X',
+  'feedback.toast.offsetAxisY': '偏移 Y',
+  'feedback.toast.offsetUnit': '偏移单位',
   'feedback.toast.positionTitle': '位置：{position}',
   'feedback.notification.title': '通知',
   'feedback.notification.note':

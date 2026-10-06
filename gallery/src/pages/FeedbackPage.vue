@@ -15,6 +15,8 @@ import {
   JinIcon,
   JinProgress,
   JinResult,
+  JinSelect,
+  JinTextField,
   JinSkeleton,
   JinSpinner,
   JinSwitch,
@@ -22,6 +24,7 @@ import {
   useToasts,
 } from '@bythid/jin'
 import { DemoPage, DemoSection, StateGrid } from '../demo/DemoSection'
+import { regionOffset } from '../host/region-offset'
 import { useI18n } from '../i18n'
 
 defineProps<{ section?: string | null }>()
@@ -34,6 +37,30 @@ const determinate = ref(35)
 const longText = computed(() =>
   t('feedback.alert.longTitle'),
 )
+
+// The offset inputs edit the shared state the app shell's regions follow.
+const offsetX = computed({
+  get: () => String(regionOffset.value.x),
+  set: (value: string) => {
+    regionOffset.value = { ...regionOffset.value, x: Number(value) || 0 }
+  },
+})
+const offsetY = computed({
+  get: () => String(regionOffset.value.y),
+  set: (value: string) => {
+    regionOffset.value = { ...regionOffset.value, y: Number(value) || 0 }
+  },
+})
+const offsetUnit = computed({
+  get: () => regionOffset.value.unit,
+  set: (value: string | null) => {
+    regionOffset.value = { ...regionOffset.value, unit: value === 'percent' ? 'percent' : 'px' }
+  },
+})
+const offsetUnitOptions = [
+  { value: 'px', label: 'px' },
+  { value: 'percent', label: '%' },
+]
 
 function bump(value: number): void {
   determinate.value = Math.min(100, Math.max(0, value))
@@ -247,6 +274,36 @@ const progressLabel = computed(() => t('feedback.progressLinear.uploading', { pe
         <JinButton v-for="position in positions" :key="position" size="sm" variant="ghost" @click="toastAt(position)">
           {{ position }}
         </JinButton>
+      </div>
+
+      <p class="gallery-section__note" style="margin: var(--jin-space-4) 0 0">
+        {{ t('feedback.toast.offsetNote') }}
+      </p>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--jin-space-2)">
+        <JinTextField
+          v-model="offsetX"
+          type="number"
+          size="sm"
+          :block="false"
+          :aria-label="t('feedback.toast.offsetAxisX')"
+          style="width: 88px"
+        />
+        <JinTextField
+          v-model="offsetY"
+          type="number"
+          size="sm"
+          :block="false"
+          :aria-label="t('feedback.toast.offsetAxisY')"
+          style="width: 88px"
+        />
+        <JinSelect
+          v-model="offsetUnit"
+          :options="offsetUnitOptions"
+          size="sm"
+          :block="false"
+          :aria-label="t('feedback.toast.offsetUnit')"
+          style="width: 96px"
+        />
       </div>
     </DemoSection>
 

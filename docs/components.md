@@ -133,6 +133,15 @@ notifications.push({
 | `actions` | `FeedbackAction[]` | `{ label, handler, primary?, keepOpen? }` |
 | `priority` | `number` | Higher-priority entries are evicted later |
 
+Both regions also take an **`offset`** prop — `{ x?, y?, unit? }` with `unit: 'px' | 'percent'`
+(default `'px'`) — that shifts the **whole sequence** (every message in every rendered region) by a
+signed amount from its pinned corner. The directions are physical and absolute: `+x` is always
+rightward, `+y` always downward, with no RTL mirroring — the values are explicit coordinates, not
+flow-relative ones. `percent` resolves against the viewport (the region's fixed containing block),
+so a ratio offset follows window resizes. An offset may push messages off-screen; the queue neither
+reflows around it nor clamps it — the caller owns the values. The decision is reusable:
+`regionTransform(position, offset)` from the package root returns the inline transform.
+
 Store methods: `push` (returns the id), `update`, `dismiss`, `clear`, `pause`, `resume`, plus the
 reactive `items` and `byPosition`.
 
@@ -610,6 +619,7 @@ import {
   useFocusTrap, stepIndex, resolveFocusReturn,
   nextRovingIndex, createTypeaheadBuffer,
   filterIndices, foldText, matchSegments,
+  regionTransform,
   flattenMenu, menuNavigate,
   flattenTree, navigateTree, applyLoadFailure,
   fromKeyboardEvent, serializeHotkey, findHotkeyConflicts,

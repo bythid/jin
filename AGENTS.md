@@ -7,7 +7,7 @@ disagree, they win.
 ## What this is
 
 Jin (锦) — a token-driven Vue 3 control library, published as `@bythid/jin` (0.1.0, MIT, peer
-`vue ^3.5`). 37 components, 13 pure decision modules, 9 DOM composables, 220 tests. Two ideas carry
+`vue ^3.5`). 37 components, 14 pure decision modules, 9 DOM composables, 230 tests. Two ideas carry
 everything:
 
 1. **Behaviour lives in plain TypeScript; components only render.** `src/core/` imports no Vue and

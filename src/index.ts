@@ -92,6 +92,8 @@ export {
 export type { HotkeyBinding, HotkeyParts, HotkeyFormat } from './core/hotkey'
 export { createQueue, QUEUE_POSITIONS } from './core/queue'
 export type { QueueEntry, QueueInput, QueuePosition, QueueOptions } from './core/queue'
+export { regionTransform } from './core/offset'
+export type { RegionOffset } from './core/offset'
 export { LAYERS, LAYER_TOKEN, layerZIndex, readNumericToken } from './core/layer'
 export type { Layer } from './core/layer'
 export { filterIndices, foldText, matchSegments } from './core/filter'

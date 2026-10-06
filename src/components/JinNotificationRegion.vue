@@ -12,15 +12,23 @@ import type { IconName } from './icon-paths'
 import { useNotifications, type FeedbackEntry } from '../composables/useFeedback'
 import { useT } from '../composables/useT'
 import { useOverlay } from '../composables/useOverlay'
+import { regionTransform, type RegionOffset } from '../core/offset'
 import type { Tone } from '../core/types'
 import type { QueuePosition } from '../core/queue'
 
 const props = withDefaults(
   defineProps<{
     positions?: QueuePosition[]
+    /**
+     * Shifts the whole sequence — every message in every rendered region — by
+     * a signed amount from its pinned corner. Physical directions, no RTL
+     * mirroring; percent resolves against the viewport. May push messages
+     * off-screen.
+     */
+    offset?: RegionOffset
     label?: string
   }>(),
-  { positions: undefined, label: '' },
+  { positions: undefined, offset: undefined, label: '' },
 )
 
 const ALL: QueuePosition[] = ['top-start', 'top', 'top-end', 'bottom-start', 'bottom', 'bottom-end']
@@ -67,7 +75,7 @@ function onAction(entry: FeedbackEntry, actionIndex: number): void {
       :key="position"
       class="jin-notification-region"
       :class="`jin-notification-region--${position}`"
-      :style="{ zIndex: 'var(--jin-z-toast, 1400)' }"
+      :style="{ zIndex: 'var(--jin-z-toast, 1400)', transform: regionTransform(position, props.offset) }"
       role="region"
       :aria-label="props.label || t('a11y.notifications')"
     >

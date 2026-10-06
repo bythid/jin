@@ -23,6 +23,18 @@ downstream an afternoon.
 
 Added:
 
+- **Whole-sequence offsets for the feedback regions.** `JinToastRegion` and
+  `JinNotificationRegion` take an `offset` prop — `{ x?, y?, unit? }` with
+  `unit: 'px' | 'percent'` (default `'px'`) — that shifts the entire message
+  sequence by a signed amount from its pinned corner, so a host can move the
+  stack off its own chrome or park it proportionally (`percent` resolves
+  against the viewport and follows window resizes). Directions are physical
+  and absolute (`+x` right, `+y` down, no RTL mirroring); the queue semantics
+  are untouched — messages still group, stack, pause and evict by position —
+  and an offset may push messages off-screen rather than being clamped. The
+  transform decision is exported as `regionTransform(position, offset)` with
+  its `RegionOffset` type, for hosts that build their own regions.
+
 - **`JinCombobox` — a type-to-filter select with optional free-form entry.** A
   text input whose value filters a listbox of options (case- and
   diacritic-insensitive substring match, highlighted in the default rows),

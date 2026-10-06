@@ -33,6 +33,7 @@ import {
   type NavItem,
 } from '@bythid/jin'
 import { AVAILABLE_STYLES } from './host/preferences'
+import { regionOffset } from './host/region-offset'
 import { getCapabilities } from './host/capabilities'
 import { LOCALES, useI18n, type GalleryLocale } from './i18n'
 import TokenPanel from './panels/TokenPanel.vue'
@@ -278,8 +279,8 @@ onMounted(() => {
     </div>
 
     <!-- Both regions are part of the page, not of any single control. -->
-    <JinToastRegion />
-    <JinNotificationRegion />
+    <JinToastRegion :offset="regionOffset" />
+    <JinNotificationRegion :offset="regionOffset" />
 
     <JinDrawer v-model="aboutOpen" :title="t('app.menu.about')" side="right" size="md">
       <div class="gallery-grid">
