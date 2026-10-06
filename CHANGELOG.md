@@ -63,6 +63,18 @@ Added:
 
 Fixed:
 
+- **The portal now ranks above host chrome.** `.jin-portal` carried
+  `z-index: 0`, which turned the whole overlay system into one stacking
+  context at level 0: the layer tokens an entry holds (dropdown 1000 …
+  tooltip 1500) only competed inside the portal, and any host element with a
+  z-index of its own — a sticky header at `--jin-z-sticky` (900) — painted
+  over toasts, modals, tooltips and dropdowns that crossed it. The portal now
+  takes the overlay system's floor (`var(--jin-z-dropdown)`) instead, so the
+  shared scrim also dims sticky chrome while an overlay is open, which is what
+  the layer contract always expressed. Applications that worked around this
+  by pushing their own chrome's z-index above the portal can drop the
+  workaround.
+
 - **A closed overlay no longer swallows Escape.** `useDismissable` kept the
   document-level key listener attached after its overlay unregistered from the
   stack: with the overlay id gone it considered itself "open" and re-armed, and

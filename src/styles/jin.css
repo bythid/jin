@@ -30,7 +30,12 @@
 .jin-portal {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  /* The portal is one box against the host's own chrome, so it takes the
+     overlay system's floor: a z-index: 0 here created a stacking context that
+     ranked the whole portal below any host element with a z-index — sticky
+     headers painted over toasts, modals and tooltips crossing them. Entries
+     keep ranking among themselves through the stack's layer tokens. */
+  z-index: var(--jin-z-dropdown, 1000);
   pointer-events: none;
 }
 
