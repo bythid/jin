@@ -95,10 +95,15 @@ export function useDismissable(options: UseDismissableOptions): void {
     attached = false
   }
 
-  // The overlay only listens while it is actually open.
+  // The overlay only listens while it is actually open: registered in the
+  // stack. A null id here means the entry was just removed — treating that as
+  // "open" kept the document listener attached after close, and its
+  // stopPropagation swallowed every Escape meant for the page behind it.
+  // Consumers without an overlayId (no stack) always listen.
   const isOpen = () => {
     const id = options.overlayId?.value ?? null
-    return id ? controller.stack.isOpen(id) : true
+    if (!options.overlayId) return true
+    return id !== null && controller.stack.isOpen(id)
   }
 
   watch(
