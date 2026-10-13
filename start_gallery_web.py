@@ -90,6 +90,23 @@ def pnpm_run(*args: str) -> list[str]:
     return [pnpm_command(), "--pm-on-fail=ignore", *args]
 
 
+def vite_command(*args: str) -> list[str]:
+    """直接调本地 vite，**不经过 pnpm**。
+
+    为什么：pnpm 跑脚本命令时，中间会经过
+    `DSH Desktop.exe`（运行时把它当 node 用 —— 那是个 **GUI 二进制**，不挂控制台）。
+    它再去起 `cmd /c vite …` 时，Windows 会**新分配一个控制台**；Windows 11 把新控制台
+    交给 Windows Terminal 打开，桌面上就冒出一个标题为 `C:\\WINDOWS\\system32\\cmd.exe`、
+    内容空白的窗口（实测抓到过：`cmd /d /s /c vite preview --port 5180` 的父进程正是
+    `DSH Desktop.exe … pnpm.mjs`）。
+
+    直接起 `node_modules/.bin/vite` 就没有那一层，控制台沿用它爸的（我们那条 PTY），
+    整条链一个窗口都不会多。pnpm 只留给真正需要它的地方（install）。
+    """
+    exe = GALLERY / "node_modules" / ".bin" / ("vite.cmd" if os.name == "nt" else "vite")
+    return [str(exe), *args]
+
+
 def require() -> None:
     """Fail early, with the actual missing piece named."""
     pnpm_command()  # exits with a clear message when pnpm is absent
@@ -165,7 +182,16 @@ def spawn(command: list[str], cwd: Path) -> subprocess.Popen[str]:
     if os.name == "nt":
         # A new process group plus taskkill /T is what actually removes the
         # grandchild processes npm creates.
-        kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+        #
+        # CREATE_NO_WINDOW 是给"空 cmd 窗口"那件事的：这条链里会经过
+        # `pnpm.cmd → DSH Desktop.exe（GUI 二进制当 node 用）`，GUI 进程不挂控制台，
+        # 于是它再起的控制台子进程（`cmd /c vite …`）会被系统**新分配一个控制台**——
+        # Windows 11 把新控制台交给 Windows Terminal 打开，桌面上就冒出一个
+        # 标题为 `C:\WINDOWS\system32\cmd.exe`、内容空白的窗口（实测遇到过）。
+        # 给子进程一个**没有窗口的控制台**，它的后代都继承它，整条链就不再弹窗。
+        kwargs["creationflags"] = (
+            subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW
+        )
     else:
         kwargs["start_new_session"] = True
 
@@ -250,7 +276,11 @@ def check_and_start_browser(port: int) -> tuple[subprocess.Popen[str] | None, in
         say(f"port {port} is taken by something else; looking for a free one")
         port = free_port(port + 1)
 
-    child = spawn([*pnpm_run("run", "dev"), "--", "--port", str(port), "--strictPort"], GALLERY)
+    # 注意这里**没有** `"--"`：pnpm 会把多余的 `--` 原样转发给脚本，
+    # 于是 `vite` 把它当成"选项结束"，`--port` 被忽略、去监听默认的 4173，
+    # 而本函数等的是 5180 —— 结果必然是 60 秒后超时（实测踩过）。
+    # 也不再经过 pnpm：见 `vite_command()` 的注释（那一层会多出一个空 cmd 窗口）。
+    child = spawn([*vite_command("--port", str(port), "--strictPort")], GALLERY)
     if not wait_until_ready(port, child):
         if child.poll() is not None:
             fail("the dev server exited before it was ready.", "Its output is above.")
@@ -284,8 +314,9 @@ def run_dev(port: int, open_browser: bool) -> int:
 
 def run_build(port: int, open_browser: bool) -> int:
     say("building the gallery for production")
+    # 构建也直接走本地 vite：经过 pnpm 那一层同样会多分配一个控制台（见 vite_command）。
     build = subprocess.run(
-        pnpm_run("run", "build"),
+        vite_command("build"),
         cwd=str(GALLERY),
         check=False,
     )
@@ -293,7 +324,8 @@ def run_build(port: int, open_browser: bool) -> int:
         fail("the production build failed.")
 
     say("serving the build")
-    child = spawn([*pnpm_run("run", "preview"), "--", "--port", str(port), "--strictPort"], GALLERY)
+    # 同上：不经过 pnpm（见 vite_command 的注释），也不要 `"--"`。
+    child = spawn([*vite_command("preview", "--port", str(port), "--strictPort")], GALLERY)
     if not wait_until_ready(port, child):
         fail(f"the preview server did not answer on port {port}.")
     url = f"http://localhost:{port}/"
@@ -365,4 +397,10 @@ if __name__ == "__main__":
         sys.exit(main())
     except KeyboardInterrupt:
         stop(_child)
+    except SystemExit:
+        # `fail()` 走的是 `sys.exit()`（不是 KeyboardInterrupt）：不在这里收一次，
+        # 已经起来的子进程就被留下了 —— 实测 preview 会绑在默认的 4173 上活一整晚，
+        # 下一次点按钮只能看到端口被占 / "已经有一个画廊在跑"。
+        stop(_child)
+        raise
         sys.exit(130)

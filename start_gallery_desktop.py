@@ -171,7 +171,13 @@ def spawn(command: list[str], cwd: Path) -> subprocess.Popen[str]:
     if os.name == "nt":
         # A new process group plus taskkill /T is what actually removes the
         # grandchild processes npm creates.
-        kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+        # CREATE_NO_WINDOW：这条链里有 GUI 二进制当 node 用的那一层（不挂控制台），
+        # 它再起的控制台子进程会被系统新分配一个控制台 —— Windows 11 用
+        # Windows Terminal 打开它，桌面上就多一个空白的 cmd 窗口（见
+        # start_gallery_web.py 里同一处的注释）。给它一个没有窗口的控制台即可。
+        kwargs["creationflags"] = (
+            subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW
+        )
     else:
         kwargs["start_new_session"] = True
 
@@ -339,3 +345,8 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         stop(_child)
         sys.exit(130)
+    except SystemExit:
+        # 与 start_gallery_web.py 同理：`fail()` 走的是 `sys.exit()`，
+        # 不在这里收一次，已经起来的子进程会被留下（tauri dev / release shell）。
+        stop(_child)
+        raise
