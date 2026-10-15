@@ -4,11 +4,17 @@
  *
  * Non-interactive by design (no focusable content inside), so it must never be
  * the only place a piece of information exists. Touch input reaches it on focus.
+ *
+ * The whole open/close decision — two intents, their delays, press/Escape
+ * suppression — lives in core/tooltip-trigger.ts. This component only renders:
+ * it forwards DOM events into the machine, schedules the phase it reports and
+ * paints the result.
  */
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useOverlay } from '../composables/useOverlay'
 import { usePositioning } from '../composables/usePositioning'
 import { createId } from '../core/id'
+import { createTooltipTrigger, type TriggerPhase } from '../core/tooltip-trigger'
 import type { Placement } from '../core/types'
 
 const props = withDefaults(
@@ -38,15 +44,27 @@ const props = withDefaults(
 const overlay = useOverlay()
 const anchorElement = ref<HTMLElement | null>(null)
 const floating = ref<HTMLElement | null>(null)
-const visible = ref(false)
 const overlayId = ref<string | null>(null)
 const instanceId = createId('tip')
 const tooltipId = `jin-tooltip-${instanceId}`
+
+const trigger = createTooltipTrigger({
+  openDelay: () => props.openDelay,
+  closeDelay: () => props.closeDelay,
+  disabled: () => props.disabled,
+})
+const phase = ref<TriggerPhase>(trigger.state().phase)
+const unsubscribe = trigger.subscribe(() => {
+  phase.value = trigger.state().phase
+})
 
 let openTimer: ReturnType<typeof setTimeout> | null = null
 let closeTimer: ReturnType<typeof setTimeout> | null = null
 
 const portalTarget = computed(() => overlay.root.value)
+
+// The painted windows: committed open, and the linger after a leave.
+const visible = computed(() => phase.value === 'open' || phase.value === 'close-pending')
 
 const { position, floatingStyle, scheduleUpdate } = usePositioning({
   floating,
@@ -69,22 +87,10 @@ function clearTimers(): void {
   closeTimer = null
 }
 
-function show(): void {
-  if (props.disabled) return
-  clearTimers()
-  const delay = props.openDelay
-  if (delay <= 0) {
-    commitOpen()
-    return
-  }
-  openTimer = setTimeout(commitOpen, delay)
-}
-
 function commitOpen(): void {
-  if (visible.value) return
-  visible.value = true
+  if (overlayId.value) return
   const entry = overlay.register({
-    id: `jin-tooltip-${instanceId}`,
+    id: tooltipId,
     layer: 'tooltip',
     dismissOnEsc: true,
     dismissOnOutside: true,
@@ -96,39 +102,40 @@ function commitOpen(): void {
   requestAnimationFrame(() => scheduleUpdate())
 }
 
-function hide(): void {
-  clearTimers()
-  const delay = props.closeDelay
-  if (delay <= 0) {
-    commitHide()
-    return
-  }
-  closeTimer = setTimeout(commitHide, delay)
+function commitHide(): void {
+  if (!overlayId.value) return
+  overlay.unregister(overlayId.value)
+  overlayId.value = null
 }
 
-function commitHide(): void {
-  clearTimers()
-  visible.value = false
-  if (overlayId.value) {
-    overlay.unregister(overlayId.value)
-    overlayId.value = null
-  }
-}
+watch(
+  phase,
+  (to, from) => {
+    clearTimers()
+    if (to === 'open-pending') openTimer = setTimeout(() => trigger.event('open-due'), props.openDelay)
+    if (to === 'close-pending') closeTimer = setTimeout(() => trigger.event('close-due'), props.closeDelay)
+    if (to === 'open') commitOpen()
+    if (to === 'closed' && from !== 'closed') commitHide()
+  },
+  { flush: 'post' },
+)
 
 function onKeydown(event: KeyboardEvent): void {
-  if (event.key === 'Escape') commitHide()
+  if (event.key === 'Escape') trigger.event('escape')
 }
 
 watch(
   () => props.disabled,
   (disabled) => {
-    if (disabled) commitHide()
+    if (disabled) trigger.event('reset')
   },
 )
 
 onBeforeUnmount(() => {
+  unsubscribe()
   clearTimers()
-  if (overlayId.value) overlay.unregister(overlayId.value)
+  trigger.event('reset')
+  commitHide()
 })
 </script>
 
@@ -137,12 +144,12 @@ onBeforeUnmount(() => {
     ref="anchorElement"
     class="jin-tooltip-anchor"
     :aria-describedby="visible && content ? tooltipId : undefined"
-    @pointerenter="show"
-    @pointerleave="hide"
-    @focusin="show"
-    @focusout="hide"
+    @pointerenter="trigger.event('hover-enter')"
+    @pointerleave="trigger.event('hover-leave')"
+    @focusin="trigger.event('focus-enter')"
+    @focusout="trigger.event('focus-leave')"
     @keydown="onKeydown"
-    @pointerdown="commitHide"
+    @pointerdown="trigger.event('press')"
   >
     <slot />
   </span>

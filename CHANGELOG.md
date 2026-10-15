@@ -19,6 +19,24 @@ what it contains. Entries are written for the application that has to react — 
 that only shows up in an unusual host layout, because that is the kind of change that costs
 downstream an afternoon.
 
+## [0.4.1] — 2026-10-16
+
+Fixed:
+
+- **Tooltip open/close no longer misfires around clicks and focus.** The
+  trigger decision moved into the pure state machine
+  `createTooltipTrigger` (`src/core/tooltip-trigger.ts`); `JinTooltip` only
+  forwards events and paints. Application-visible changes: a swipe through
+  the anchor cannot leave a hint that then refuses to close, because leaving
+  cancels a pending open; pressing or hitting Escape closes at once **and
+  pins the interaction** — the click focus that lands inside the anchor no
+  longer re-opens the hint the pointer is still standing in, and it comes
+  back only after the pointer (or focus) leaves and re-enters; while the
+  close linger is running a re-enter cancels it instead of restarting the
+  open delay. `openDelay` / `closeDelay` defaults and meanings are unchanged
+  (300 / 80 ms; delays of 0 commit immediately). Hosts that drove the tooltip
+  only through its props are unaffected.
+
 ## [0.4.0] — 2026-10-06
 
 Added:

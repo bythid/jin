@@ -226,7 +226,17 @@ Non-interactive by design; never the only place information lives.
 | `openDelay` / `closeDelay` | `number` | ms; defaults 300 / 80 |
 | `disabled` | `boolean` | |
 
-Opens on hover **and focus**, so touch and keyboard reach it too.
+Opens on hover **and focus**, so touch and keyboard reach it too. The two are
+independent intents, not one shared timer: whichever is live keeps the tooltip
+open, and leaving cancels a pending open, so a swipe through never opens. The
+close delay is a linger — the tooltip stays painted until it runs out, and a
+re-enter during the linger cancels it instead of re-arming a fresh delay. A
+`pointerdown` on the anchor or Escape closes at once and pins that interaction
+closed: clicking focuses the anchor's control and would otherwise re-open the
+hint while the pointer is still standing in it — the tooltip returns only when
+a leave of either channel happens. The decision is the pure state machine
+`createTooltipTrigger` in `src/core/tooltip-trigger.ts`; the component only
+forwards events, schedules the phase and paints the result.
 
 ### JinPopconfirm
 
