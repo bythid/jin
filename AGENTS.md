@@ -6,14 +6,14 @@ disagree, they win.
 
 ## What this is
 
-Jin (锦) — a token-driven Vue 3 control library, published as `@bythid/jin` (0.1.0, MIT, peer
-`vue ^3.5`). 37 components, 15 pure decision modules, 9 DOM composables, 250 tests. Two ideas carry
-everything:
+Jin (锦) — a Vue 3 control library whose entire style interface is a token contract, published to
+npm as `@bythid/jin` (MIT, peer `vue ^3.5`; the current version is `package.json`'s). 37 components,
+15 pure decision modules, 9 DOM composables, 250 tests. Two ideas carry everything:
 
 1. **Behaviour lives in plain TypeScript; components only render.** `src/core/` imports no Vue and
    assumes no DOM, which is why most tests run in Node in milliseconds.
 2. **The token contract is the only style interface.** `contracts/tokens.json` (80 tokens, prefix
-   `--jin-`) is enforced mechanically, and every theme restates all of it.
+   `--jin-`) is enforced by `tools/check_tokens.py`, and every theme restates all of it.
 
 Style and mode are two orthogonal axes, set on `<html>`: `data-jin-style` (`jin` plus eight styles
 implemented from the ui-ux-pro-max-skill catalogue) and `data-jin-mode` (`light`, `dark`). The full
@@ -29,8 +29,8 @@ list, with the contract axis each style exercises, is docs/theming.md §8.
 | `src/injection/` | Plugin (`JinUI`), theme controller, translation, capabilities, stylesheet warning. |
 | `src/styles/jin.css` | The base stylesheet — an explicit consumer import, never a side effect of the module. |
 | `themes/` | 18 files: nine styles (`jin`, `minimalism-and-swiss-style`, `neumorphism`, `glassmorphism`, `claymorphism`, `flat-design`, `neubrutalism`, `brutalism`, `dimensional-layering`), each with a `.dark` variant. |
-| `contracts/` | `tokens.json` (80 tokens) and `strings.json` (25 UI strings). |
-| `docs/` | `architecture.md` (why it is shaped this way), `components.md` (API reference), `consuming.md`, `theming.md`, and `README.en.md`, the English twin of the root README. |
+| `contracts/` | `tokens.json` (80 tokens) and `strings.json` (27 UI strings). |
+| `docs/` | `architecture.md` (why it is shaped this way), `components.md` (API reference), `consuming.md` (integration guide), `developing.md` (repo maintenance: commands, checkers, gallery, packaging, publishing), `theming.md`, and `README.en.md`, the English twin of the root README. |
 | `gallery/` | Vue 3 + Tauri demo app, and the browser-side checkpoint. Consumes the library through a `file:..` dependency, which pnpm hard-links into the gallery's virtual store — so the link is to the *inode*: editing a file in place is live there, but a tool that writes a new file over the old one (most editors and patch tools) leaves the link pointing at the stale content, and an added or deleted file needs a reinstall either way. `pnpm install --force` in `gallery/` refreshes it. The gallery also excludes the library from dep pre-bundling (`optimizeDeps.exclude` in its `vite.config.ts`), because two copies of the library mean two of every module-level `Symbol` and a private overlay stack per component. Its `src/i18n/` holds the en/zh dictionaries, the locale state, and the `t` it passes to `JinUI`. |
 | `tools/*.py` | `check_tokens.py` (six discipline checks), `check_contrast.py`, `smoke_pack.py`. |
 | `tests/` | Vitest. Pure logic runs in Node; component tests opt into jsdom with a `// @vitest-environment jsdom` docblock. `gallery-i18n.spec.ts` guards the gallery dictionaries against the pages that use them. |
@@ -85,8 +85,8 @@ breaks one gets reverted rather than adjusted.
   tokens, and state is never communicated by colour alone.
 - Groups (tabs, menus, toolbars, trees, selects, radio groups) are one tab stop with roving
   tabindex; arrows move within.
-- `prefers-reduced-motion: reduce` zeroes every duration token except the mechanical animations
-  (spinner, skeleton sweep).
+- `prefers-reduced-motion: reduce` zeroes every duration token except the two loading animations
+  (spinner rotation, skeleton sweep).
 
 ## Definition of done
 
@@ -119,10 +119,10 @@ languages, and for a release a `CHANGELOG.md` entry plus a `package.json` bump i
   re-verify by actually launching, not by label alone.
 - The checkers and the gallery launchers are Python (`python tools/check_tokens.py`,
   `python start_gallery_web.py` for the browser checkpoint, `python start_gallery_desktop.py` for
-  the Tauri shell); the test runner is vitest. All are already wired into pnpm scripts.
+  the Tauri shell); the test runner is vitest. All run as pnpm scripts.
 - GitHub (`bythid/jin`) is the repository and `origin`; CI, Dependabot and publishing run there, and
   its `publish.yml` fires on any `v*` tag, so pushing a tag stages a release — the version still
-  needs a maintainer's `npm stage approve` before it reaches anyone. See Packaging in the README.
+  needs a maintainer's `npm stage approve` before it reaches anyone. Publishing details: `docs/developing.md`.
 
 ## Repository protection
 

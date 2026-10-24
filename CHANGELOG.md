@@ -1,8 +1,9 @@
 # Changelog
 
-What changed, per version, newest first. Applications read this to know what a version brings before
-they take it; the git history is the long version, this is the one that fits in a pull-request
-description.
+Every release, newest first, written for the application that has to react to the change —
+including behaviour that only shows up in an unusual host layout, because that is the kind of change
+that costs downstream an afternoon. The git history holds the full detail; this file records what an
+upgrade requires.
 
 ## How versions work
 
@@ -20,6 +21,20 @@ that only shows up in an unusual host layout, because that is the kind of change
 downstream an afternoon.
 
 ## [0.4.1] — 2026-10-16
+
+Added:
+
+- **Select and combobox popups match their trigger's width.** The `JinSelect`
+  listbox and the `JinCombobox` popup are now never narrower than the control
+  they anchor to, so the dropdown lines up with the field on both edges in any
+  host layout (before, the panel was purely content-sized and only its left
+  edge aligned). Longer content can still widen the panel past the control, up
+  to the popover max-width cap — and a control wider than that cap stretches
+  the panel past it, because a matched min-width wins over the stylesheet
+  max-width. The capability is generic: `JinPopover` takes a
+  `matchAnchorWidth` prop (default `false`) and `usePositioning` takes the
+  same option, so other anchored panels can opt in. Popovers, tooltips, menus
+  and popconfirms are unchanged.
 
 Fixed:
 
