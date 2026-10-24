@@ -803,6 +803,13 @@
   outline: none;
 }
 
+.jin-popover[data-jin-match-width="true"] {
+  /* A matched min-width is derived from the anchor's border-box, so the panel
+     box must be measured with the same box or its borders poke out of the
+     anchor's outline by a visible whisker on the end edge. */
+  box-sizing: border-box;
+}
+
 .jin-popover__arrow,
 .jin-tooltip__arrow {
   position: absolute;

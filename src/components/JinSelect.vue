@@ -271,6 +271,7 @@ defineExpose({ open: openList, close: closeList })
       placement="bottom-start"
       :offset="4"
       :flip="true"
+      :match-anchor-width="true"
       @update:model-value="(value) => (open = value)"
     >
       <ul

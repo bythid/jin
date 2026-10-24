@@ -359,6 +359,7 @@ defineExpose({ focus, open: openPopup, close: closePopup })
       placement="bottom-start"
       :offset="4"
       :flip="true"
+      :match-anchor-width="true"
       role=""
       @update:model-value="onPopoverToggle"
     >

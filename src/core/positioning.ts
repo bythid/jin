@@ -94,6 +94,21 @@ export function rectsIntersect(a: Rect, b: Rect): boolean {
   return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y
 }
 
+/**
+ * Panel min-width that keeps a width-matched panel at least as wide as its
+ * anchor. Ceil, not round: a fractional anchor rect must not leave a sliver
+ * of the page between the panel's edge and the anchor's. Zero or less — an
+ * anchor that is hidden or not yet measured — yields null, so no width style
+ * is written and the panel keeps its content-driven size. Growth past the
+ * anchor stays capped by the panel's own max-width; a min-width larger than
+ * a stylesheet max-width wins by the CSS constraint rules, which is what
+ * lets a wide anchor stretch a panel past that cap.
+ */
+export function matchAnchorMinWidth(anchorWidth: number): string | null {
+  if (!(anchorWidth > 0)) return null
+  return `${Math.ceil(anchorWidth)}px`
+}
+
 function crossAxisStart(side: Side, align: Alignment, anchor: Rect, floating: Rect): number {
   const horizontal = side === 'top' || side === 'bottom'
   const anchorStart = horizontal ? anchor.x : anchor.y

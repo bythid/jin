@@ -6,6 +6,7 @@
 import { onBeforeUnmount, ref, toValue, watch, type MaybeRefOrGetter, type Ref } from 'vue'
 import {
   computePosition,
+  matchAnchorMinWidth,
   type PositionOptions,
   type PositionResult,
   type Rect,
@@ -28,6 +29,8 @@ export interface UsePositioningOptions {
   arrow?: MaybeRefOrGetter<Size2D | null | undefined>
   /** Teleported floating elements: subtract the offset parent's origin. */
   offsetParent?: Ref<HTMLElement | null>
+  /** Keep the floating element at least as wide as the anchor. Default false. */
+  matchAnchorWidth?: MaybeRefOrGetter<boolean | undefined>
   /** Keep following scroll/resize. Default true. */
   autoUpdate?: MaybeRefOrGetter<boolean | undefined>
   /** Run the first placement immediately on setup. Default true. */
@@ -103,11 +106,16 @@ export function usePositioning(options: UsePositioningOptions): UsePositioningRe
       x: result.x + dx,
       y: result.y + dy,
     }
-    floatingStyle.value = {
+    const style: Record<string, string> = {
       position: 'absolute',
       left: `${Math.round(position.value.x)}px`,
       top: `${Math.round(position.value.y)}px`,
     }
+    if (toValue(options.matchAnchorWidth)) {
+      const minWidth = matchAnchorMinWidth(anchorRect.width)
+      if (minWidth) style.minWidth = minWidth
+    }
+    floatingStyle.value = style
   }
 
   function update(): void {

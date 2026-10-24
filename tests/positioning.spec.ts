@@ -3,6 +3,7 @@ import {
   buildPlacement,
   computePosition,
   isPlacement,
+  matchAnchorMinWidth,
   parsePlacement,
   rectsIntersect,
 } from '../src/core/positioning'
@@ -150,5 +151,20 @@ describe('rectsIntersect', () => {
   it('detects overlap and separation', () => {
     expect(rectsIntersect({ x: 0, y: 0, width: 10, height: 10 }, { x: 5, y: 5, width: 10, height: 10 })).toBe(true)
     expect(rectsIntersect({ x: 0, y: 0, width: 10, height: 10 }, { x: 20, y: 0, width: 10, height: 10 })).toBe(false)
+  })
+})
+
+describe('matchAnchorMinWidth', () => {
+  it('keeps the panel at least the anchor width', () => {
+    expect(matchAnchorMinWidth(240)).toBe('240px')
+  })
+
+  it('rounds a fractional anchor up, never short', () => {
+    expect(matchAnchorMinWidth(240.4)).toBe('241px')
+  })
+
+  it('gives no constraint for an unmeasured or hidden anchor', () => {
+    expect(matchAnchorMinWidth(0)).toBeNull()
+    expect(matchAnchorMinWidth(-1)).toBeNull()
   })
 })

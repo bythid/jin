@@ -30,6 +30,12 @@ const props = withDefaults(
     arrow?: boolean
     /** The anchor is also "inside" (clicks on it do not dismiss). */
     ignoreAnchor?: boolean
+    /**
+     * Keep the panel at least as wide as the anchor, so a dropdown-style
+     * panel lines up with its trigger on both edges. Content may still grow
+     * the panel wider, up to the stylesheet's max-width cap.
+     */
+    matchAnchorWidth?: boolean
     ariaLabel?: string
     role?: string
     /**
@@ -48,6 +54,7 @@ const props = withDefaults(
     closeOnOutside: true,
     arrow: false,
     ignoreAnchor: true,
+    matchAnchorWidth: false,
     ariaLabel: '',
     role: 'dialog',
     lazy: false,
@@ -87,6 +94,7 @@ const { position, floatingStyle, scheduleUpdate } = usePositioning({
   flip: () => props.flip,
   shift: () => props.shift,
   arrow: () => (props.arrow ? { width: 8, height: 8 } : null),
+  matchAnchorWidth: () => props.matchAnchorWidth,
   immediate: false,
   autoUpdate: () => isOpen.value,
 })
@@ -156,6 +164,7 @@ defineExpose({ floating, position, update: scheduleUpdate })
       class="jin-popover"
       :style="style"
       :data-placement="position.placement"
+      :data-jin-match-width="props.matchAnchorWidth || undefined"
       :role="props.role || undefined"
       :aria-label="props.ariaLabel || undefined"
       tabindex="-1"
