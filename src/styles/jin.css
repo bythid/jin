@@ -2319,6 +2319,18 @@
   background: var(--jin-surface-sunken, #e9edf5);
 }
 
+/* Content-width rows (`rowWidth="content"`): each row is a chip sized to its
+   own content, so the rest of the tree stays a real blank surface for the
+   application to paint — rows rest on --jin-surface, and the hover/selected
+   rules above still apply on top. The reserved right gap keeps even the
+   longest row from reaching the edge, so a clickable blank strip always
+   exists (mirrors a file manager's folder background). */
+.jin-tree--rows-content .jin-tree__row {
+  width: fit-content;
+  max-width: calc(100% - var(--jin-space-7, 32px));
+  background: var(--jin-surface, #fff);
+}
+
 .jin-tree__row--selected {
   background: color-mix(in srgb, var(--jin-accent, #4f46e5) 16%, transparent);
   color: var(--jin-accent, #4f46e5);

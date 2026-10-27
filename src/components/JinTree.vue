@@ -50,6 +50,13 @@ const props = withDefaults(
     ariaLabel?: string
     /** Indent step per level, in space-token multiples. */
     indent?: number
+    /**
+     * Row width: `fill` stretches rows across the tree; `content` sizes each
+     * row to its own content so the area to its right stays a first-class
+     * blank surface (the application paints that surface and owns whatever
+     * interaction it offers — rows rest on `--jin-surface` there).
+     */
+    rowWidth?: 'fill' | 'content'
     loadingLabel?: string
     emptyLabel?: string
   }>(),
@@ -60,6 +67,7 @@ const props = withDefaults(
     selectionMode: 'single',
     ariaLabel: '',
     indent: 1,
+    rowWidth: 'fill',
     loadingLabel: '',
     emptyLabel: '',
   },
@@ -308,7 +316,7 @@ defineExpose({ rows, retry, expand, collapse })
 </script>
 
 <template>
-  <div class="jin-tree" :aria-label="ariaLabel || undefined">
+  <div class="jin-tree" :class="{ 'jin-tree--rows-content': rowWidth === 'content' }" :aria-label="ariaLabel || undefined">
     <p v-if="rows.length === 0" class="jin-tree__empty">{{ emptyLabel || t('tree.empty') }}</p>
 
     <ul

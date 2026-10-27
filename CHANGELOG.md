@@ -24,6 +24,15 @@ downstream an afternoon.
 
 Added:
 
+- **JinTree rows can size to their content.** `rowWidth="content"` turns each
+  row into a chip sized to its own content instead of a full-width strip: rows
+  rest on `--jin-surface`, and a gap is reserved on the right so even the
+  longest row leaves a clickable blank strip — the rest of the tree becomes a
+  first-class blank surface the application can paint and give its own context
+  menu (a file manager's folder background). Hover and selection paint the
+  chip as before. The default `rowWidth="fill"` is unchanged: rows still span
+  the tree, and hosts that never pass the prop see no difference.
+
 - **Select and combobox popups match their trigger's width.** The `JinSelect`
   listbox and the `JinCombobox` popup are now never narrower than the control
   they anchor to, so the dropdown lines up with the field on both edges in any
