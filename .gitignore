@@ -26,3 +26,9 @@ __pycache__/
 # per-checkout files, never published
 docs/*prompt.md
 tools/check_tokens.local.json
+
+.dsh/
+
+.vscode/
+
+ilprobe_pwsh.exe
