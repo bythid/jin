@@ -120,6 +120,16 @@ languages, and for a release a `CHANGELOG.md` entry plus a `package.json` bump i
 - The checkers and the gallery launchers are Python (`python tools/check_tokens.py`,
   `python start_gallery_web.py` for the browser checkpoint, `python start_gallery_desktop.py` for
   the Tauri shell); the test runner is vitest. All run as pnpm scripts.
+- `start_gallery_desktop.py` reports only the first prerequisite it finds missing, so a broken
+  machine looks like a single failure while several are stacked. Check in this order:
+  `which cargo` (a rustup toolchain under `~/.rustup/toolchains` is not enough — the launcher needs
+  a `cargo` on `PATH`, which rustup puts in `~/.cargo/bin`; `rustup-init -y --no-modify-path
+  --default-toolchain none` recreates those shims without downloading a toolchain);
+  `ls gallery/node_modules/.pnpm` (without the virtual store, `pnpm exec tauri build` tries to
+  reinstall and pnpm refuses with `ERR_PNPM_PACKAGE_MANAGER_REMOVE_MODULES_DIR`; a plain
+  `pnpm install` in `gallery/` restores it from the store); and the integrity label above.
+  A launch counts as verified only when the process owns a visible window of its configured size —
+  every one of these failures leaves `tasklist` reporting a live process.
 - GitHub (`bythid/jin`) is the repository and `origin`; CI, Dependabot and publishing run there, and
   its `publish.yml` fires on any `v*` tag, so pushing a tag stages a release — the version still
   needs a maintainer's `npm stage approve` before it reaches anyone. Publishing details: `docs/developing.md`.
