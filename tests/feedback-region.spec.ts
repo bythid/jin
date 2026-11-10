@@ -73,7 +73,7 @@ describe('feedback region offset', () => {
     wrapper = mounted.wrapper
     mounted.store.push({ tone: 'warning', title: 'Careful' })
     await nextTick()
-    const region = document.querySelector('.jin-notification-region--top-end') as HTMLElement
+    const region = document.querySelector('.jin-notification-region--bottom-end') as HTMLElement
     expect(region.style.transform).toBe('translate(-24px, 0px)')
     expect(region.textContent).toContain('Careful')
   })

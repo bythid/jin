@@ -49,6 +49,7 @@ export interface QueueOptions {
   /** Visible cap per position; overflowing entries are evicted oldest-first. */
   maxVisible?: number | Partial<Record<QueuePosition, number>>
   defaultDuration?: number
+  defaultPosition?: QueuePosition
   createId?: () => string
 }
 
@@ -86,6 +87,7 @@ export function createQueue<T extends QueueEntry = QueueEntry>(options: QueueOpt
   const now = options.now ?? (() => Date.now())
   const nextId = options.createId ?? (() => createId('jin-toast'))
   const defaultDuration = options.defaultDuration ?? 5000
+  const defaultPosition = options.defaultPosition ?? 'top-end'
   const defaultLimit = 5
   let entries: T[] = []
   const listeners = new Set<() => void>()
@@ -132,7 +134,7 @@ export function createQueue<T extends QueueEntry = QueueEntry>(options: QueueOpt
       const entry = {
         ...input,
         id: input.id ?? nextId(),
-        position: input.position ?? 'top-end',
+        position: input.position ?? defaultPosition,
         duration: input.duration ?? defaultDuration,
         priority: input.priority ?? 0,
         createdAt: at,

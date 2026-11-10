@@ -6,6 +6,10 @@
  *   - toast:        auto-dismisses, non-blocking
  *   - notification: stays until the user deals with it (duration 0)
  *
+ * They also default to different corners — toast top-end, notification
+ * bottom-end — so the two stacks never share one unless a caller puts them
+ * there.
+ *
  * The store owns the clock through a single interval so every component that
  * uses it shares one timeline.
  */
@@ -65,6 +69,7 @@ export interface FeedbackStore {
 
 export interface CreateFeedbackStoreOptions {
   defaultDuration?: number
+  defaultPosition?: QueuePosition
   maxVisible?: number | Partial<Record<QueuePosition, number>>
 }
 
@@ -83,6 +88,7 @@ function normalize(entry: QueueEntry): FeedbackEntry {
 export function createFeedbackStore(options: CreateFeedbackStoreOptions = {}): FeedbackStore {
   const queue = createQueue<FeedbackEntry>({
     defaultDuration: options.defaultDuration ?? 5000,
+    ...(options.defaultPosition !== undefined ? { defaultPosition: options.defaultPosition } : {}),
     ...(options.maxVisible !== undefined ? { maxVisible: options.maxVisible } : {}),
   })
   const items = ref<FeedbackEntry[]>([])
@@ -171,7 +177,10 @@ export const notificationsKey = injectionKey<FeedbackStore>('notifications')
 
 export function provideFeedbackStores(app: App): void {
   app.provide(toastsKey, createFeedbackStore({ defaultDuration: 5000, maxVisible: 5 }))
-  app.provide(notificationsKey, createFeedbackStore({ defaultDuration: 0, maxVisible: 4 }))
+  app.provide(
+    notificationsKey,
+    createFeedbackStore({ defaultDuration: 0, defaultPosition: 'bottom-end', maxVisible: 4 }),
+  )
 }
 
 /** Toast = auto-dismissing, non-blocking. */
@@ -185,5 +194,5 @@ export function useToasts(): FeedbackStore {
 export function useNotifications(): FeedbackStore {
   const instance = getCurrentInstance()
   const injected = instance?.appContext.provides[notificationsKey as unknown as string] as FeedbackStore | undefined
-  return injected ?? createFeedbackStore({ defaultDuration: 0 })
+  return injected ?? createFeedbackStore({ defaultDuration: 0, defaultPosition: 'bottom-end' })
 }

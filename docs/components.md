@@ -128,7 +128,7 @@ notifications.push({
 | `tone` | `Tone` | |
 | `title`, `description` | `string` | |
 | `duration` | `number` | ms; **0 means "until dismissed"** and is the notification default |
-| `position` | `QueuePosition` | Six positions, settable per message |
+| `position` | `QueuePosition` | Six positions, settable per message. Default: `top-end` for toasts, `bottom-end` for notifications |
 | `closable` | `boolean` | Default `true` |
 | `actions` | `FeedbackAction[]` | `{ label, handler, primary?, keepOpen? }` |
 | `priority` | `number` | Higher-priority entries are removed later |
@@ -153,8 +153,18 @@ reactive `items` and `byPosition`.
   never carry a decision.
 - A **notification** stays until handled. It is for anything the user must act on.
 
-Hovering or focusing a region pauses its timers, so a message cannot vanish mid-read. When a
-position is full, the oldest **toast** is removed; a notification is never dropped to make room.
+Hovering or focusing a region pauses its timers, so a message cannot vanish mid-read. Toasts and
+notifications are two separate stores: the per-position caps and the removal rule are counted per
+store, and a message pushed into one never removes an entry from the other. Within a store, a full
+position removes the oldest auto-dismissing message; an entry with `duration: 0` is never removed
+to make room — when a position is full of such entries, the incoming message is the one dropped.
+
+Both regions pin to the same six corners with the same z-index, and neither stack reflows for the
+other. The defaults keep the two apart — toasts land in `top-end`, notifications in `bottom-end` —
+so they share a corner only when a caller puts them there. When they do share one, they overlap and
+the region mounted later covers the earlier one. An application that wants both visible at once
+keeps the two in disjoint `position` values or shifts one whole stack with `offset`, as described
+above.
 
 ### JinResult
 

@@ -252,10 +252,19 @@ They look similar and are not interchangeable:
 | Interrupts | never — it must not demand a response | yes; it is for decisions |
 | Put in it | confirmation that something happened | anything the user must act on |
 | If ignored | nothing is lost | it is still there later |
+| Default corner | `top-end` (top right) | `bottom-end` (bottom right) |
 
-Both run on the same queue, which is why the eviction rule matters: when a position is full, the
-**oldest toast** is dropped, never a notification. Losing a confirmation is a small annoyance;
-losing a decision the user still had to make is not.
+The two are separate queues with separate caps and separate removal: a message pushed into one
+never drops an entry from the other. Within a queue, a full position drops the **oldest
+auto-dismissing message**; an entry with `duration: 0` is never dropped to make room — when a
+position is full of such entries, the incoming message is the one dropped. Losing a confirmation
+is a small annoyance; losing a decision the user still had to make is not.
+
+Both containers pin to the same six corners and make no room for each other. The defaults keep the
+two apart — toasts land in `top-end`, notifications in `bottom-end` — so they share a corner only
+when a caller puts them there. When they do share one, the container mounted later covers the
+earlier one. An application that wants both visible at once keeps the two in disjoint `position`
+values or shifts one side with `offset`.
 
 ---
 

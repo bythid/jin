@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { createQueue, QUEUE_POSITIONS } from '../src/core/queue'
 import type { QueueEntry, QueuePosition } from '../src/core/queue'
+import { useNotifications } from '../src/composables/useFeedback'
 import {
   fromKeyboardEvent,
   serializeHotkey,
@@ -28,6 +29,16 @@ describe('feedback queue', () => {
     expect(entry.position).toBe('top-end')
     expect(entry.duration).toBe(5000)
     expect(queue.count()).toBe(1)
+  })
+
+  it('honours defaultPosition and lets an explicit position win', () => {
+    const now = { value: 0 }
+    const queue = makeQueue(now, { defaultPosition: 'bottom-end' })
+    const { entry } = queue.push({})
+    expect(entry.position).toBe('bottom-end')
+    now.value = 1
+    const { entry: explicit } = queue.push({ position: 'top-start' })
+    expect(explicit.position).toBe('top-start')
   })
 
   it('keeps duration 0 entries alive forever (notifications)', () => {
@@ -124,6 +135,15 @@ describe('feedback queue', () => {
 
   it('exposes the six documented positions', () => {
     expect(QUEUE_POSITIONS).toEqual(['top-start', 'top', 'top-end', 'bottom-start', 'bottom', 'bottom-end'])
+  })
+
+  it('defaults the notification store to bottom-end so the toast corner stays free', () => {
+    // No component instance here, so this is the fallback store an application
+    // gets without installing the plugin.
+    const store = useNotifications()
+    store.push({ tone: 'info', title: 'Bottom' })
+    expect(store.items.value[0]?.position).toBe('bottom-end')
+    store.dispose()
   })
 
   it('notifies subscribers', () => {
