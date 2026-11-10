@@ -30,9 +30,10 @@ list, with the contract axis each style exercises, is docs/theming.md §8.
 | `src/styles/jin.css` | The base stylesheet — an explicit consumer import, never a side effect of the module. |
 | `themes/` | 18 files: nine styles (`jin`, `minimalism-and-swiss-style`, `neumorphism`, `glassmorphism`, `claymorphism`, `flat-design`, `neubrutalism`, `brutalism`, `dimensional-layering`), each with a `.dark` variant. |
 | `contracts/` | `tokens.json` (80 tokens) and `strings.json` (27 UI strings). |
-| `docs/` | `architecture.md` (why it is shaped this way), `components.md` (API reference), `consuming.md` (integration guide), `developing.md` (repo maintenance: commands, checkers, gallery, packaging, publishing), `theming.md`, and `README.en.md`, the English twin of the root README. |
+| `assets/` | The Jin icon: `jin-icon.svg`, its 1024 render, and the construction record in `docs/icon.md`; `tools/make_icon.py` regenerates the SVG. |
+| `docs/` | `architecture.md` (why it is shaped this way), `components.md` (API reference), `consuming.md` (integration guide), `developing.md` (repo maintenance: commands, checkers, gallery, packaging, publishing), `theming.md`, `icon.md` (the icon's construction record), and `README.en.md`, the English twin of the root README. |
 | `gallery/` | Vue 3 + Tauri demo app, and the browser-side checkpoint. Consumes the library through a `file:..` dependency, which pnpm hard-links into the gallery's virtual store — so the link is to the *inode*: editing a file in place is live there, but a tool that writes a new file over the old one (most editors and patch tools) leaves the link pointing at the stale content, and an added or deleted file needs a reinstall either way. `pnpm install --force` in `gallery/` refreshes it. The gallery also excludes the library from dep pre-bundling (`optimizeDeps.exclude` in its `vite.config.ts`), because two copies of the library mean two of every module-level `Symbol` and a private overlay stack per component. Its `src/i18n/` holds the en/zh dictionaries, the locale state, and the `t` it passes to `JinUI`. |
-| `tools/*.py` | `check_tokens.py` (six discipline checks), `check_contrast.py`, `smoke_pack.py`. |
+| `tools/*.py` | `check_tokens.py` (six discipline checks), `check_contrast.py`, `smoke_pack.py`, and `make_icon.py` (regenerates `assets/jin-icon.svg`). |
 | `tests/` | Vitest. Pure logic runs in Node; component tests opt into jsdom with a `// @vitest-environment jsdom` docblock. `gallery-i18n.spec.ts` guards the gallery dictionaries against the pages that use them. |
 
 ## Hard rules

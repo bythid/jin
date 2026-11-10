@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-labelledby="t d">
+  <title id="t">Overlapping scales</title>
+  <desc id="d">Three overlapping scales. Each rim is one elliptical arc, each inner edge is a three-point quadratic Bezier; the cream gaps are a constant 16 px; every scale casts a hard offset shadow, and the artwork is optically centred by its ink mass.</desc>
+  <rect width="1024" height="1024" fill="#F9F7E4"/>
+  <defs>
+    <clipPath id="clip-green"><path d="M0 0 A148.72 127.57 -25 1 1 0 254.06 Q111.48 124.48 0 0 Z"/></clipPath>
+    <clipPath id="clip-orange"><path d="M0 0 A191.04 163.88 -25 1 1 0 326.35 Q170.97 157.58 0 0 Z"/></clipPath>
+    <clipPath id="clip-red"><path d="M0 0 A218.00 187.00 -25 1 1 0 372.40 Q208.60 186.10 0 0 Z"/></clipPath>
+    <filter id="holeBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+    <mask id="redBoxHole" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <rect width="1024" height="1024" fill="#fff"/>
+      <rect x="139" y="458" width="247" height="136" fill="#000" filter="url(#holeBlur)"/>
+    </mask>
+  </defs>
+  <g transform="translate(-22.12 33.49)">
+
+  <!-- green -->
+  <g transform="translate(559.30 299.46) rotate(-30.749)">
+    <path d="M0 0 A148.72 127.57 -25 1 1 0 254.06" fill="none" stroke="#F9F7E4" stroke-width="32" stroke-linecap="butt"/>
+    <path d="M0 0 A148.72 127.57 -25 1 1 0 254.06 Q111.48 124.48 0 0 Z" fill="#4B2817" opacity="0.4" transform="translate(0.74 14.40)"/>
+    <path d="M0 0 A148.72 127.57 -25 1 1 0 254.06 Q111.48 124.48 0 0 Z" fill="#386754"/>
+    <path d="M112.29 39.12 Q119.90 31.57 127.66 24.21 A1.21 1.21 0 0 1 129.24 26.04 Q120.85 32.67 112.29 39.12 Z M116.10 54.11 Q128.58 44.13 141.29 34.48 A2.06 2.06 0 0 1 143.61 37.89 Q129.97 46.17 116.10 54.11 Z M123.47 66.31 Q138.42 56.71 153.62 47.60 A2.76 2.76 0 0 1 156.15 52.50 Q139.94 59.65 123.47 66.31 Z M129.06 79.52 Q146.10 72.05 163.32 65.10 A2.76 2.76 0 0 1 165.07 70.33 Q147.16 75.19 129.06 79.52 Z M131.60 95.27 Q151.18 90.01 170.85 85.28 A2.69 2.69 0 0 1 171.83 90.57 Q151.76 93.18 131.60 95.27 Z M132.36 111.28 Q153.31 108.13 174.30 105.53 A2.76 2.76 0 0 1 174.69 111.04 Q153.55 111.43 132.36 111.28 Z M139.48 126.27 Q156.11 125.64 172.73 125.36 A1.71 1.71 0 0 1 172.64 128.78 Q156.06 127.69 139.48 126.27 Z" fill="#F5DEB4" clip-path="url(#clip-green)"/>
+  </g>
+
+  <!-- orange -->
+  <g transform="translate(389.24 378.90) rotate(-29.454)">
+    <path d="M0 0 A191.04 163.88 -25 1 1 0 326.35" fill="none" stroke="#F9F7E4" stroke-width="32" stroke-linecap="butt"/>
+    <path d="M0 0 A191.04 163.88 -25 1 1 0 326.35 Q170.97 157.58 0 0 Z" fill="#4B2817" opacity="0.4" transform="translate(1.07 14.38)"/>
+    <path d="M0 0 A191.04 163.88 -25 1 1 0 326.35 Q170.97 157.58 0 0 Z" fill="#C57724"/>
+    <path d="M144.25 50.26 Q154.02 40.56 163.99 31.10 A1.55 1.55 0 0 1 166.02 33.44 Q155.24 41.97 144.25 50.26 Z M149.14 69.51 Q165.17 56.68 181.50 44.29 A2.65 2.65 0 0 1 184.48 48.67 Q166.96 59.31 149.14 69.51 Z M158.61 85.18 Q177.81 72.85 197.33 61.14 A3.55 3.55 0 0 1 200.59 67.44 Q179.76 76.63 158.61 85.18 Z M165.79 102.15 Q187.68 92.55 209.79 83.63 A3.55 3.55 0 0 1 212.05 90.35 Q189.03 96.58 165.79 102.15 Z M169.05 122.38 Q194.20 115.62 219.47 109.55 A3.45 3.45 0 0 1 220.72 116.34 Q194.95 119.70 169.05 122.38 Z M170.03 142.94 Q196.94 138.90 223.90 135.57 A3.55 3.55 0 0 1 224.40 142.64 Q197.24 143.14 170.03 142.94 Z M179.17 162.20 Q200.53 161.40 221.88 161.04 A2.19 2.19 0 0 1 221.77 165.42 Q200.47 164.03 179.17 162.20 Z" fill="#F5DEB4" clip-path="url(#clip-orange)"/>
+  </g>
+
+  <!-- red -->
+  <g transform="translate(219.00 472.00) rotate(-30.200)">
+    <path d="M0 0 A218.00 187.00 -25 1 1 0 372.40" fill="none" stroke="#F9F7E4" stroke-width="32" stroke-linecap="butt"/>
+  </g>
+  <g mask="url(#redBoxHole)">
+    <g transform="translate(219.00 472.00) rotate(-30.200)">
+      <path d="M0 0 A218.00 187.00 -25 1 1 0 372.40 Q208.60 186.10 0 0 Z" fill="#4B2817" opacity="0.4" transform="translate(0.88 14.40)"/>
+    </g>
+  </g>
+  <g transform="translate(219.00 472.00) rotate(-30.200)">
+    <path d="M0 0 A218.00 187.00 -25 1 1 0 372.40 Q208.60 186.10 0 0 Z" fill="#A33729"/>
+    <path d="M164.60 57.35 Q175.75 46.28 187.12 35.48 A1.77 1.77 0 0 1 189.45 38.16 Q177.14 47.89 164.60 57.35 Z M170.19 79.32 Q188.48 64.68 207.11 50.54 A3.02 3.02 0 0 1 210.51 55.54 Q190.52 67.68 170.19 79.32 Z M180.99 97.20 Q202.89 83.12 225.17 69.77 A4.05 4.05 0 0 1 228.89 76.96 Q205.13 87.44 180.99 97.20 Z M189.18 116.56 Q214.16 105.61 239.39 95.42 A4.05 4.05 0 0 1 241.97 103.09 Q215.70 110.21 189.18 116.56 Z M192.90 139.65 Q221.60 131.94 250.43 125.00 A3.94 3.94 0 0 1 251.87 132.75 Q222.46 136.59 192.90 139.65 Z M194.02 163.11 Q224.73 158.50 255.49 154.69 A4.05 4.05 0 0 1 256.06 162.76 Q225.07 163.34 194.02 163.11 Z M204.45 185.08 Q228.82 184.17 253.19 183.76 A2.50 2.50 0 0 1 253.07 188.76 Q228.75 187.17 204.45 185.08 Z" fill="#F5DEB4" clip-path="url(#clip-red)"/>
+  </g>
+  </g>
+</svg>

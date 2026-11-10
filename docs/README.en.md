@@ -5,6 +5,8 @@
 > Everything under `docs/` is English except [`theming.md`](theming.md), which is written in
 > Chinese.
 
+<p align="center"><img src="https://raw.githubusercontent.com/bythid/jin/main/assets/jin-icon.svg" width="120" height="120" alt="Jin icon"></p>
+
 # Jin · 锦
 
 A Vue 3 control library for desktop applications. It ships the controls an app needs — buttons,

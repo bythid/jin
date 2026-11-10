@@ -3,6 +3,8 @@
 > 本文件是中文版；英文版在 [`docs/README.en.md`](docs/README.en.md)，两份内容一致，改动其一即
 > 须同步另一份。`docs/` 下除 [`docs/theming.md`](docs/theming.md)（中文）外都是英文。
 
+<p align="center"><img src="https://raw.githubusercontent.com/bythid/jin/main/assets/jin-icon.svg" width="120" height="120" alt="Jin icon"></p>
+
 # Jin · 锦
 
 面向桌面应用的 Vue 3 控件库。它提供按钮、表单、浮层、导航、消息提示等常用控件，每个控件都能
