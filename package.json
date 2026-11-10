@@ -91,7 +91,7 @@
     "@vitest/coverage-v8": "^5.0.1",
     "@vue/test-utils": "^2.5.0",
     "husky": "^9.1.7",
-    "jsdom": "^30.0.1",
+    "jsdom": "^31.0.0",
     "publint": "^0.3.24",
     "typescript": "~5.9.3",
     "vite": "^8.3.0",
