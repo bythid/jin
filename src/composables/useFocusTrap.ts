@@ -77,15 +77,38 @@ export function useFocusTrap(options: UseFocusTrapOptions): UseFocusTrapReturn {
     ;(first ?? candidates[0])?.focus()
   }
 
+  /**
+   * Where focus lands when the trigger itself cannot take it: the nearest
+   * focusable ancestor of the trigger, else the first tabbable element outside
+   * the trap container. The extra isFocusable check rejects disabled and
+   * aria-hidden nodes, so the fallback is always one focus() accepts.
+   */
+  function fallbackTarget(trigger: HTMLElement | null): HTMLElement | null {
+    if (trigger && trigger.isConnected) {
+      let node = trigger.parentElement
+      while (node && node !== document.body) {
+        if (elementFocusState(node).isFocusable) return node
+        node = node.parentElement
+      }
+    }
+    const container = options.container.value
+    return (
+      collectCandidates(document).find(
+        (candidate) => !container?.contains(candidate) && elementFocusState(candidate).isFocusable,
+      ) ?? null
+    )
+  }
+
   function restoreFocus(): void {
     const trigger =
       options.trigger?.value !== undefined ? options.trigger.value : previouslyFocused
-    const decision = resolveFocusReturn(elementFocusState(trigger ?? null), null)
+    const fallback = fallbackTarget(trigger)
+    const decision = resolveFocusReturn(elementFocusState(trigger ?? null), elementFocusState(fallback))
     if (decision === 'trigger' && trigger) {
       trigger.focus()
       return
     }
-    if (decision === 'fallback' && previouslyFocused) previouslyFocused.focus()
+    if (decision === 'fallback' && fallback) fallback.focus()
   }
 
   function onKeydown(event: KeyboardEvent): void {

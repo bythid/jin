@@ -534,6 +534,36 @@ describe('JinModal', () => {
     expect(document.activeElement?.classList.contains('jin-modal__panel')).toBe(true)
   })
 
+  it('returns focus to the opening control on close', async () => {
+    const Host = defineComponent({
+      setup() {
+        const open = ref(false)
+        return () =>
+          h('div', [
+            h('button', { id: 'opener', onClick: () => { open.value = true } }, 'Open'),
+            h(JinModal, {
+              modelValue: open.value,
+              'onUpdate:modelValue': (value: boolean) => { open.value = value },
+            }),
+          ])
+      },
+    })
+    const wrapper = withPlugin(Host, { attachTo: document.body })
+    await nextTick()
+    const opener = document.getElementById('opener')
+    opener?.focus()
+    opener?.click()
+    await nextTick()
+    await nextTick()
+    expect(document.activeElement?.classList.contains('jin-modal__panel')).toBe(true)
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+    await nextTick()
+    await nextTick()
+    expect(document.activeElement).toBe(opener)
+    wrapper.unmount()
+  })
+
   it('emits update:modelValue on Escape', async () => {
     const wrapper = withPlugin(JinModal, { props: { modelValue: true }, attachTo: document.body })
     await nextTick()
