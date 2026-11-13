@@ -10,7 +10,7 @@ const props = withDefaults(
     variant?: 'text' | 'rect' | 'circle'
     width?: string | number
     height?: string | number
-    /** Sweep animation. Disabled automatically under reduced motion. */
+    /** Sweep animation. The stylesheet deliberately exempts it from reduced-motion zeroing, like the spinner. */
     animated?: boolean
   }>(),
   { variant: 'text', width: '', height: '', animated: true },

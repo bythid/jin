@@ -8,7 +8,7 @@ disagree, they win.
 
 Jin (锦) — a Vue 3 control library whose entire style interface is a token contract, published to
 npm as `@bythid/jin` (MIT, peer `vue ^3.5`; the current version is `package.json`'s). 37 components,
-15 pure decision modules, 9 DOM composables, 250 tests. Two ideas carry everything:
+15 pure decision modules, 9 DOM composables, 257 tests. Two ideas carry everything:
 
 1. **Behaviour lives in plain TypeScript; components only render.** `src/core/` imports no Vue and
    assumes no DOM, which is why most tests run in Node in milliseconds.
@@ -112,7 +112,7 @@ languages, and for a release a `CHANGELOG.md` entry plus a `package.json` bump i
 
 - The ZCode Windows sandbox re-stamps the workspace with a Low integrity label per session
   (recurrence confirmed on this machine; diagnosis and fix in
-  `../TauriVueStackNotes/docs/zcode-sandbox-integrity-label.md`). Anything built in the tree then
+  `../dev-notes/tauri-vue/zcode-sandbox-integrity-label.md`). Anything built in the tree then
   runs at Low IL: executables cannot write outside the workspace, and a Tauri shell fails
   **silently** — the process lives, no window, no stderr. When a locally built exe "starts but does
   nothing", check `icacls <exe>` for `Low Mandatory Level`, then

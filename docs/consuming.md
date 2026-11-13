@@ -252,7 +252,7 @@ persist anything itself; that is the application's job, and the Gallery shows on
 | Every message appears twice | The toast/notification regions are mounted more than once | Mount them once, at the root |
 | A themed control looks unstyled | The theme file was not imported, so its tokens have no values | Import the theme, or rely on the fallback values written into the base stylesheet |
 | "Cannot find module '@bythid/jin/styles'" after upgrading | The specifier is now `@bythid/jin/styles.css` — the version without `.css` never resolved through the package's `exports` | Rename the import |
-| Styles leak into the application | The application wrote a `.jin-*` selector, or the library gained a global element selector | Run `pnpm run check` in the library — both are reported by check 5 of `tools/check_tokens.py` |
+| Styles leak into the application | The application wrote a `.jin-*` selector, or the library gained a global element selector | An application-side `.jin-*` selector is invisible to the checkers and is fixed app-side; the library side is reported by check 5 of `tools/check_tokens.py` (`pnpm run check` in the library) |
 
 ---
 

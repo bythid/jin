@@ -67,7 +67,7 @@ Linear or circular, determinate or not.
 | `max` | `number` | Default 100 |
 | `size`, `showValue`, `label`, `diameter` | | `diameter` is circular-only, in px |
 
-Determinate mode always prints the percentage. Indeterminate mode omits `aria-valuenow` entirely
+Determinate mode prints the percentage while `showValue` is on (the default). Indeterminate mode omits `aria-valuenow` entirely
 rather than reporting a made-up number.
 
 ### JinSkeleton
@@ -76,7 +76,7 @@ rather than reporting a made-up number.
 | --- | --- | --- |
 | `variant` | `'text' \| 'rect' \| 'circle'` | |
 | `width`, `height` | `string \| number` | |
-| `animated` | `boolean` | The sweep; suppressed under reduced motion |
+| `animated` | `boolean` | The sweep; deliberately exempt from reduced-motion zeroing, like the spinner — a frozen placeholder no longer says "loading" |
 
 Use a skeleton when the final layout is predictable, a spinner when it is not.
 
@@ -147,6 +147,9 @@ sticky header) splits its regions by `positions` — disjoint subsets never doub
 Store methods: `push` (returns the id), `update`, `dismiss`, `clear`, `pause`, `resume`, plus the
 reactive `items` and `byPosition`.
 
+The regions themselves take `positions` (which of the six corners to render; default all six) and
+`label` (the live region's accessible name).
+
 **Toast versus notification:**
 
 - A **toast** auto-dismisses and must not interrupt. It confirms that something happened; it must
@@ -156,7 +159,7 @@ reactive `items` and `byPosition`.
 Hovering or focusing a region pauses its timers, so a message cannot vanish mid-read. Toasts and
 notifications are two separate stores: the per-position caps and the removal rule are counted per
 store, and a message pushed into one never removes an entry from the other. Within a store, a full
-position removes the oldest auto-dismissing message; an entry with `duration: 0` is never removed
+position removes the lowest-priority, then oldest, auto-dismissing message; an entry with `duration: 0` is never removed
 to make room — when a position is full of such entries, the incoming message is the one dropped.
 
 Both regions pin to the same six corners with the same z-index, and neither stack reflows for the
@@ -170,7 +173,7 @@ above.
 
 | Prop | Type | Notes |
 | --- | --- | --- |
-| `status` | `'success' \| 'danger' \| 'warning' \| 'info' \| 'empty' \| 'forbidden' \| 'notFound' \| 'offline'` | Chooses tone + icon + default title |
+| `status` | `'success' \| 'danger' \| 'warning' \| 'info' \| 'empty' \| 'forbidden' \| 'notFound' \| 'offline'` | Chooses tone + icon; `empty` also supplies a default title |
 | `title`, `description`, `icon` | | `icon` overrides the status preset |
 
 Slots: `icon`, `actions`, default.
@@ -204,7 +207,9 @@ window controls live) and top-right elsewhere, mirroring with the document direc
 removes it for applications that render their own close button.
 
 On open, focus moves into the panel; Tab cycles within it; on close, focus returns to the element
-that opened it. A `busy` dialog deliberately breaks the always-dismissable rule — that is what
+that opened it — or, when that element has been removed or is no longer focusable, to its nearest
+focusable ancestor, else to the first focusable element outside the panel, so focus is never left
+on `<body>`. A `busy` dialog deliberately breaks the always-dismissable rule — that is what
 prevents a half-finished save from being dismissed by a stray keystroke.
 
 ### JinDrawer
@@ -222,6 +227,7 @@ The same API as the modal, with `side: 'top' | 'right' | 'bottom' | 'left'` and 
 | `closeOnEsc`, `closeOnOutside` | `boolean` | |
 | `ignoreAnchor` | `boolean` | Clicks on the trigger do not dismiss (default `true`) |
 | `matchAnchorWidth` | `boolean` | Panel is never narrower than the anchor; content may still widen it up to the max-width cap (default `false`) |
+| `ariaLabel`, `role` | `string` | Accessible name and role of the panel; `role` defaults to `'dialog'` |
 | `lazy` | `boolean` | **Declared but not implemented** — the panel is always mounted while closed |
 
 `JinDropdown`, `JinSelect` (custom mode), `JinTooltip` and `JinPopconfirm` build on this popover;
@@ -235,6 +241,7 @@ Non-interactive by design; never the only place information lives.
 | --- | --- | --- |
 | `content` | `string` | Or the `#content` slot |
 | `placement` | `Placement` | Default `'top'` |
+| `offset`, `ariaLabel` | | `offset` is the gap to the anchor in px (default `6`); `ariaLabel` overrides the tooltip's accessible name |
 | `openDelay` / `closeDelay` | `number` | ms; defaults 300 / 80 |
 | `disabled` | `boolean` | |
 
@@ -259,9 +266,14 @@ paints the result.
 | Prop | Type | Notes |
 | --- | --- | --- |
 | `title`, `description`, `tone` | | `tone: 'danger'` colours the confirm action |
+| `modelValue` | `boolean` | Omitting it makes the popconfirm self-managing, same as the popover |
+| `anchor` | `HTMLElement` | Defaults to the default slot's trigger wrapper |
 | `confirmLabel`, `cancelLabel` | `string` | Fall back to the injected translations |
 | `loading` | `boolean` | For a confirm that itself takes time |
-| `placement` | `Placement` | |
+| `closeOnConfirm` | `boolean` | Default `true`; `false` keeps the panel open after confirming |
+| `placement` | `Placement` | Default `'top'` |
+
+Emits: `update:modelValue`, `confirm`, `cancel`.
 
 Focus moves to the confirm button on open, so a keyboard user is not stranded. Escape cancels.
 An `anchor` set at the same time as the open flag is measured after the DOM update, so the panel is
@@ -291,7 +303,7 @@ switch, a group), pass `:no-label-for="true"`.
 
 | Prop | Type | Notes |
 | --- | --- | --- |
-| `modelValue` | `string` | |
+| `modelValue` | `string \| number \| null` | |
 | `multiline` | `boolean` | Renders a textarea |
 | `rows`, `autosize`, `maxRows` | | Autosizing stops at `maxRows` and scrolls |
 | `type`, `size`, `placeholder` | | |
@@ -307,7 +319,9 @@ Slots: `prefix`, `suffix`. Emits: `update:modelValue`, `input`, `change`, `clear
 ### JinSearchField
 
 A `JinTextField` specialised for search: a search icon, a clear button, Escape to clear, and a
-debounced `search` event (`debounce`, default 300ms; `0` for Enter-only).
+debounced `search` event (`debounce`, default 300ms; `0` for Enter-only). `immediate` (default
+`true`) makes `Enter` fire `search` at once — clearing the pending debounce — instead of waiting
+for it.
 
 ### JinSelect
 
@@ -318,7 +332,7 @@ One API, two implementations.
 | `modelValue` | `string \| null` | |
 | `options` | `SelectOption[]` | `{ value, label, disabled?, data? }` |
 | `native` | `boolean` | Renders a real `<select>`; flipping it changes nothing else |
-| `placeholder`, `size`, `disabled`, `invalid`, `block` | | |
+| `placeholder`, `size`, `disabled`, `invalid`, `block`, `ariaLabel` | | |
 | `keepOpen` | `boolean` | Custom mode only |
 
 Emits `update:modelValue` and `change(value, option)`. Slot: `option` for rich rows.
@@ -399,6 +413,7 @@ reasoning as "Not built, and why" in [architecture.md](architecture.md)).
 | `modelValue` | `string \| null` | |
 | `options` | `RadioOption[]` | `{ value, label, hint?, disabled? }` |
 | `label`, `hint`, `error`, `required` | | The group renders its own `fieldset`/`legend` |
+| `name` | `string` | Form name for the underlying radio inputs; generated when omitted |
 | `orientation` | `'vertical' \| 'horizontal'` | |
 | `disabled` | `boolean` | |
 
@@ -444,9 +459,10 @@ mounting the component.
 | `grow` | `boolean` | Tabs fill the list |
 
 Each tab's content comes from the slot named after its value (`<template #panelValue>`); a shared
-`#panel` slot serves every tab that has no value-named slot. `#default` is **not** panel content
-and renders nothing. The library sets `role="tab"`/`role="tabpanel"` and `aria-controls` without
-caring where the panel content lives in the tree.
+`#panel` slot serves every tab that has no value-named slot. The tab buttons themselves render
+through the `#tab` scoped slot (`{ item, selected }`), falling back to the default label. `#default`
+is **not** panel content and renders nothing. The library sets `role="tab"`/`role="tabpanel"` and
+`aria-controls` without caring where the panel content lives in the tree.
 
 ### JinMenu
 
@@ -547,6 +563,7 @@ library/application boundary.
 | `selected` | `string \| null` | `v-model:selected` |
 | `selectionMode` | `'none' \| 'single' \| 'multiple'` | Multiple selection is uncontrolled: the tree keeps the set internally and reports it through `update:selectedMany`; there is no `selectedMany` prop to write back yet |
 | `ariaLabel`, `indent`, `loadingLabel`, `emptyLabel` | | |
+| `rowWidth` | `'fill' \| 'content'` | Default `'fill'` stretches every row across the tree; `'content'` sizes each row to its own content (a chip on `--jin-surface`), leaving the rest of the tree as blank surface for the application to paint |
 
 Emits: `update:expanded`, `update:selected`, `update:selectedMany`, `activate`, `toggle`,
 `load-start`, `load`, `load-error`.

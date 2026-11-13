@@ -16,7 +16,7 @@ font pairings and UX guidelines.
 
   | Style | The characteristics that were implemented |
   | --- | --- |
-  | **Minimalism & Swiss Style** | Monochrome page, one red as the only colour, zero radius, no shadow, hierarchy from type and alignment |
+  | **Minimalism & Swiss Style** | Monochrome page, a single red accent, zero radius, no shadow, hierarchy from type and alignment |
   | **Neumorphism** | One material, extruded and pressed: panels are the page's own colour, told apart by a light-and-shade pair of shadows and an inset shadow |
   | **Glassmorphism** | Translucent surfaces over a coloured ground, 1px light edge, backdrop blur, diagonal sheen instead of a drop shadow |
   | **Claymorphism** | Chunky pastel clay: 3px rims in a tint of the fill, 16–24px radii, matte gradient, solid thickness offset under a soft shadow |
@@ -27,8 +27,9 @@ font pairings and UX guidelines.
 
   The eight were selected on two conditions. They are styles the field treats as mainstream and the
   ones the catalogue itself references most often in its product and UX guidance; and they cover the
-  contract's axes with as little overlap as possible — glass is the only user of `--jin-blur`,
-  neumorphism of `--jin-shadow-inset`, claymorphism of thick pastel rims. That overlap-free spread
+  contract's axes with as little overlap as possible — glass and dimensional layering are the only
+  non-zero users of `--jin-blur`, neumorphism makes `--jin-shadow-inset` its primary visual,
+  claymorphism of thick pastel rims. That overlap-free spread
   is what makes them worth having side by side.
 
   The catalogue holds 88 entries, of which 50 are marked active (repository snapshot at the time of

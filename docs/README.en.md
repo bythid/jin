@@ -104,7 +104,7 @@ import App from './App.vue'
 
 createApp(App)
   .use(JinUI, {
-    // All three are optional: `app.use(JinUI)` on its own is a valid install.
+    // All options are optional: `app.use(JinUI)` on its own is a valid install.
     t: (key, vars) => i18n.t(key, vars),
     capabilities: {
       pickFolder: async () => '/some/path',
@@ -138,13 +138,14 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 </template>
 ```
 
-### The three `JinUI` options
+### The `JinUI` options
 
 | Option | What it does | If you omit it |
 | --- | --- | --- |
 | `t` | Translates the library's interface strings | The built-in English defaults are used |
 | `capabilities` | Gives the library desktop access: `pickFolder` / `openExternal` / clipboard | Controls that need them hide that entry instead of failing |
 | `theme` | Receives theme changes so the application persists them; the library never reads or writes storage itself | Style and mode live for the session only |
+| `overlay` | Shares one overlay controller across apps (tests, micro-frontends) | Each app builds its own controller |
 
 Every string the library needs, with its default text, is declared in
 [`contracts/strings.json`](../contracts/strings.json). No key contains a business word — the library
@@ -188,9 +189,10 @@ others express no depth at all.
 | **Brutalism** | 0 | none | 3px, always visible | 0s |
 | **Dimensional Layering** | 6 / 10 / 14px | four shadow levels | 1px hairline | 200ms |
 
-Titles read `--jin-font-display`: in Jin it is a second family (serif/Songti), elsewhere the same
-family as body text; the texture token `--jin-surface-texture` carries Jin's warp/weft grid and is
-`none` in the other eight.
+Titles read `--jin-font-display`: in Jin it is a second family (serif/Songti); the other styles set
+the same family as body text, with glassmorphism the exception — a display variant of the same
+family (SF Pro Display against body SF Pro Text). The texture token `--jin-surface-texture` carries
+Jin's warp/weft grid and is `none` in the other eight.
 
 ### Writing your own theme
 
@@ -225,6 +227,7 @@ are `minimalism-and-swiss-style`, `neumorphism`, `glassmorphism`, `claymorphism`
 
 ## The controls
 
+**Actions** — `JinButton`
 **Feedback** — `JinSpinner` `JinProgress` `JinSkeleton` `JinAlert` `JinToastRegion`
 `JinNotificationRegion` `JinResult`
 **Overlays** — `JinModal` `JinDrawer` `JinPopover` `JinTooltip` `JinPopconfirm`
@@ -255,8 +258,8 @@ They look similar and are not interchangeable:
 | Default corner | `top-end` (top right) | `bottom-end` (bottom right) |
 
 The two are separate queues with separate caps and separate removal: a message pushed into one
-never drops an entry from the other. Within a queue, a full position drops the **oldest
-auto-dismissing message**; an entry with `duration: 0` is never dropped to make room — when a
+never drops an entry from the other. Within a queue, a full position drops the **lowest-priority, then oldest, auto-dismissing
+message**; an entry with `duration: 0` is never dropped to make room — when a
 position is full of such entries, the incoming message is the one dropped. Losing a confirmation
 is a small annoyance; losing a decision the user still had to make is not.
 
@@ -274,12 +277,13 @@ The following holds for every control:
 
 - Every interactive control is keyboard reachable, with a visible focus ring drawn from the focus
   tokens.
-- While an overlay is open, focus stays inside it; on close it returns to the element that opened
-  the overlay — or, if that element became unfocusable, to a focusable neighbour. Never to
-  `<body>`.
+- Modal-type overlays (`JinModal`, `JinDrawer`) trap focus while open and return it to the element
+  that opened them; if that element has been removed or is no longer focusable, to its nearest
+  focusable ancestor, else to the first focusable element outside the overlay. Popover-family
+  overlays do not trap focus — it stays on the trigger.
 - Nested overlays close one at a time: Escape acts only on the topmost one.
-- State is never communicated by colour alone. Every tone pairs with an icon, and every value that
-  matters also appears as text.
+- State is never communicated by colour alone. In the feedback controls every tone pairs with an
+  icon, and the progress bar prints the percentage by default.
 - `prefers-reduced-motion: reduce` sets every duration token to `0s`. The only exempt animations
   are the two loading indicators — the spinner's rotation and the skeleton sweep — because a frozen
   spinner no longer means "loading".
@@ -301,7 +305,7 @@ The following holds for every control:
 - Three props are declared but not implemented, and setting them does nothing: `lazy` on
   `JinPopover`, `chevron` on `JinDropdown`, `maxItems` on `JinBreadcrumb`.
 - The stylesheet relies on CSS custom properties, `:focus-visible` and `backdrop-filter` (the last
-  used by the glassmorphism style only).
+  used by the glassmorphism and dimensional-layering styles).
 
 ---
 

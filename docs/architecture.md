@@ -24,6 +24,12 @@ specification is [theming.md](theming.md) (Chinese), and day-to-day repository w
 | `dismissable.ts` | Should this overlay close, given the event? |
 | `hotkey.ts` | Is this combination recordable, and does it collide? |
 | `queue.ts` | What expires now, and what is removed when the cap is reached? |
+| `filter.ts` | Given a query and the option labels, which rows match, and which spans to highlight? |
+| `tooltip-trigger.ts` | Given the pointer and focus events, does the tooltip open, close, or wait? |
+| `platform.ts` | Which side of the window does the corner close button sit on? |
+| `offset.ts` | Given a pinned corner and an offset, where does the message stack move? |
+| `layer.ts` | Which z-index token does each overlay layer read? |
+| `id.ts` | What is the generated element id? |
 
 `src/composables/` is the other half: the part that must touch the DOM. `usePositioning` measures
 real rectangles and schedules `requestAnimationFrame`; `computePosition` does the geometry.

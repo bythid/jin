@@ -20,7 +20,31 @@ what it contains. Entries are written for the application that has to react — 
 that only shows up in an unusual host layout, because that is the kind of change that costs
 downstream an afternoon.
 
-## [0.4.1] — 2026-10-16
+## [Unreleased]
+
+Changed:
+
+- **Notifications now default to the bottom-end corner.** The notification
+  store behind `JinNotificationRegion` (and the one `useNotifications` creates
+  on demand) places new messages at `bottom-end` unless the caller passes an
+  explicit `position` — per entry or as the store's `defaultPosition`.
+  Toasts keep the historical `top-end`, so the two regions no longer share a
+  corner by accident. Hosts that already pass an explicit `position` are
+  unaffected; hosts that expect notifications at the top-end must pass it or
+  flip the region after upgrading.
+
+Fixed:
+
+- **Closing a dialog no longer drops focus on `<body>`.** The focus return the
+  dialogs promise — back to the opening control, to a focusable fallback when
+  it became unfocusable — was only half-wired: the fallback candidate was
+  never computed, so a trigger that had been removed or disabled while the
+  dialog was open left keyboard focus on `<body>`, restarting the user from
+  the top of the page. The return now goes to the trigger's nearest focusable
+  ancestor, else to the first focusable element outside the panel. Dialogs
+  whose trigger is still focusable are unchanged.
+
+## [0.4.1] — 2026-10-28
 
 Added:
 

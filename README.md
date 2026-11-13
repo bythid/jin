@@ -18,7 +18,7 @@
 
 ## 安装
 
-包已发布到 npm（`@bythid/jin`，0.x 阶段，见「版本与变更」）：
+包已发布到 npm（`@bythid/jin`，0.x 阶段，见「版本与已知限制」）：
 
 ```bash
 npm install @bythid/jin
@@ -92,7 +92,7 @@ import App from './App.vue'
 
 createApp(App)
   .use(JinUI, {
-    // 三项都是可选的：只写 `app.use(JinUI)` 也是一次合法的安装。
+    // 配置项都是可选的：只写 `app.use(JinUI)` 也是一次合法的安装。
     t: (key, vars) => i18n.t(key, vars),
     capabilities: {
       pickFolder: async () => '/some/path',
@@ -126,13 +126,14 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 </template>
 ```
 
-### `JinUI` 的三个配置项
+### `JinUI` 的配置项
 
 | 选项 | 作用 | 省略时 |
 | --- | --- | --- |
 | `t` | 翻译本库的界面文案 | 使用内置的英文默认文案 |
 | `capabilities` | 向本库注入桌面能力：`pickFolder` / `openExternal` / 剪贴板 | 需要它们的控件隐藏对应入口，而不是报错 |
 | `theme` | 接收主题变化通知，由应用自己持久化；本库从不读写任何存储 | 风格与模式只在本次会话内有效 |
+| `overlay` | 跨应用共享同一个 overlay 控制器（测试、微前端） | 每个应用自建控制器 |
 
 本库需要的全部文案 key 及其默认文本声明在
 [`contracts/strings.json`](contracts/strings.json)。没有一个 key 含业务词——本库没有业务词汇可
@@ -173,7 +174,8 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 | **粗野主义** | 0 | 无 | 3px，始终可见 | 0s |
 | **维度分层** | 6 / 10 / 14px | 四级阴影 | 1px 发丝线 | 200ms |
 
-标题读取 `--jin-font-display`：在 Jin 风格里它是第二字族（衬线/宋体），在其余风格里与正文同字族；
+标题读取 `--jin-font-display`：在 Jin 风格里它是第二字族（衬线/宋体）；其余风格里与正文同字族，
+玻璃拟态例外——同族的展示变体（SF Pro Display 对正文的 SF Pro Text）。
 纹理令牌 `--jin-surface-texture` 只有 Jin 定义经纬网格图案，其余八个风格全部为 `none`。
 
 ### 写一个自己的主题
@@ -204,6 +206,7 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 
 ## 控件清单
 
+**操作** —— `JinButton`
 **反馈** —— `JinSpinner` `JinProgress` `JinSkeleton` `JinAlert` `JinToastRegion`
 `JinNotificationRegion` `JinResult`
 **浮层** —— `JinModal` `JinDrawer` `JinPopover` `JinTooltip` `JinPopconfirm`
@@ -232,7 +235,7 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 | 默认位置 | `top-end`（右上角） | `bottom-end`（右下角） |
 
 两者是两条独立的队列，容量与淘汰各算各的：往一边加消息，永远不会丢掉另一边已有的。各自队列内部，
-位置满了丢的是**最旧的会自动消失的那条**；`duration` 为 0 的常驻消息不会被丢——该位置已满且全是
+位置满了丢的是**优先级最低、再按最旧的会自动消失的那条**；`duration` 为 0 的常驻消息不会被丢——该位置已满且全是
 常驻消息时，丢的是新来的那条。丢掉一条确认只是轻微的不便；丢掉一个用户还等着做的决定不是。
 
 两个消息容器固定在相同的六个角落，互不为对方让位。默认位置错开——toast 落在 `top-end`，
@@ -246,10 +249,12 @@ notification 落在 `bottom-end`——只有调用方把两者放进同一个 `p
 以下行为对每个控件成立：
 
 - 每个可交互控件都能用键盘到达，并有取自焦点令牌的可见焦点环。
-- 浮层打开时焦点锁定在浮层内，关闭时归还给打开它的元素——触发元素变得不可聚焦时归还给它附近
-  可聚焦的元素，绝不归还到 `<body>`。
+- `JinModal` 与 `JinDrawer` 打开时焦点锁定在浮层内，关闭时归还给打开它们的元素；该元素已被移除
+  或不可聚焦时，先归还给它最近的可聚焦祖先，否则落到浮层外第一个可聚焦元素。其余浮层（气泡类）
+  不锁定焦点，焦点留在触发元素上。
 - 嵌套浮层逐个关闭：Escape 只作用于栈顶那一层。
-- 状态从不只靠颜色传达。每个 tone 都配图标，每个要紧的取值同时以文字出现。
+- 状态从不只靠颜色传达。反馈类控件（警告框、结果页、通知与 toast）的每个 tone 都配图标，进度条
+  默认打印百分比。
 - `prefers-reduced-motion: reduce` 把所有时长令牌置为 `0s`；唯二豁免的是加载动画——spinner 的
   旋转和骨架屏的扫光——因为停住的 spinner 不再表示「正在加载」。
 - 成组的控件（标签页、菜单、工具栏、树、选择器、单选组）整组占一个 tab 停留点，组内用方向键移动。
@@ -265,7 +270,8 @@ notification 落在 `bottom-end`——只有调用方把两者放进同一个 `p
   Gallery 的 dev 构建实测）；超过这个量级的数据量需要应用自己处理。
 - 三个 prop 声明了但未实现，设置它们不产生任何效果：`JinPopover` 的 `lazy`、`JinDropdown` 的
   `chevron`、`JinBreadcrumb` 的 `maxItems`。
-- 样式表依赖 CSS 自定义属性、`:focus-visible` 和 `backdrop-filter`（玻璃拟态使用最后一项）。
+- 样式表依赖 CSS 自定义属性、`:focus-visible` 和 `backdrop-filter`（最后一项玻璃拟态与维度分层
+  使用）。
 
 ---
 
