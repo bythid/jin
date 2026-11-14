@@ -106,7 +106,8 @@ pnpm run gallery:web    # browser checkpoint — required for portal, positionin
 - Docs move with the code: `docs/components.md` for the API, `docs/theming.md` for measured contrast
 numbers (compute them — `tools/check_contrast.py` is the source of truth), the README in both of its
 languages, and for a release a `CHANGELOG.md` entry plus a `package.json` bump in one commit on
-`main`, tagged `vX.Y.Z`.
+`develop`; the release lands by merging `develop` into `main` and tagging `vX.Y.Z` there (see
+Branches and releases).
 
 ## Environment gotchas
 
@@ -147,6 +148,16 @@ Each ruleset carries its own bypass list, and the lists are not shared, so the r
 Definition of done — one commit straight to `main`, then a `vX.Y.Z` tag — works only for an account
 on both. A rejected `git push origin vX.Y.Z` means the bypass list failed, not `publish.yml`:
 nothing is staged.
+
+## Branches and releases
+
+Daily development happens on the `develop` branch; do not commit to `main` directly.
+
+- `develop`: the development branch. All changes land here first.
+- `main`: the release branch. It only receives merges from `develop`, and tags are cut on `main`
+  only. `main` is protected (see Repository protection above): on this repository the merge arrives
+  as a pull request with a linear history.
+- To release: merge `develop` into `main`, tag `vX.Y.Z` on `main`, then push `main` and the tag.
 
 ## Conventions
 
