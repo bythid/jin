@@ -20,7 +20,7 @@ what it contains. Entries are written for the application that has to react — 
 that only shows up in an unusual host layout, because that is the kind of change that costs
 downstream an afternoon.
 
-## [Unreleased]
+## [0.6.0] — 2026-11-15
 
 Added:
 
