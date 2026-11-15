@@ -17,8 +17,10 @@ source contains no hardcoded style values — a rule a checker enforces (see
 
 **What the name means.** 锦 is brocade: a fabric woven from repeating small units and dyed in
 different colourways. The library has the same structure — components are the repeat units, and
-appearance is swapped whole, by theme file. The name is the Chinese word, read `jin`, not a
-Japanese reading of it.
+appearance is swapped whole, by theme file. 锦 is also the jin of 锦鲤, the koi. Spread flat, the
+three scales of the mark are the repeating pattern of a weave; overlapped, they are the scales of
+a carp — red, orange and cream, the colours of a koi. The name is the Chinese word, read `jin`, not
+a Japanese reading of it.
 
 ---
 
