@@ -106,17 +106,29 @@ body,
   white-space: nowrap;
 }
 
-/* The recolor palette: preset hues plus a free picker. The swatch colours are
-   hue samples, not theme values — the theme itself renders the result. */
+/* The recolor palette, opened from a header button into a popover: a small
+   grid of recommended hues plus a free picker. The swatch colours are hue
+   samples, not theme values — the theme itself renders the result. */
 .gallery-palette {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: var(--jin-space-2);
+  justify-content: center;
+  padding: var(--jin-space-3);
+  width: 180px;
+}
+
+.gallery-palette__row {
+  grid-column: 1 / -1;
+  display: flex;
   align-items: center;
-  gap: var(--jin-space-1);
+  justify-content: center;
+  gap: var(--jin-space-2);
 }
 
 .gallery-swatch {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: var(--jin-radius-full);
   border: 2px solid var(--jin-border-color);
   padding: 0;
@@ -126,6 +138,13 @@ body,
 .gallery-swatch--active {
   outline: var(--jin-focus-ring-width) solid var(--jin-focus-ring-color);
   outline-offset: var(--jin-focus-ring-offset);
+}
+
+.gallery-hue-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--jin-radius-full);
+  display: inline-block;
 }
 
 .gallery-hue-input {

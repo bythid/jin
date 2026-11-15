@@ -22,6 +22,7 @@ import {
   JinIcon,
   JinNav,
   JinNotificationRegion,
+  JinPopover,
   JinSelect,
   JinSwitch,
   JinToastRegion,
@@ -185,6 +186,12 @@ function announceStyle(): void {
 // keeps its lightness ladder and saturation discipline, and the controller
 // re-derives the whole colour family from the anchor, clamped to WCAG AA.
 const PRESET_HUES = [220, 195, 150, 90, 30, 0, 330, 270]
+const paletteOpen = ref(false)
+// The trigger dot shows the colour the theme actually wears right now —
+// the accent itself while the theme owns its palette, the anchor hue otherwise.
+const dotColor = computed(() =>
+  theme.accentHue.value === null ? 'var(--jin-accent)' : `hsl(${theme.accentHue.value} 70% 55%)`,
+)
 
 function announceHue(): void {
   const validation = theme.validateRecolor()
@@ -269,8 +276,26 @@ onMounted(() => {
             />
           </div>
 
-          <div class="gallery-control">
-            <span class="gallery-control__label">{{ t('app.control.palette') }}</span>
+          <JinPopover
+            :model-value="paletteOpen"
+            placement="bottom-end"
+            arrow
+            :aria-label="t('app.control.paletteAria')"
+            @update:model-value="(value: boolean) => (paletteOpen = value)"
+          >
+            <template #anchor="{ toggle }">
+              <JinButton
+                variant="secondary"
+                size="sm"
+                :aria-label="t('app.control.paletteAria')"
+                @click="toggle()"
+              >
+                <template #icon>
+                  <span class="gallery-hue-dot" :style="{ backgroundColor: dotColor }" aria-hidden="true" />
+                </template>
+                {{ t('app.control.palette') }}
+              </JinButton>
+            </template>
             <div class="gallery-palette" role="group" :aria-label="t('app.control.paletteAria')">
               <button
                 v-for="hue in PRESET_HUES"
@@ -283,26 +308,28 @@ onMounted(() => {
                 :aria-label="t('app.control.paletteHue', { hue })"
                 @click="applyHue(hue)"
               />
-              <input
-                type="color"
-                class="gallery-hue-input"
-                :aria-label="t('app.control.palettePickerAria')"
-                @input="onPickerInput"
-              />
-              <JinTooltip :content="t('app.control.paletteResetTooltip')" placement="bottom">
-                <JinButton
-                  variant="ghost"
-                  size="sm"
-                  icon
-                  :disabled="theme.accentHue.value === null"
-                  :label="t('app.control.paletteReset')"
-                  @click="applyHue(null)"
-                >
-                  <template #icon><JinIcon name="refresh" /></template>
-                </JinButton>
-              </JinTooltip>
+              <div class="gallery-palette__row">
+                <input
+                  type="color"
+                  class="gallery-hue-input"
+                  :aria-label="t('app.control.palettePickerAria')"
+                  @input="onPickerInput"
+                />
+                <JinTooltip :content="t('app.control.paletteResetTooltip')" placement="bottom">
+                  <JinButton
+                    variant="ghost"
+                    size="sm"
+                    icon
+                    :disabled="theme.accentHue.value === null"
+                    :label="t('app.control.paletteReset')"
+                    @click="applyHue(null)"
+                  >
+                    <template #icon><JinIcon name="refresh" /></template>
+                  </JinButton>
+                </JinTooltip>
+              </div>
             </div>
-          </div>
+          </JinPopover>
 
           <JinTooltip :content="t('app.control.resetTooltip')" placement="bottom">
             <JinButton variant="ghost" size="sm" icon :label="t('app.control.reset')" @click="resetDemo">
