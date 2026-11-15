@@ -22,6 +22,21 @@ downstream an afternoon.
 
 ## [Unreleased]
 
+Added:
+
+- **Accent-hue recoloring on the theme controller.** `useTheme().setAccentHue(hue)` re-anchors
+  the current theme's colour family onto the hue you pick: every colour-bearing token rotates by
+  the same OKLCH hue delta with lightness and chroma held, the semantic state colours (danger,
+  warning, success, info) never move, and the result is re-measured against WCAG AA with lightness
+  clamped where the rotation alone missed. `validateRecolor()` returns the per-pair ratios; the
+  hue rides in `ThemeSnapshot.accentHue`, so the host's existing `onChange` persistence stores it
+  too. A few styles limit what moves (`RECOLOR_PARTICIPATION`): e-ink-paper rotates nothing,
+  pixel-art only its accent family. Existing hosts are unaffected — nothing changes until
+  `setAccentHue` is called.
+- **Recolor exports for hosts building their own palette controls:** `computeRecolor` (the pure
+  hue re-anchoring decision), `hueOfColor` (hue of any CSS colour) and `RECOLOR_PARTICIPATION`
+  (the per-style participation table).
+
 Changed:
 
 - **Three catalogue styles retuned away from violet: `claymorphism`,

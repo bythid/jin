@@ -242,7 +242,8 @@ persist anything itself; that is the application's job, and the Gallery shows on
 
 The tokens are CSS custom properties, so the colour family of a style can be changed at runtime
 without touching its shape: radii, borders, shadows, motion and typography stay as the theme
-declared them because the overrides never name those tokens. Two ways to override:
+declared them because the overrides never name those tokens. Three ways, from most constrained to
+most free:
 
 1. **A stylesheet imported after the theme files**, mirroring the theme's own selector:
 
@@ -262,6 +263,23 @@ declared them because the overrides never name those tokens. Two ways to overrid
    ```ts
    document.documentElement.style.setProperty('--jin-accent', '#38bdf8')
    ```
+
+3. **The library's recolor API** — the theme controller re-anchors the theme's whole colour family
+   onto a hue you pick. Only the hue moves: lightness and chroma stay the theme's own, the semantic
+   state colours (danger, warning, success, info) never rotate, and every contrast pair is
+   re-measured against WCAG AA with lightness clamped where the rotation alone missed it. This is
+   the path that keeps a palette harmonious by construction instead of by hand:
+
+   ```ts
+   const theme = useTheme()
+   theme.setAccentHue(210)  // the chromatic family re-derives from the new anchor
+   theme.validateRecolor()  // per-pair ratios, or null while no hue is set
+   theme.setAccentHue(null) // back to the theme's own palette
+   ```
+
+   A few styles limit what moves (`RECOLOR_PARTICIPATION`): e-ink-paper is achromatic and rotates
+   nothing, pixel-art moves only its accent family. The hue rides in `ThemeSnapshot.accentHue`, so
+   the same `onChange` persistence that stores style and mode stores it too.
 
 Colours move as a family, not one token at a time. A retint that changes `--jin-accent` but keeps
 the theme's `--jin-text-on-accent`, `--jin-accent-hover`/`-active` and `--jin-focus-ring-color`

@@ -673,6 +673,8 @@ import {
   flattenTree, navigateTree, applyLoadFailure,
   fromKeyboardEvent, serializeHotkey, findHotkeyConflicts,
   createQueue,
+  // theme recoloring — see "Switching the theme at runtime" in consuming.md
+  computeRecolor, hueOfColor, RECOLOR_PARTICIPATION,
   // platform conventions
   closeButtonSide,
 } from '@bythid/jin'
@@ -681,7 +683,9 @@ import {
 The distinction that matters: `useOverlay`, `usePositioning` and `useFocusTrap` are the DOM halves,
 and the functions listed beside them are the decisions. If you build a control the library does not
 ship, call the decision functions directly — that is how the behaviour stays identical to the
-built-in controls instead of merely similar.
+built-in controls instead of merely similar. The recolor exports are the same split: `computeRecolor`
+is the pure hue re-anchoring decision, the `ThemeController` (via `useTheme`) is the DOM half that
+reads the theme and writes the overrides.
 
 `closeButtonSide(userAgent)` is the single decision behind the modal's corner close button:
 `'left'` on Apple platforms, `'right'` elsewhere. An application that draws its own dialog
@@ -697,3 +701,8 @@ ratings, product tours, and anything that is genuinely just CSS (`text`, `label`
 typography tokens and a plain element). Each is either a substantial product in its own right or
 gains nothing from being wrapped in a shared control. The reasoning is stated once, per case, in
 "Not built, and why" in [architecture.md](architecture.md).
+
+The colour-picker entry needs one clarification: the library ships no picker *component*, but
+recoloring a theme is supported through `setAccentHue` on the theme controller — a host that wants
+a palette UI builds the picker itself (a native `<input type="color">` is enough) and hands the
+hue to the controller. See [consuming.md](consuming.md) §5.

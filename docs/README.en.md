@@ -207,11 +207,15 @@ retro-futurism, a linen crosshatch in skeuomorphism, geometric confetti in memph
 checker in pixel-art, and a fine anti-banding grain in aurora and e-ink-paper; it is `none`
 in the rest.
 
-Recoloring a style without changing it is supported too: the colour tokens can be overridden at
-runtime — a stylesheet stacked after the theme files (mirroring the theme's
-`:root[data-jin-style=…][data-jin-mode=…]` selector), or inline on `<html>`. Colours move as a
-group (the accent with `text-on-accent`, the focus ring, the surface ramp, the status colours);
-the recipe and the contrast responsibility are in [docs/consuming.md](docs/consuming.md) §5.
+Recoloring a style without changing it has two paths. The first is the library's API:
+`useTheme().setAccentHue(hue)` re-anchors the current theme's colour family onto the hue you pick —
+in OKLCH only the hue axis moves, the lightness and saturation discipline is kept, semantic state
+colours never follow, and the result is re-clamped to WCAG AA; a few styles limit what moves
+(e-ink-paper rotates nothing, pixel-art only its accent family). The second is overriding the
+colour tokens directly — a stylesheet stacked after the theme files (mirroring the theme's
+`:root[data-jin-style=…][data-jin-mode=…]` selector), or inline on `<html>`, with colours moved as
+a group (the accent with `text-on-accent`, the focus ring, the surface ramp, the status colours).
+The details and the contrast responsibility for both are in [docs/consuming.md](docs/consuming.md) §5.
 
 ### Writing your own theme
 
