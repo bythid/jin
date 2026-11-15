@@ -32,6 +32,12 @@ import vue from '@vitejs/plugin-vue'
  *     file watcher then dies with EBUSY and takes the dev server down. Those
  *     artifacts are another build system's output; nothing here consumes them
  *     as source, so the watcher must not look.
+ *   - server.headers no-store: Vite stamps module URLs with a version query
+ *     and `Cache-Control: immutable`, and that version is derived from the
+ *     lockfile — editing the LINKED LIBRARY does not change it, so the browser
+ *     would keep serving the pre-edit module for as long as the entry lives.
+ *     A dev server must revalidate everything; `no-store` says so for every
+ *     response this server emits.
  */
 export default defineConfig({
   plugins: [vue()],
@@ -40,11 +46,17 @@ export default defineConfig({
     dedupe: ['vue'],
   },
   optimizeDeps: {
+    // vue is imported from both the app and the linked library; pre-bundle it
+    // exactly once (dedupe keeps one module instance).
+    include: ['vue'],
     exclude: ['@bythid/jin'],
   },
   server: {
     port: 5180,
     strictPort: false,
+    headers: {
+      'Cache-Control': 'no-store',
+    },
     fs: {
       // Allow serving the library and its contracts from the parent directory.
       allow: [fileURLToPath(new URL('..', import.meta.url))],
