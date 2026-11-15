@@ -293,7 +293,11 @@ onMounted(() => {
 
     <JinDrawer v-model="aboutOpen" :title="t('app.menu.about')" side="right" size="md">
       <div class="gallery-grid">
+        <div class="gallery-about-mark">
+          <img src="/jin-icon.svg" :alt="t('app.about.markAlt')" width="160" height="160" />
+        </div>
         <p>{{ t('app.about.p1') }}</p>
+        <p>{{ t('app.about.koi') }}</p>
         <p>{{ t('app.about.p2') }}</p>
         <JinDivider :label="t('app.about.contract')" />
         <ul class="gallery-mono">

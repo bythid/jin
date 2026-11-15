@@ -68,10 +68,13 @@ export const EN_MESSAGES = {
   'app.toast.desktopTitle': 'Running in the desktop shell',
   'app.toast.folderPickerAvailable': 'Native folder picker available',
   'app.toast.folderPickerUnavailable': 'Browser: folder picker unavailable',
+  'app.about.markAlt': 'The Jin mark: three overlapping scales',
   'app.about.p1':
     'Jin is a token-driven Vue 3 control library. Its name is the Chinese word for brocade: a fabric woven from many small repeated units, which is what a component set is, and it is dyed in many colourways, which is what a style system is.',
+  'app.about.koi':
+    '锦 is also the jin of 锦鲤, the koi. Spread flat, the three scales of the mark are the repeating pattern of a weave; overlapped, they are the scales of a carp — red, orange and cream, the colours of a koi.',
   'app.about.p2':
-    'The library knows about structure, interaction, accessibility and state machines. Anything that needs a business noun to describe goes through props, slots or injection — the controls in this gallery carry no domain vocabulary at all.',
+    'This gallery is itself built from the library: the navigation, menus, drawers and messages are all its components. Every interaction on these pages works with the keyboard alone.',
   'app.about.contract': 'Contract',
   'app.about.contract.tokens': 'Tokens:',
   'app.about.contract.classes': 'Classes:',
