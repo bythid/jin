@@ -372,9 +372,15 @@ function clampAgainst(
 
 /**
  * Compute the override map that re-anchors `base`'s colour family onto
- * `hue`. Returns only the values that actually changed; the validation
+ * `hue`. The anchor is what the user sees most among the tokens that move:
+ * the ground for full participation (the page's largest surface lands exactly
+ * on the picked hue, and the accent rides the same delta into wherever the
+ * theme's hue architecture puts it), the accent itself when only the accent
+ * family rotates. A neutral ground has no hue to anchor on — brutalism's pure
+ * black — and falls back to the accent, so those themes still answer the
+ * picker. Returns only the values that actually changed; the validation
  * re-measures the AA pairs over the rotated family and clamps lightness
- * where the rotation alone broke a threshold.
+ * where the rotation alone missed a threshold.
  */
 export function computeRecolor(
   base: Record<string, string>,
@@ -383,7 +389,9 @@ export function computeRecolor(
 ): RecolorResult {
   const empty: RecolorResult = { overrides: {}, validation: { pairs: [], warnings: [] } }
   const scope = scopeFor(participation)
-  const anchor = hueOfColor(base['--jin-accent'] ?? '')
+  const anchorToken = participation === 'accent-only' ? '--jin-accent' : '--jin-bg'
+  const anchor =
+    hueOfColor(base[anchorToken] ?? '') ?? hueOfColor(base['--jin-accent'] ?? '')
   if (scope.length === 0 || anchor === null) return empty
 
   const delta = ((hue - anchor + 540) % 360) - 180

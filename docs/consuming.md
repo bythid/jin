@@ -277,9 +277,13 @@ most free:
    theme.setAccentHue(null) // back to the theme's own palette
    ```
 
-   A few styles limit what moves (`RECOLOR_PARTICIPATION`): e-ink-paper is achromatic and rotates
-   nothing, pixel-art moves only its accent family. The hue rides in `ThemeSnapshot.accentHue`, so
-   the same `onChange` persistence that stores style and mode stores it too.
+   The anchor is the ground: the colour most of the page wears lands exactly on your hue, and the
+   accent rides the same delta into wherever the theme's hue architecture puts it. Styles whose
+   ground is a pure neutral (brutalism, minimalism) have no hue to anchor on and fall back to
+   accent anchoring. A few styles limit what moves (`RECOLOR_PARTICIPATION`): e-ink-paper is
+   achromatic and rotates nothing, pixel-art moves only its accent family. The hue rides in
+   `ThemeSnapshot.accentHue`, so the same `onChange` persistence that stores style and mode stores
+   it too.
 
 Colours move as a family, not one token at a time. A retint that changes `--jin-accent` but keeps
 the theme's `--jin-text-on-accent`, `--jin-accent-hover`/`-active` and `--jin-focus-ring-color`

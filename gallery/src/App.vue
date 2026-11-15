@@ -192,14 +192,17 @@ const sliderHue = ref(theme.accentHue.value ?? 220)
 watch(paletteOpen, (open) => {
   if (!open) return
   // Park the slider where the theme currently sits: the anchored hue when one
-  // is set, the theme's own accent hue otherwise.
+  // is set, the theme's own ground hue otherwise (falling back to the accent
+  // when the ground is a pure neutral and has no hue to park on).
   if (theme.accentHue.value !== null) {
     sliderHue.value = theme.accentHue.value
     return
   }
   if (typeof document === 'undefined') return
-  const accent = getComputedStyle(document.documentElement).getPropertyValue('--jin-accent').trim()
-  const hue = hueOfColor(accent)
+  const styles = getComputedStyle(document.documentElement)
+  const hue =
+    hueOfColor(styles.getPropertyValue('--jin-bg').trim()) ??
+    hueOfColor(styles.getPropertyValue('--jin-accent').trim())
   if (hue !== null) sliderHue.value = hue
 })
 
@@ -215,10 +218,11 @@ function applyHue(hue: number | null): void {
   theme.setAccentHue(hue)
 }
 
-// The trigger dot shows the colour the theme actually wears right now —
-// the accent itself while the theme owns its palette, the anchor hue otherwise.
+// The trigger dot shows the colour the user is steering — the ground, the
+// page's largest surface: the theme's own ground while its palette is intact,
+// the anchored hue otherwise.
 const dotColor = computed(() =>
-  theme.accentHue.value === null ? 'var(--jin-accent)' : `hsl(${theme.accentHue.value} 70% 55%)`,
+  theme.accentHue.value === null ? 'var(--jin-bg)' : `hsl(${theme.accentHue.value} 70% 55%)`,
 )
 
 const portalHint = computed(() =>

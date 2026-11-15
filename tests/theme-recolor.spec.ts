@@ -61,12 +61,19 @@ describe('createTheme recolor', () => {
   it('writes the rotated family as inline custom properties on the target', () => {
     const theme = createTheme({ defaultStyle: 'clay', tokenReader })
     theme.setAccentHue(40)
+    // the ground is the anchor: it lands on the picked hue
+    const bg = inlineProp('--jin-bg')
+    expect(bg).not.toBe('')
+    expect(Math.abs(((hueOfColor(bg)! - 40 + 540) % 360) - 180)).toBeLessThan(4)
+    // the accent rides the same delta
     const accent = inlineProp('--jin-accent')
     expect(accent).not.toBe('')
     expect(accent).not.toBe(BASES.clay!['--jin-accent'])
-    expect(Math.abs(hueOfColor(accent)! - 40)).toBeLessThan(4)
-    // the chromatic ground follows the same anchor
-    expect(inlineProp('--jin-bg')).not.toBe('')
+    const bgHue = hueOfColor(BASES.clay!['--jin-bg']!)!
+    const accentHue = hueOfColor(BASES.clay!['--jin-accent']!)!
+    const delta = ((40 - bgHue + 540) % 360) - 180
+    const expectedAccent = (accentHue + delta + 360) % 360
+    expect(Math.abs(((hueOfColor(accent)! - expectedAccent + 540) % 360) - 180)).toBeLessThan(4)
     // the semantic families are never written
     expect(inlineProp('--jin-danger')).toBe('')
   })
@@ -92,10 +99,12 @@ describe('createTheme recolor', () => {
     theme.setAccentHue(40)
     currentStyle = 'poppy'
     theme.setStyle('poppy')
-    const accent = inlineProp('--jin-accent')
-    expect(Math.abs(hueOfColor(accent)! - 40)).toBeLessThan(4)
-    // the anchor moved with the theme: poppy's pink rotated, not clay's blue
-    expect(accent).not.toBe(inlineProp('--jin-text-on-accent'))
+    // the ground re-lands on the picked hue from the new theme's base
+    const bg = inlineProp('--jin-bg')
+    expect(Math.abs(((hueOfColor(bg)! - 40 + 540) % 360) - 180)).toBeLessThan(4)
+    // the accent rides the same delta into poppy's hue architecture
+    expect(hueOfColor(inlineProp('--jin-accent')!)).not.toBeNull()
+    expect(inlineProp('--jin-accent')).not.toBe(inlineProp('--jin-text-on-accent'))
   })
 
   it('clears exactly its own properties on reset, leaving foreign ones alone', () => {
@@ -112,7 +121,8 @@ describe('createTheme recolor', () => {
 
   it('applies a restored hue at creation', () => {
     createTheme({ defaultStyle: 'clay', tokenReader, defaultAccentHue: 40 })
-    expect(Math.abs(hueOfColor(inlineProp('--jin-accent'))! - 40)).toBeLessThan(4)
+    const bg = inlineProp('--jin-bg')
+    expect(Math.abs(((hueOfColor(bg)! - 40 + 540) % 360) - 180)).toBeLessThan(4)
   })
 
   it('writes nothing for a style that does not participate', () => {
@@ -145,6 +155,7 @@ describe('createTheme recolor', () => {
     expect(theme.style.value).toBe('poppy')
     const after = inlineProp('--jin-accent')
     expect(after).not.toBe(before)
-    expect(Math.abs(hueOfColor(after)! - 40)).toBeLessThan(4)
+    const bg = inlineProp('--jin-bg')
+    expect(Math.abs(((hueOfColor(bg)! - 40 + 540) % 360) - 180)).toBeLessThan(4)
   })
 })

@@ -172,17 +172,38 @@ describe('computeRecolor', () => {
   it('rotates the whole chromatic family onto the requested hue', () => {
     const target = 40
     const { overrides, validation } = computeRecolor(BASE, target, 'full')
-    const accentHue = hueOfColor(overrides['--jin-accent']!)
-    expect(Math.abs(accentHue! - target)).toBeLessThan(4)
-    // visibly chromatic tokens follow the same anchor
-    const bgHue = hueOfColor(overrides['--jin-bg']!)
-    expect(bgHue).not.toBeNull()
+    // the ground is the anchor: it lands exactly on the picked hue
+    const bgLanded = hueOfColor(overrides['--jin-bg']!)!
+    expect(Math.abs(((bgLanded - target + 540) % 360) - 180)).toBeLessThan(4)
+    // the accent rides the same delta, keeping the theme's hue architecture
+    const bgHue = hueOfColor(BASE['--jin-bg']!)!
+    const accentHue = hueOfColor(BASE['--jin-accent']!)!
+    const delta = ((target - bgHue + 540) % 360) - 180
+    const accentLanded = hueOfColor(overrides['--jin-accent']!)!
+    const moved = ((accentLanded - accentHue + 540) % 360) - 180
+    expect(Math.abs(moved - delta)).toBeLessThan(4)
     // and the semantic families stay exactly where they were
     for (const token of RECOLOR_EXEMPT_TOKENS) {
       expect(overrides[token]).toBeUndefined()
     }
     expect(validation.pairs.length).toBeGreaterThan(0)
     expect(validation.warnings).toEqual([])
+  })
+
+  it('falls back to accent anchoring when the ground is neutral', () => {
+    const mono: Record<string, string> = {
+      ...BASE,
+      '--jin-bg': '#000000',
+      '--jin-surface': '#111111',
+      '--jin-surface-raised': '#1a1a1a',
+      '--jin-surface-sunken': '#000000',
+    }
+    const { overrides } = computeRecolor(mono, 120, 'full')
+    // a pure black ground has no hue to anchor on: the accent takes the pick
+    const accentLanded = hueOfColor(overrides['--jin-accent']!)!
+    expect(Math.abs(((accentLanded - 120 + 540) % 360) - 180)).toBeLessThan(4)
+    // and pure grays never rotate
+    expect(overrides['--jin-bg']).toBeUndefined()
   })
 
   it('keeps every AA pair passing for the reference theme', () => {
@@ -209,9 +230,10 @@ describe('computeRecolor', () => {
     expect(overrides['--jin-elevation-1']).toBeUndefined()
   })
 
-  it('returns nothing for none participation or a missing anchor', () => {
+  it('returns nothing for none participation or no anchorable colour', () => {
     expect(computeRecolor(BASE, 40, 'none').overrides).toEqual({})
-    expect(computeRecolor({ '--jin-bg': '#131b28' }, 40, 'full').overrides).toEqual({})
+    // neither the ground nor the accent carries a hue: nothing to anchor on
+    expect(computeRecolor({ '--jin-surface': '#131b28' }, 40, 'full').overrides).toEqual({})
   })
 
   it('clamps a failing text pair back over AA', () => {

@@ -144,6 +144,7 @@ body,
   width: 12px;
   height: 12px;
   border-radius: var(--jin-radius-full);
+  border: 1px solid var(--jin-border-color-strong);
   display: inline-block;
 }
 

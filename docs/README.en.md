@@ -209,9 +209,12 @@ in the rest.
 
 Recoloring a style without changing it has two paths. The first is the library's API:
 `useTheme().setAccentHue(hue)` re-anchors the current theme's colour family onto the hue you pick —
-in OKLCH only the hue axis moves, the lightness and saturation discipline is kept, semantic state
-colours never follow, and the result is re-clamped to WCAG AA; a few styles limit what moves
-(e-ink-paper rotates nothing, pixel-art only its accent family). The second is overriding the
+the anchor is the ground, so the colour most of the page wears lands exactly on your hue while the
+accent rides the same delta into wherever the theme's hue architecture puts it (themes with a pure
+neutral ground fall back to accent anchoring). In OKLCH only the hue axis moves, the lightness and
+saturation discipline is kept, semantic state colours never follow, and the result is re-clamped to
+WCAG AA; a few styles limit what moves (e-ink-paper rotates nothing, pixel-art only its accent
+family). The second is overriding the
 colour tokens directly — a stylesheet stacked after the theme files (mirroring the theme's
 `:root[data-jin-style=…][data-jin-mode=…]` selector), or inline on `<html>`, with colours moved as
 a group (the accent with `text-on-accent`, the focus ring, the surface ramp, the status colours).
