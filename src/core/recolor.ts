@@ -11,7 +11,10 @@
  *
  * Pure decisions only: no Vue, no DOM. The caller supplies the current token
  * values (typically read off <html> via getComputedStyle) and receives the
- * override map to write back.
+ * override map to write back. Two axes are open, both relative and bounded by
+ * their clamps: hue (the family re-anchors onto the picked wheel position)
+ * and a lightness offset (the whole family slides lighter or darker within
+ * its own identity — this is the one transform that also moves pure grays).
  */
 
 /** Tokens whose colour follows the theme hue. Names mirror contracts/tokens.json. */
@@ -224,16 +227,20 @@ function fitToGamut(lch: Oklch): Oklch {
 }
 
 /**
- * Rotate one colour by `delta` degrees. Lightness and chroma are held, so
- * every contrast relationship in the theme survives the move; neutral
- * colours (chroma under the floor) pass through untouched.
+ * Transform one colour by `delta` degrees of hue and a `lightnessDelta`
+ * shift in OKLCH lightness. Chroma is held, so the saturation discipline
+ * survives; pure neutrals only respond to the lightness shift (a hue delta
+ * on them is meaningless, but a lightness shift is exactly how a near-black
+ * ground breathes).
  */
-export function rotateColor(value: string, delta: number): string | null {
+export function rotateColor(value: string, delta: number, lightnessDelta = 0): string | null {
   const color = parseColor(value)
   if (!color) return null
   const lch = srgbToOklch(color)
-  if (lch.c < CHROMA_FLOOR) return null
-  const rotated = fitToGamut({ ...lch, h: lch.h + delta })
+  if (lch.c < CHROMA_FLOOR && lightnessDelta === 0) return null
+  const shifted = { ...lch, l: Math.max(0, Math.min(1, lch.l + lightnessDelta)) }
+  if (lch.c >= CHROMA_FLOOR) shifted.h = lch.h + delta
+  const rotated = fitToGamut(shifted)
   return formatRgba({
     r: delinearize(oklchToLinearSrgb(rotated)[0]),
     g: delinearize(oklchToLinearSrgb(rotated)[1]),
@@ -246,16 +253,16 @@ const COLOR_LITERAL =
   /(?:%23|#)([0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|rgba?\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*(?:,\s*[\d.]+\s*)?\)/g
 
 /**
- * Rotate every colour literal inside a token *value* — flat colours, the
+ * Transform every colour literal inside a token *value* — flat colours, the
  * rgba() stops inside gradients and box-shadows, and the %23-encoded hex
  * inside a texture's SVG data URI. Non-colour text (offsets, radii, paths)
  * passes through untouched; `none` and unparseable input return as-is.
  */
-export function rotateTokenValue(value: string, delta: number): string {
-  if (!value || value === 'none') return value
+export function rotateTokenValue(value: string, delta: number, lightnessDelta = 0): string {
+  if ((!delta && !lightnessDelta) || !value || value === 'none') return value
   return value.replace(COLOR_LITERAL, (match) => {
     const encoded = match.startsWith('%23')
-    const rotated = rotateColor(encoded ? `#${match.slice(3)}` : match, delta)
+    const rotated = rotateColor(encoded ? `#${match.slice(3)}` : match, delta, lightnessDelta)
     if (!rotated) return match
     if (encoded) return `%23${rotated.slice(1)}`
     return rotated
@@ -372,36 +379,39 @@ function clampAgainst(
 
 /**
  * Compute the override map that re-anchors `base`'s colour family onto
- * `hue`. The anchor is what the user sees most among the tokens that move:
- * the ground for full participation (the page's largest surface lands exactly
- * on the picked hue, and the accent rides the same delta into wherever the
- * theme's hue architecture puts it), the accent itself when only the accent
- * family rotates. A neutral ground has no hue to anchor on — brutalism's pure
- * black — and falls back to the accent, so those themes still answer the
- * picker. Returns only the values that actually changed; the validation
- * re-measures the AA pairs over the rotated family and clamps lightness
- * where the rotation alone missed a threshold.
+ * `hue` and shifts it by `lightnessDelta` of OKLCH lightness. The hue anchor
+ * is what the user sees most among the tokens that move: the ground for full
+ * participation (the page's largest surface lands exactly on the picked hue,
+ * and the accent rides the same delta into wherever the theme's hue
+ * architecture puts it), the accent itself when only the accent family
+ * rotates. A neutral ground has no hue to anchor on — brutalism's pure black
+ * — and falls back to the accent, so those themes still answer the picker;
+ * the lightness shift, by contrast, moves every token including pure grays.
+ * `hue` may be null to shift lightness alone. Returns only the values that
+ * actually changed; the validation re-measures the AA pairs over the
+ * transformed family and clamps lightness where the transform alone missed a
+ * threshold.
  */
 export function computeRecolor(
   base: Record<string, string>,
-  hue: number,
+  hue: number | null,
   participation: RecolorParticipation,
+  lightnessDelta = 0,
 ): RecolorResult {
   const empty: RecolorResult = { overrides: {}, validation: { pairs: [], warnings: [] } }
   const scope = scopeFor(participation)
+  if (scope.length === 0) return empty
   const anchorToken = participation === 'accent-only' ? '--jin-accent' : '--jin-bg'
   const anchor =
     hueOfColor(base[anchorToken] ?? '') ?? hueOfColor(base['--jin-accent'] ?? '')
-  if (scope.length === 0 || anchor === null) return empty
-
-  const delta = ((hue - anchor + 540) % 360) - 180
+  const delta = hue === null || anchor === null ? 0 : (((hue - anchor + 540) % 360) - 180)
 
   const map: Record<string, string> = { ...base }
   const overrides: Record<string, string> = {}
   for (const token of scope) {
     const value = base[token]
     if (!value) continue
-    const rotated = rotateTokenValue(value, delta)
+    const rotated = rotateTokenValue(value, delta, lightnessDelta)
     if (rotated !== value) {
       overrides[token] = rotated
       map[token] = rotated

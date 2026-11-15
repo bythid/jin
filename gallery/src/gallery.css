@@ -148,13 +148,35 @@ body,
   display: inline-block;
 }
 
-/* The hue strip: the whole wheel in one drag. Our recolor only consumes hue,
-   so a rainbow rail is the honest control — no fake saturation/lightness. */
-.gallery-hue-slider {
+/* Sliders ride in relative wrappers so the origin tick can sit on the track:
+   where the theme's own hue lives, and the centre of the lightness rail. */
+.gallery-slider-track {
+  position: relative;
   grid-column: 1 / -1;
+  display: flex;
+}
+
+.gallery-slider-origin {
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  width: 2px;
+  transform: translateX(-1px);
+  background: var(--jin-text);
+  opacity: 0.55;
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.gallery-slider-origin--center {
+  left: 50%;
+}
+
+.gallery-hue-slider {
   -webkit-appearance: none;
   appearance: none;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   height: 12px;
   margin: var(--jin-space-1) 0;
   border-radius: var(--jin-radius-full);
@@ -172,7 +194,21 @@ body,
   cursor: pointer;
 }
 
-.gallery-hue-slider::-webkit-slider-thumb {
+.gallery-lightness-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  min-width: 0;
+  height: 12px;
+  margin: var(--jin-space-1) 0;
+  border-radius: var(--jin-radius-full);
+  border: var(--jin-border-width) var(--jin-border-style) var(--jin-border-color);
+  background: linear-gradient(to right, hsl(240 8% 5%), hsl(240 8% 92%));
+  cursor: pointer;
+}
+
+.gallery-hue-slider::-webkit-slider-thumb,
+.gallery-lightness-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 16px;
@@ -182,7 +218,8 @@ body,
   border: 2px solid var(--jin-text);
 }
 
-.gallery-hue-slider::-moz-range-thumb {
+.gallery-hue-slider::-moz-range-thumb,
+.gallery-lightness-slider::-moz-range-thumb {
   width: 14px;
   height: 14px;
   border-radius: var(--jin-radius-full);

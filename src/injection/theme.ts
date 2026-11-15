@@ -12,6 +12,7 @@ import { computed, inject, ref, type App, type ComputedRef, type Ref } from 'vue
 import {
   RECOLOR_COLOR_TOKENS,
   computeRecolor,
+  hueOfColor,
   participationFor,
   type RecolorValidation,
 } from '../core/recolor'
@@ -26,6 +27,7 @@ export interface ThemeSnapshot {
   style: string
   mode: JinMode
   accentHue: number | null
+  lightnessOffset: number
 }
 
 export interface ThemeController {
@@ -33,12 +35,18 @@ export interface ThemeController {
   mode: Ref<JinMode>
   /** The re-anchored hue, or null when the theme ships its own palette. */
   accentHue: Ref<number | null>
+  /** The applied lightness shift in OKLCH units, 0 when the theme is untouched. */
+  lightnessOffset: Ref<number>
+  /** The current theme's own ground hue — where "back to original" sits on the wheel. */
+  originHue: ComputedRef<number | null>
   snapshot: ComputedRef<ThemeSnapshot>
   setStyle(next: string): void
   setMode(next: JinMode): void
   toggleMode(): void
   /** Re-anchor the current theme's colour family onto `hue`; null clears it. */
   setAccentHue(hue: number | null): void
+  /** Shift the family lighter or darker; null resets to the theme's own lightness. */
+  setLightnessOffset(delta: number | null): void
   /** The AA re-measurement of the last recolor, or null when none is active. */
   validateRecolor(): RecolorValidation | null
   /** Re-read the attributes from the DOM (used when the host owns the markup). */
@@ -64,6 +72,8 @@ export interface ThemeOptions {
   onChange?: (snapshot: ThemeSnapshot) => void
   /** The hue the host restored from its own persistence, if any. */
   defaultAccentHue?: number | null
+  /** The lightness shift the host restored from its own persistence, if any. */
+  defaultLightnessOffset?: number
   /**
    * Where the recolor reads the theme's base token values from. Defaults to
    * the computed style of the target; tests inject a fixture here because
@@ -86,6 +96,14 @@ function normalizeHue(hue: number): number {
   return ((Math.round(hue) % 360) + 360) % 360
 }
 
+/** How far the lightness axis may push the family from its declared values. */
+const MAX_LIGHTNESS_OFFSET = 0.15
+
+function normalizeLightness(delta: number): number {
+  const clamped = Math.max(-MAX_LIGHTNESS_OFFSET, Math.min(MAX_LIGHTNESS_OFFSET, delta))
+  return Math.round(clamped * 1000) / 1000
+}
+
 export function createTheme(options: ThemeOptions = {}): ThemeController {
   const target = domTarget(options.target)
   const initialStyle = target?.getAttribute(JIN_STYLE_ATTRIBUTE) ?? options.defaultStyle ?? DEFAULT_STYLE
@@ -97,6 +115,16 @@ export function createTheme(options: ThemeOptions = {}): ThemeController {
   const accentHue = ref<number | null>(
     options.defaultAccentHue == null ? null : normalizeHue(options.defaultAccentHue),
   )
+  const lightnessOffset = ref(
+    options.defaultLightnessOffset === undefined
+      ? 0
+      : normalizeLightness(options.defaultLightnessOffset),
+  )
+  // Where "back to the theme's own colours" sits on the wheel: the active
+  // theme's own ground hue, re-read from the base on every apply (the read
+  // happens after the recolor's own overrides are cleared, so it is the theme
+  // file's value, never a recoloured one).
+  const originGroundHue = ref<number | null>(null)
 
   const readToken =
     options.tokenReader ??
@@ -119,15 +147,19 @@ export function createTheme(options: ThemeOptions = {}): ThemeController {
   }
 
   function writeRecolor(): void {
-    const hue = accentHue.value
-    if (hue === null || !target) return
-    if (participationFor(style.value) === 'none') return
+    if (!target) return
     const base: Record<string, string> = {}
     for (const token of RECOLOR_COLOR_TOKENS) {
       const value = readToken(token)
       if (value) base[token] = value
     }
-    const result = computeRecolor(base, hue, participationFor(style.value))
+    originGroundHue.value =
+      hueOfColor(base['--jin-bg'] ?? '') ?? hueOfColor(base['--jin-accent'] ?? '')
+    if (participationFor(style.value) === 'none') return
+    const hue = accentHue.value
+    const dL = lightnessOffset.value
+    if (hue === null && dL === 0) return
+    const result = computeRecolor(base, hue, participationFor(style.value), dL)
     for (const [token, value] of Object.entries(result.overrides)) {
       target.style.setProperty(token, value)
     }
@@ -140,7 +172,12 @@ export function createTheme(options: ThemeOptions = {}): ThemeController {
     target?.setAttribute(JIN_STYLE_ATTRIBUTE, style.value)
     target?.setAttribute(JIN_MODE_ATTRIBUTE, mode.value)
     writeRecolor()
-    options.onChange?.({ style: style.value, mode: mode.value, accentHue: accentHue.value })
+    options.onChange?.({
+      style: style.value,
+      mode: mode.value,
+      accentHue: accentHue.value,
+      lightnessOffset: lightnessOffset.value,
+    })
   }
 
   // Write once on creation so the DOM matches the controller even when the
@@ -166,15 +203,30 @@ export function createTheme(options: ThemeOptions = {}): ThemeController {
     apply()
   }
 
+  function setLightnessOffset(next: number | null): void {
+    const normalized = next === null ? 0 : normalizeLightness(next)
+    if (normalized === lightnessOffset.value) return
+    lightnessOffset.value = normalized
+    apply()
+  }
+
   return {
     style,
     mode,
     accentHue,
-    snapshot: computed(() => ({ style: style.value, mode: mode.value, accentHue: accentHue.value })),
+    lightnessOffset,
+    originHue: computed(() => originGroundHue.value),
+    snapshot: computed(() => ({
+      style: style.value,
+      mode: mode.value,
+      accentHue: accentHue.value,
+      lightnessOffset: lightnessOffset.value,
+    })),
     setStyle,
     setMode,
     toggleMode: () => setMode(mode.value === 'dark' ? 'light' : 'dark'),
     setAccentHue,
+    setLightnessOffset,
     validateRecolor: () => lastValidation,
     sync(element) {
       const next = domTarget(element ?? target)

@@ -108,6 +108,19 @@ describe('rotateColor', () => {
     // jin.dark's ground: chroma ~0.016 — near-neutral, but not neutral.
     expect(rotateColor('#12171d', 120)).not.toBeNull()
   })
+  it('shifts lightness without touching the hue', () => {
+    const before = srgbToOklch(parseColor('#82c7ee')!)
+    const shifted = rotateColor('#82c7ee', 0, 0.1)!
+    const after = srgbToOklch(parseColor(shifted)!)
+    expect(Math.abs(after.l - before.l - 0.1)).toBeLessThan(0.01)
+    expect(Math.abs(((after.h - before.h + 540) % 360) - 180)).toBeLessThan(2)
+  })
+  it('moves pure grays by lightness alone', () => {
+    const shifted = rotateColor('#111111', 90, 0.1)!
+    const lch = srgbToOklch(parseColor(shifted)!)
+    expect(lch.l).toBeGreaterThan(0.1)
+    expect(lch.c).toBeLessThan(0.02)
+  })
   it('preserves alpha', () => {
     const rotated = rotateColor('rgba(63, 217, 197, 0.09)', 90)!
     expect(rotated).toContain('0.09')
@@ -234,6 +247,24 @@ describe('computeRecolor', () => {
     expect(computeRecolor(BASE, 40, 'none').overrides).toEqual({})
     // neither the ground nor the accent carries a hue: nothing to anchor on
     expect(computeRecolor({ '--jin-surface': '#131b28' }, 40, 'full').overrides).toEqual({})
+  })
+
+  it('shifts the whole family lighter or darker with a lightness offset', () => {
+    const { overrides } = computeRecolor(BASE, null, 'full', 0.1)
+    const bgL = srgbToOklch(parseColor(overrides['--jin-bg']!)!).l
+    const baseL = srgbToOklch(parseColor(BASE['--jin-bg']!)!).l
+    expect(Math.abs(bgL - baseL - 0.1)).toBeLessThan(0.02)
+    // hue untouched: only lightness moved (low-chroma colours drift a few
+    // degrees in the hue atan2 when lightness shifts — tolerance covers it)
+    const bgHue = hueOfColor(overrides['--jin-bg']!)!
+    const baseHue = hueOfColor(BASE['--jin-bg']!)!
+    expect(Math.abs(((bgHue - baseHue + 540) % 360) - 180)).toBeLessThan(5)
+    // pure neutrals respond to lightness alone
+    expect(overrides['--jin-surface-texture']).toBeUndefined() // none stays none
+  })
+
+  it('does nothing when both axes are at rest', () => {
+    expect(computeRecolor(BASE, null, 'full', 0).overrides).toEqual({})
   })
 
   it('clamps a failing text pair back over AA', () => {

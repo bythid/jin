@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from 'vitest'
 import { createTheme, type ThemeSnapshot } from '../src/injection/theme'
-import { hueOfColor } from '../src/core/recolor'
+import { hueOfColor, parseColor, srgbToOklch } from '../src/core/recolor'
 
 /** Two fixture "theme files"; the reader hands out the one for the current style. */
 const BASES: Record<string, Record<string, string>> = {
@@ -86,12 +86,34 @@ describe('createTheme recolor', () => {
     expect(theme.accentHue.value).toBe(340)
   })
 
-  it('carries the hue in snapshot and onChange', () => {
+  it('carries hue and lightness in snapshot and onChange', () => {
     const seen: ThemeSnapshot[] = []
     const theme = createTheme({ defaultStyle: 'clay', tokenReader, onChange: (s) => seen.push(s) })
     theme.setAccentHue(40)
+    theme.setLightnessOffset(0.08)
     expect(theme.snapshot.value.accentHue).toBe(40)
-    expect(seen.at(-1)).toEqual({ style: 'clay', mode: 'dark', accentHue: 40 })
+    expect(theme.snapshot.value.lightnessOffset).toBe(0.08)
+    expect(seen.at(-1)).toEqual({ style: 'clay', mode: 'dark', accentHue: 40, lightnessOffset: 0.08 })
+  })
+
+  it('shifts lightness as a bounded second axis', () => {
+    const theme = createTheme({ defaultStyle: 'clay', tokenReader })
+    theme.setLightnessOffset(0.5)
+    expect(theme.lightnessOffset.value).toBe(0.15)
+    const bgL = srgbToOklch(parseColor(inlineProp('--jin-bg'))!).l
+    const baseL = srgbToOklch(parseColor(BASES.clay!['--jin-bg']!)!).l
+    expect(bgL - baseL).toBeCloseTo(0.15, 1)
+    theme.setLightnessOffset(null)
+    expect(theme.lightnessOffset.value).toBe(0)
+    expect(inlineProp('--jin-bg')).toBe('')
+  })
+
+  it('exposes the theme origin hue for back-to-original affordances', () => {
+    const theme = createTheme({ defaultStyle: 'clay', tokenReader })
+    expect(theme.originHue.value).toBe(hueOfColor(BASES.clay!['--jin-bg']!)!)
+    // the origin is the theme file's own value, unaffected by an active recolor
+    theme.setAccentHue(120)
+    expect(theme.originHue.value).toBe(hueOfColor(BASES.clay!['--jin-bg']!)!)
   })
 
   it('re-derives from the newly active theme when the style changes', () => {

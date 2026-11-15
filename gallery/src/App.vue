@@ -182,28 +182,36 @@ function announceStyle(): void {
   })
 }
 
-// The palette demonstrates the recolor API. Only the hue moves: the theme
-// keeps its lightness ladder and saturation discipline, and the controller
-// re-derives the whole colour family from the anchor, clamped to WCAG AA.
+// The palette demonstrates the recolor API. Two bounded axes move, both
+// relative: hue (the ground re-anchors onto the picked wheel position) and a
+// lightness shift. The theme keeps its lightness ladder and saturation
+// discipline; the controller re-derives the whole family, clamped to WCAG AA.
 const PRESET_HUES = [220, 195, 150, 90, 30, 0, 330, 270]
 const paletteOpen = ref(false)
-// The slider rides while dragging (no toast per pixel) and announces on release.
 const sliderHue = ref(theme.accentHue.value ?? 220)
+const sliderLightness = ref(theme.lightnessOffset.value)
+// Within these tolerances a released slider snaps back to the theme's own
+// palette — "back to original" must be reachable by hand, not only by reset.
+const HUE_SNAP_DEGREES = 3
+const LIGHTNESS_SNAP = 0.01
+
+function wrappedDiff(a: number, b: number): number {
+  return Math.abs(((a - b + 540) % 360) - 180)
+}
+
 watch(paletteOpen, (open) => {
   if (!open) return
-  // Park the slider where the theme currently sits: the anchored hue when one
-  // is set, the theme's own ground hue otherwise (falling back to the accent
-  // when the ground is a pure neutral and has no hue to park on).
-  if (theme.accentHue.value !== null) {
-    sliderHue.value = theme.accentHue.value
-    return
+  // Park both sliders where the theme currently sits: the anchored values
+  // when a recolor is active, the theme's own ground hue otherwise.
+  if (theme.accentHue.value !== null) sliderHue.value = theme.accentHue.value
+  else if (typeof document !== 'undefined') {
+    const styles = getComputedStyle(document.documentElement)
+    const hue =
+      hueOfColor(styles.getPropertyValue('--jin-bg').trim()) ??
+      hueOfColor(styles.getPropertyValue('--jin-accent').trim())
+    if (hue !== null) sliderHue.value = hue
   }
-  if (typeof document === 'undefined') return
-  const styles = getComputedStyle(document.documentElement)
-  const hue =
-    hueOfColor(styles.getPropertyValue('--jin-bg').trim()) ??
-    hueOfColor(styles.getPropertyValue('--jin-accent').trim())
-  if (hue !== null) sliderHue.value = hue
+  sliderLightness.value = theme.lightnessOffset.value
 })
 
 function onSliderInput(event: Event): void {
@@ -212,10 +220,39 @@ function onSliderInput(event: Event): void {
   theme.setAccentHue(hue)
 }
 
+// Dragging back onto the origin tick restores the theme's own palette —
+// the tick makes the position visible, the snap makes it reachable.
+function onHueChange(event: Event): void {
+  const hue = Number((event.target as HTMLInputElement).value)
+  if (theme.originHue.value !== null && wrappedDiff(hue, theme.originHue.value) <= HUE_SNAP_DEGREES) {
+    theme.setAccentHue(null)
+    sliderHue.value = theme.originHue.value
+  }
+}
+
+function onLightnessInput(event: Event): void {
+  const offset = Number((event.target as HTMLInputElement).value)
+  sliderLightness.value = offset
+  theme.setLightnessOffset(offset)
+}
+
+function onLightnessChange(event: Event): void {
+  const offset = Number((event.target as HTMLInputElement).value)
+  if (Math.abs(offset) <= LIGHTNESS_SNAP) {
+    theme.setLightnessOffset(null)
+    sliderLightness.value = 0
+  }
+}
+
 function applyHue(hue: number | null): void {
   // No toast on purpose: the page itself is the feedback — every surface
   // re-derives the moment the hue lands.
   theme.setAccentHue(hue)
+}
+
+function resetPalette(): void {
+  theme.setAccentHue(null)
+  theme.setLightnessOffset(null)
 }
 
 // The trigger dot shows the colour the user is steering — the ground, the
@@ -318,25 +355,48 @@ onMounted(() => {
                 :aria-label="t('app.control.paletteHue', { hue })"
                 @click="applyHue(hue)"
               />
-              <input
-                type="range"
-                class="gallery-hue-slider"
-                min="0"
-                max="360"
-                step="1"
-                :value="sliderHue"
-                :aria-label="t('app.control.paletteSliderAria')"
-                @input="onSliderInput"
-              />
+              <div class="gallery-slider-track">
+                <input
+                  type="range"
+                  class="gallery-hue-slider"
+                  min="0"
+                  max="360"
+                  step="1"
+                  :value="sliderHue"
+                  :aria-label="t('app.control.paletteSliderAria')"
+                  @input="onSliderInput"
+                  @change="onHueChange"
+                />
+                <span
+                  v-if="theme.originHue.value !== null"
+                  class="gallery-slider-origin"
+                  :style="{ left: `${(theme.originHue.value / 360) * 100}%` }"
+                  aria-hidden="true"
+                />
+              </div>
+              <div class="gallery-slider-track">
+                <input
+                  type="range"
+                  class="gallery-lightness-slider"
+                  min="-0.15"
+                  max="0.15"
+                  step="0.005"
+                  :value="sliderLightness"
+                  :aria-label="t('app.control.paletteLightnessAria')"
+                  @input="onLightnessInput"
+                  @change="onLightnessChange"
+                />
+                <span class="gallery-slider-origin gallery-slider-origin--center" aria-hidden="true" />
+              </div>
               <div class="gallery-palette__row">
                 <JinTooltip :content="t('app.control.paletteResetTooltip')" placement="bottom">
                   <JinButton
                     variant="ghost"
                     size="sm"
                     icon
-                    :disabled="theme.accentHue.value === null"
+                    :disabled="theme.accentHue.value === null && theme.lightnessOffset.value === 0"
                     :label="t('app.control.paletteReset')"
-                    @click="applyHue(null)"
+                    @click="resetPalette"
                   >
                     <template #icon><JinIcon name="refresh" /></template>
                   </JinButton>

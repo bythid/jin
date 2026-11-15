@@ -272,9 +272,11 @@ most free:
 
    ```ts
    const theme = useTheme()
-   theme.setAccentHue(210)  // the chromatic family re-derives from the new anchor
-   theme.validateRecolor()  // per-pair ratios, or null while no hue is set
-   theme.setAccentHue(null) // back to the theme's own palette
+   theme.setAccentHue(210)       // the chromatic family re-derives from the new anchor
+   theme.setLightnessOffset(0.06) // slide the whole family lighter, bounded to ±0.15
+   theme.validateRecolor()        // per-pair ratios, or null while nothing is set
+   theme.setAccentHue(null)       // back to the theme's own palette
+   theme.setLightnessOffset(null)
    ```
 
    The anchor is the ground: the colour most of the page wears lands exactly on your hue, and the

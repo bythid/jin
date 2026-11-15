@@ -9,6 +9,7 @@ const STYLE_KEY = 'jin-gallery.style'
 const MODE_KEY = 'jin-gallery.mode'
 const LOCALE_KEY = 'jin-gallery.locale'
 const HUE_KEY = 'jin-gallery.hue'
+const LIGHTNESS_KEY = 'jin-gallery.lightness'
 
 /**
  * The catalogue of styles. Labels and notes are dictionary keys rather than
@@ -119,7 +120,7 @@ export function savePreferences(snapshot: { style: string; mode: JinMode }): voi
 }
 
 /**
- * The re-anchored accent hue, persisted the same way as the locale: a small
+ * The re-anchored ground hue, persisted the same way as the locale: a small
  * number or "no opinion" (null), and the theme controller owns what it means.
  */
 export function loadHue(): number | null {
@@ -135,6 +136,25 @@ export function saveHue(hue: number | null): void {
   try {
     if (hue === null) localStorage.removeItem(HUE_KEY)
     else localStorage.setItem(HUE_KEY, String(hue))
+  } catch {
+    // A gallery that cannot persist a preference still works; say nothing.
+  }
+}
+
+/** The bounded lightness shift, persisted as a number; 0 means untouched. */
+export function loadLightness(): number {
+  if (typeof localStorage === 'undefined') return 0
+  const raw = localStorage.getItem(LIGHTNESS_KEY)
+  if (raw === null) return 0
+  const offset = Number(raw)
+  return Number.isFinite(offset) ? offset : 0
+}
+
+export function saveLightness(offset: number): void {
+  if (typeof localStorage === 'undefined') return
+  try {
+    if (offset === 0) localStorage.removeItem(LIGHTNESS_KEY)
+    else localStorage.setItem(LIGHTNESS_KEY, String(offset))
   } catch {
     // A gallery that cannot persist a preference still works; say nothing.
   }

@@ -30,11 +30,13 @@ Added:
   whose ground is a pure neutral. Every colour-bearing token rotates by the same OKLCH hue delta
   with lightness and chroma held, the semantic state colours (danger, warning, success, info)
   never move, and the result is re-measured against WCAG AA with lightness clamped where the
-  rotation alone missed. `validateRecolor()` returns the per-pair ratios; the hue rides in
-  `ThemeSnapshot.accentHue`, so the host's existing `onChange` persistence stores it too. A few
-  styles limit what moves (`RECOLOR_PARTICIPATION`): e-ink-paper rotates nothing, pixel-art only
-  its accent family. Existing hosts are unaffected — nothing changes until `setAccentHue` is
-  called.
+  rotation alone missed. A second bounded axis, `setLightnessOffset(delta)` (±0.15 of OKLCH
+  lightness), slides the whole family lighter or darker — pure grays included, which hue rotation
+  alone cannot reach. `validateRecolor()` returns the per-pair ratios; the axes ride in
+  `ThemeSnapshot.accentHue` and `ThemeSnapshot.lightnessOffset`, so the host's existing `onChange`
+  persistence stores them too. A few styles limit what moves (`RECOLOR_PARTICIPATION`): e-ink-paper
+  rotates nothing, pixel-art only its accent family. Existing hosts are unaffected — nothing
+  changes until `setAccentHue`/`setLightnessOffset` is called.
 - **Recolor exports for hosts building their own palette controls:** `computeRecolor` (the pure
   hue re-anchoring decision), `hueOfColor` (hue of any CSS colour) and `RECOLOR_PARTICIPATION`
   (the per-style participation table).

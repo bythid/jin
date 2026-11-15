@@ -45,7 +45,16 @@ import '@bythid/jin/themes/pixel-art.dark.css'
 import './gallery.css'
 import App from './App.vue'
 import { installCapabilities } from './host/capabilities'
-import { loadHue, loadLocale, loadPreferences, saveHue, saveLocale, savePreferences } from './host/preferences'
+import {
+  loadHue,
+  loadLightness,
+  loadLocale,
+  loadPreferences,
+  saveHue,
+  saveLightness,
+  saveLocale,
+  savePreferences,
+} from './host/preferences'
 import { createGalleryI18n, provideI18n } from './i18n'
 
 const app = createApp(App)
@@ -69,13 +78,15 @@ app.use(JinUI, {
   // browser — which is exactly the intended degradation path.
   capabilities,
   theme: {
-    // Style, mode and the re-anchored hue survive a reload; this is the
+    // Style, mode and the recolor axes survive a reload; this is the
     // application's job, not the library's own job.
     ...loadPreferences(),
     defaultAccentHue: loadHue(),
+    defaultLightnessOffset: loadLightness(),
     onChange: (snapshot) => {
       savePreferences(snapshot)
       saveHue(snapshot.accentHue)
+      saveLightness(snapshot.lightnessOffset)
     },
   },
 })
