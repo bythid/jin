@@ -27,6 +27,11 @@ import vue from '@vitejs/plugin-vue'
  *     Excluding the dependency is also what makes an in-place library edit show
  *     up immediately, instead of being served from a stale bundle in
  *     `node_modules/.vite/deps`.
+ *   - server.watch.ignored: the Tauri shell builds into `src-tauri/target`,
+ *     and on Windows its `.exe` artifacts get locked while a build runs — the
+ *     file watcher then dies with EBUSY and takes the dev server down. Those
+ *     artifacts are another build system's output; nothing here consumes them
+ *     as source, so the watcher must not look.
  */
 export default defineConfig({
   plugins: [vue()],
@@ -43,6 +48,9 @@ export default defineConfig({
     fs: {
       // Allow serving the library and its contracts from the parent directory.
       allow: [fileURLToPath(new URL('..', import.meta.url))],
+    },
+    watch: {
+      ignored: ['**/src-tauri/**'],
     },
   },
   build: {
