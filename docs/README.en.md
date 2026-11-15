@@ -207,6 +207,12 @@ retro-futurism, a linen crosshatch in skeuomorphism, geometric confetti in memph
 checker in pixel-art, and a fine anti-banding grain in aurora and e-ink-paper; it is `none`
 in the rest.
 
+Recoloring a style without changing it is supported too: the colour tokens can be overridden at
+runtime — a stylesheet stacked after the theme files (mirroring the theme's
+`:root[data-jin-style=…][data-jin-mode=…]` selector), or inline on `<html>`. Colours move as a
+group (the accent with `text-on-accent`, the focus ring, the surface ramp, the status colours);
+the recipe and the contrast responsibility are in [docs/consuming.md](docs/consuming.md) §5.
+
 ### Writing your own theme
 
 1. Copy the token list from `contracts/tokens.json` (importable as

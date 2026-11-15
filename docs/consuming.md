@@ -238,6 +238,49 @@ Or bind the two switchers the Gallery uses:
 `useTheme()` writes the two attributes on `<html>` and calls `onChange`. It deliberately does not
 persist anything itself; that is the application's job, and the Gallery shows one way to do it.
 
+### Recoloring a theme without changing the style
+
+The tokens are CSS custom properties, so the colour family of a style can be changed at runtime
+without touching its shape: radii, borders, shadows, motion and typography stay as the theme
+declared them because the overrides never name those tokens. Two ways to override:
+
+1. **A stylesheet imported after the theme files**, mirroring the theme's own selector:
+
+   ```css
+   /* loaded after themes/glassmorphism.css and glassmorphism.dark.css */
+   :root[data-jin-style='glassmorphism'][data-jin-mode='dark'] {
+     --jin-bg: #0a0f1c;
+     --jin-surface: #101828;
+     --jin-accent: #38bdf8;
+     /* …the rest of the colour family… */
+   }
+   ```
+
+2. **Inline on `<html>`**, which beats every stylesheet and applies across all styles and modes.
+   The Gallery's Token panel recolors this way for quick experiments:
+
+   ```ts
+   document.documentElement.style.setProperty('--jin-accent', '#38bdf8')
+   ```
+
+Colours move as a family, not one token at a time. A retint that changes `--jin-accent` but keeps
+the theme's `--jin-text-on-accent`, `--jin-accent-hover`/`-active` and `--jin-focus-ring-color`
+leaves text unreadable or focus invisible. The colour-bearing tokens to override together:
+
+| Group | Tokens |
+| --- | --- |
+| Ground | `--jin-bg`, `--jin-surface`, `--jin-surface-raised`, `--jin-surface-sunken`, `--jin-surface-translucent`, `--jin-surface-gradient`, `--jin-scrim` |
+| Text | `--jin-text`, `--jin-text-muted`, `--jin-text-subtle`, `--jin-text-on-accent` |
+| Border | `--jin-border-color`, `--jin-border-color-strong` |
+| Accent | `--jin-accent`, `--jin-accent-hover`, `--jin-accent-active`, `--jin-focus-ring-color` |
+| Depth | `--jin-elevation-1` through `--jin-elevation-4`, `--jin-shadow-inset` |
+| Status | `--jin-danger` / `--jin-warning` / `--jin-success` / `--jin-info` and their `-text` / `-bg` variants |
+
+`--jin-focus-ring-color` is a declared value, never derived from the accent — override it
+explicitly alongside the accent. Contrast is then the application's responsibility: the shipped
+themes are audited by `tools/check_contrast.py` against WCAG AA (4.5:1 text, 3:1 focus), and that
+audit does not cover overridden values.
+
 ---
 
 ## Symptoms and their causes

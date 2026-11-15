@@ -20,6 +20,27 @@ what it contains. Entries are written for the application that has to react — 
 that only shows up in an unusual host layout, because that is the kind of change that costs
 downstream an afternoon.
 
+## [Unreleased]
+
+Changed:
+
+- **Three catalogue styles retuned away from violet: `claymorphism`,
+  `memphis-design`, `aurora-ui`.** None of the three requires purple — only
+  retro-futurism does, and it keeps its indigo. claymorphism now runs a baby-blue
+  pastel accent (its `info` family moved to cyan to stay distinct from the blue
+  accent) on a blue-gray ground; memphis-design drops its violet night ground
+  for a warm charcoal and carries a plain blue where "blue purple" used to sit
+  (the `info` family and the confetti squiggle); aurora-ui's flowing gradient is
+  teal-blue-pink, its dark glow is blue and its focus ring is the pink end of
+  the aurora in both modes. Applications that picked these styles for their
+  violet palette should re-look at the dark modes; no token names or selectors
+  changed. Every file still restates the whole 80-token contract and passes
+  `tools/check_contrast.py` at WCAG AA.
+- **Documented how to recolor a style without changing it** — `docs/consuming.md`
+  §5 now gives the token-override recipe (a stylesheet stacked after the theme
+  files, or inline overrides on `<html>`, colour tokens moved as a family) and
+  states that contrast on overridden values is the application's responsibility.
+
 ## [0.5.0] — 2026-11-15
 
 Added:

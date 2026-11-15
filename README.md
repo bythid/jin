@@ -188,6 +188,11 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 亚麻斜纹织理，在孟菲斯里是几何拼贴碎花，在像素里是抖动棋盘，在极光与墨水纸里是防条带的细颗粒
 噪点，其余风格全部为 `none`。
 
+不改风格、只换配色也是支持的：颜色令牌可以在运行时直接覆盖——在主题文件之后再叠一层样式表
+（镜像主题的 `:root[data-jin-style=…][data-jin-mode=…]` 选择器），或写在 `<html>` 的内联样式上。
+颜色要成组覆盖（accent 与 `text-on-accent`、焦点环、表面阶梯、状态色），配方与对比度责任见
+[docs/consuming.md](docs/consuming.md) §5。
+
 ### 写一个自己的主题
 
 1. 从 `contracts/tokens.json` 复制令牌清单（可通过 `@bythid/jin/contracts/tokens.json` 导入）。
