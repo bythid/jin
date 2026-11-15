@@ -41,6 +41,16 @@ export { useRovingTabindex } from './composables/useRovingTabindex'
 export { useDismissable } from './composables/useDismissable'
 
 /* -------------------------------------------------------------------- core */
+export {
+  computeRecolor,
+  hueOfColor,
+  RECOLOR_PARTICIPATION,
+} from './core/recolor'
+export type {
+  RecolorParticipation,
+  RecolorResult,
+  RecolorValidation,
+} from './core/recolor'
 export { computePosition, parsePlacement, buildPlacement, OPPOSITE_SIDE, isPlacement } from './core/positioning'
 export type { PositionOptions, PositionResult, Placement as PlacementType, Rect } from './core/positioning'
 export { createOverlayStack } from './core/overlay-stack'
