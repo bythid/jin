@@ -1,10 +1,10 @@
 /*
  * Jin theme: aurora-ui (light).
  *
- * Dawn aurora: pale violet-white surfaces, each panel carrying a whisper of
- * teal-violet-pink flow in its gradient, and depth drawn by coloured shadows —
- * violet in the near field, teal in the far. The accent is the deep-teal end of
- * the aurora; the violet end is reserved for the focus ring.
+ * Dawn aurora: pale blue-white surfaces, each panel carrying a whisper of
+ * teal-blue-pink flow in its gradient, and depth drawn by coloured shadows —
+ * blue in the near field, teal in the far. The accent is the deep-teal end of
+ * the aurora; the pink end is reserved for the focus ring.
  *
  * ---
  * Style definition: the "aurora-ui" entry in nextlevelbuilder/ui-ux-pro-max-skill
@@ -21,15 +21,15 @@
   --jin-surface-raised: #fcfcff;
   --jin-surface-sunken: #e3e6f2;
   --jin-surface-translucent: #fcfcff;
-  --jin-scrim: rgba(13, 10, 28, 0.45);
-  --jin-text: #191534;
-  --jin-text-muted: #4e4a72;
+  --jin-scrim: rgba(10, 14, 28, 0.45);
+  --jin-text: #141a2e;
+  --jin-text-muted: #46506e;
   /* Held against the sunken well, not just against white panels. */
-  --jin-text-subtle: #625d87;
+  --jin-text-subtle: #57637e;
   --jin-text-on-accent: #ffffff;
 
   /* border & shape */
-  --jin-border-color: rgba(83, 74, 130, 0.2);
+  --jin-border-color: rgba(70, 86, 130, 0.2);
   --jin-border-color-strong: #0a6d63;
   --jin-border-width: 1px;
   --jin-border-style: solid;
@@ -41,19 +41,19 @@
   --jin-control-height-md: 36px;
   --jin-control-height-lg: 44px;
 
-  /* depth — coloured shadows: violet nearby, teal in the distance */
-  --jin-elevation-1: 0 1px 3px rgba(46, 34, 92, 0.08);
-  --jin-elevation-2: 0 2px 8px rgba(46, 34, 92, 0.1), 0 8px 20px rgba(46, 34, 92, 0.07);
-  --jin-elevation-3: 0 6px 18px rgba(46, 34, 92, 0.12), 0 14px 34px rgba(12, 127, 116, 0.08);
-  --jin-elevation-4: 0 12px 32px rgba(46, 34, 92, 0.16), 0 26px 60px rgba(12, 127, 116, 0.1);
-  --jin-shadow-inset: inset 0 1px 2px rgba(46, 34, 92, 0.08);
+  /* depth — coloured shadows: blue nearby, teal in the distance */
+  --jin-elevation-1: 0 1px 3px rgba(28, 48, 92, 0.08);
+  --jin-elevation-2: 0 2px 8px rgba(28, 48, 92, 0.1), 0 8px 20px rgba(28, 48, 92, 0.07);
+  --jin-elevation-3: 0 6px 18px rgba(28, 48, 92, 0.12), 0 14px 34px rgba(12, 127, 116, 0.08);
+  --jin-elevation-4: 0 12px 32px rgba(28, 48, 92, 0.16), 0 26px 60px rgba(12, 127, 116, 0.1);
+  --jin-shadow-inset: inset 0 1px 2px rgba(28, 48, 92, 0.08);
   --jin-blur: 0px;
-  /* The aurora itself, laid across every panel: teal fading through violet
+  /* The aurora itself, laid across every panel: teal fading through blue
      into pink. Kept faint enough that text never competes with it. */
   --jin-surface-gradient: linear-gradient(
     160deg,
     rgba(63, 217, 197, 0.1) 0%,
-    rgba(124, 77, 255, 0.07) 40%,
+    rgba(37, 99, 235, 0.07) 40%,
     rgba(236, 72, 153, 0.04) 70%,
     rgba(255, 255, 255, 0) 100%
   );
@@ -78,7 +78,7 @@
   --jin-info-bg: #e3edfe;
 
   /* focus — the violet end of the aurora, declared on its own */
-  --jin-focus-ring-color: #7c3aed;
+  --jin-focus-ring-color: #be185d;
   --jin-focus-ring-width: 2px;
   --jin-focus-ring-offset: 2px;
 

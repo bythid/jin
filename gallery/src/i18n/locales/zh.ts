@@ -125,7 +125,7 @@ export const ZH_MESSAGES: Record<MessageKey, string> = {
     '暗房里的荧光管：深靛底、霓虹青作主色，品红只留给强边界与焦点环；深度用辉光表达，扫描线只在地面区域出现。',
   'app.style.aurora-ui.label': '极光',
   'app.style.aurora-ui.note':
-    '流动的青—紫—粉渐变铺在每块面板上，深度用彩色辉光表达；强调色取极光的青端，紫端留给焦点环。',
+    '流动的青—蓝—粉渐变铺在每块面板上，深度用彩色辉光表达；强调色取极光的青端，粉端留给焦点环。',
   'app.style.e-ink-paper.label': '墨水纸',
   'app.style.e-ink-paper.note':
     '哑光纸面上一套无彩灰阶：强调色就是墨色，状态色退成深浅灰阶，深度交给边框而不是阴影——纸不投影。',

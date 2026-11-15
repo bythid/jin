@@ -1,5 +1,5 @@
 /*
- * Jin theme: claymorphism (dark) — the same clay, under a violet night light.
+ * Jin theme: claymorphism (dark) — the same clay, under a cool night light.
  *
  * The catalogue marks this style's dark mode as conditional, and the reason is
  * the same one neumorphism has: clay's volume comes from light, and on a dark
@@ -19,20 +19,20 @@
   color-scheme: dark;
 
   /* surface & text */
-  --jin-bg: #1e1730;
-  --jin-surface: #241b38;
-  --jin-surface-raised: #2c2142;
-  --jin-surface-sunken: #191227;
-  --jin-surface-translucent: #2c2142;
-  --jin-scrim: rgba(10, 6, 18, 0.68);
-  --jin-text: #f4eefc;
-  --jin-text-muted: #cdbfe4;
-  --jin-text-subtle: #b9a9d4;
-  --jin-text-on-accent: #221733;
+  --jin-bg: #131b28;
+  --jin-surface: #182334;
+  --jin-surface-raised: #1f2c40;
+  --jin-surface-sunken: #0e1520;
+  --jin-surface-translucent: #1f2c40;
+  --jin-scrim: rgba(8, 12, 22, 0.68);
+  --jin-text: #e8effa;
+  --jin-text-muted: #b3c2d9;
+  --jin-text-subtle: #92a5bd;
+  --jin-text-on-accent: #0d2135;
 
   /* border & shape */
-  --jin-border-color: #3a2c56;
-  --jin-border-color-strong: #5a4680;
+  --jin-border-color: #2c3d58;
+  --jin-border-color-strong: #48618a;
   --jin-border-width: 3px;
   --jin-border-style: solid;
   --jin-radius-sm: 14px;
@@ -54,24 +54,24 @@
   --jin-surface-texture: none;
 
   /* status */
-  --jin-accent: #b9a2ff;
-  --jin-accent-hover: #c9b6ff;
-  --jin-accent-active: #a68cf0;
+  --jin-accent: #82c7ee;
+  --jin-accent-hover: #9ad6f4;
+  --jin-accent-active: #66b4dd;
   --jin-danger: #ff8fa6;
   --jin-warning: #ffc078;
   --jin-success: #6ee0ac;
-  --jin-info: #93b8ff;
+  --jin-info: #67d0e2;
   --jin-danger-text: #ffaabc;
   --jin-warning-text: #ffd39b;
   --jin-success-text: #9cebc4;
-  --jin-info-text: #b6cdff;
+  --jin-info-text: #8fdcea;
   --jin-danger-bg: #3a1a2a;
   --jin-warning-bg: #38280f;
   --jin-success-bg: #14352a;
-  --jin-info-bg: #1b2440;
+  --jin-info-bg: #10333e;
 
   /* focus */
-  --jin-focus-ring-color: #b9a2ff;
+  --jin-focus-ring-color: #82c7ee;
   --jin-focus-ring-width: 3px;
   --jin-focus-ring-offset: 2px;
 

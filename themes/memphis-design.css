@@ -4,7 +4,7 @@
  *
  * 1980s Milan: a cream ground with geometric confetti (triangle, circle,
  * squiggle, tilted square) showing wherever the ground shows, hot pink as
- * the working colour, and the rest of the gang — teal, blue-purple, mustard —
+ * the working colour, and the rest of the gang — teal, blue, mustard —
  * spread across the status tones. Everything sits flat: a paper collage has
  * no depth, and the depth tokens say so outright.
  *
@@ -17,22 +17,22 @@
 :root[data-jin-style='memphis-design'] {
   color-scheme: light;
 
-  /* surface & text — cream ground, violet ink */
+  /* surface & text — cream ground, warm ink */
   --jin-bg: #f6f1e6;
   --jin-surface: #fbf8f0;
   --jin-surface-raised: #fefcf6;
   --jin-surface-sunken: #ece5d4;
   --jin-surface-translucent: #fefcf6;
-  --jin-scrim: rgba(34, 30, 46, 0.5);
-  --jin-text: #221e2e;
-  --jin-text-muted: #4f4a5e;
+  --jin-scrim: rgba(38, 34, 27, 0.5);
+  --jin-text: #26221b;
+  --jin-text-muted: #565044;
   /* Measured against the sunken well, not just against white panels. */
-  --jin-text-subtle: #635d72;
+  --jin-text-subtle: #665f52;
   --jin-text-on-accent: #fff5fa;
 
   /* border & shape — a thin keyline; the ink line is for emphasis */
   --jin-border-color: #d8d2c2;
-  --jin-border-color-strong: #221e2e;
+  --jin-border-color-strong: #26221b;
   --jin-border-width: 1px;
   --jin-border-style: solid;
   --jin-radius-sm: 4px;
@@ -53,9 +53,9 @@
   --jin-shadow-inset: none;
   --jin-blur: 0px;
   --jin-surface-gradient: none;
-  /* Geometric confetti: pink triangle, teal circle, purple squiggle, tilted
+  /* Geometric confetti: pink triangle, teal circle, blue squiggle, tilted
      mustard square — each at a whisper, never inside the reading area. */
-  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M3 21l5-9 5 9z' fill='%23b81f66' fill-opacity='.07'/%3E%3Ccircle cx='21' cy='7' r='3' fill='none' stroke='%230e7a6e' stroke-opacity='.09' stroke-width='1.5'/%3E%3Cpath d='M13 25q3-3 6 0t6 0' fill='none' stroke='%234d5aa8' stroke-opacity='.08' stroke-width='1.5'/%3E%3Crect x='4' y='3' width='4' height='4' fill='%238f6400' fill-opacity='.06' transform='rotate(15 6 5)'/%3E%3C/svg%3E");
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M3 21l5-9 5 9z' fill='%23b81f66' fill-opacity='.07'/%3E%3Ccircle cx='21' cy='7' r='3' fill='none' stroke='%230e7a6e' stroke-opacity='.09' stroke-width='1.5'/%3E%3Cpath d='M13 25q3-3 6 0t6 0' fill='none' stroke='%233a62b8' stroke-opacity='.08' stroke-width='1.5'/%3E%3Crect x='4' y='3' width='4' height='4' fill='%238f6400' fill-opacity='.06' transform='rotate(15 6 5)'/%3E%3C/svg%3E");
 
   /* status — the Memphis gang, darkened until every member clears 4.5:1 */
   --jin-accent: #b81f66;
@@ -64,18 +64,18 @@
   --jin-danger: #b33020;
   --jin-warning: #8f6400;
   --jin-success: #0e7a6e;
-  --jin-info: #4d5aa8;
+  --jin-info: #3a62b8;
   --jin-danger-text: #94291c;
   --jin-warning-text: #7a5600;
   --jin-success-text: #0b6355;
-  --jin-info-text: #3f4b90;
+  --jin-info-text: #2c4f96;
   --jin-danger-bg: #f8ddd6;
   --jin-warning-bg: #f6ecd0;
   --jin-success-bg: #d9efe9;
-  --jin-info-bg: #e2e4f6;
+  --jin-info-bg: #e1e8f6;
 
-  /* focus — the blue-purple end of the palette, declared on its own */
-  --jin-focus-ring-color: #5a53c9;
+  /* focus — the deep-teal ink of the palette, declared on its own */
+  --jin-focus-ring-color: #0a5c53;
   --jin-focus-ring-width: 2px;
   --jin-focus-ring-offset: 2px;
 

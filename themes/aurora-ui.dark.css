@@ -2,9 +2,9 @@
  * Jin theme — dark mode: aurora-ui. This is the style's signature mode.
  * Style axis: data-jin-style="aurora-ui"  ·  Mode axis: data-jin-mode="dark"
  *
- * The northern lights at night: a deep violet ground, panels that carry a
- * flowing teal-violet-pink gradient, and depth drawn by glow — a violet halo
- * around everything that rises. The accent is the aurora's teal; its violet
+ * The northern lights at night: a deep night-blue ground, panels that carry a
+ * flowing teal-blue-pink gradient, and depth drawn by glow — a blue halo
+ * around everything that rises. The accent is the aurora's teal; its pink
  * end is reserved for the focus ring.
  *
  * Surfaces stay opaque: translucency plus blur is dimensional-layering's and
@@ -20,21 +20,21 @@
   color-scheme: dark;
 
   /* surface & text */
-  --jin-bg: #0d0a1c;
-  --jin-surface: #141130;
-  --jin-surface-raised: #1b1738;
-  --jin-surface-sunken: #080613;
-  --jin-surface-translucent: #1b1738;
-  --jin-scrim: rgba(3, 2, 10, 0.62);
-  --jin-text: #edeaf9;
-  --jin-text-muted: #b3adda;
+  --jin-bg: #0a0f1c;
+  --jin-surface: #101828;
+  --jin-surface-raised: #152036;
+  --jin-surface-sunken: #060a13;
+  --jin-surface-translucent: #152036;
+  --jin-scrim: rgba(3, 6, 14, 0.62);
+  --jin-text: #e8edf7;
+  --jin-text-muted: #a7b4d2;
   /* Dimmed for the raised panel, still 4.5:1 there. */
-  --jin-text-subtle: #9a94c6;
+  --jin-text-subtle: #8695b6;
   /* The fill is a bright aurora teal, so dark text is the readable pairing. */
   --jin-text-on-accent: #07211e;
 
   /* border & shape */
-  --jin-border-color: rgba(190, 175, 240, 0.16);
+  --jin-border-color: rgba(190, 205, 240, 0.16);
   --jin-border-color-strong: rgba(63, 217, 197, 0.55);
   --jin-border-width: 1px;
   --jin-border-style: solid;
@@ -46,25 +46,25 @@
   --jin-control-height-md: 36px;
   --jin-control-height-lg: 44px;
 
-  /* depth — glow: violet halo first, black drop behind it */
-  --jin-elevation-1: 0 0 10px rgba(139, 99, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.45);
-  --jin-elevation-2: 0 0 18px rgba(139, 99, 255, 0.14), 0 4px 12px rgba(0, 0, 0, 0.5);
-  --jin-elevation-3: 0 0 26px rgba(139, 99, 255, 0.16), 0 10px 28px rgba(0, 0, 0, 0.55);
-  --jin-elevation-4: 0 0 36px rgba(139, 99, 255, 0.18), 0 20px 52px rgba(0, 0, 0, 0.6);
+  /* depth — glow: blue halo first, black drop behind it */
+  --jin-elevation-1: 0 0 10px rgba(59, 130, 246, 0.1), 0 1px 3px rgba(0, 0, 0, 0.45);
+  --jin-elevation-2: 0 0 18px rgba(59, 130, 246, 0.14), 0 4px 12px rgba(0, 0, 0, 0.5);
+  --jin-elevation-3: 0 0 26px rgba(59, 130, 246, 0.16), 0 10px 28px rgba(0, 0, 0, 0.55);
+  --jin-elevation-4: 0 0 36px rgba(59, 130, 246, 0.18), 0 20px 52px rgba(0, 0, 0, 0.6);
   --jin-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.4);
   --jin-blur: 0px;
-  /* The aurora, laid across every panel: teal through violet into pink. */
+  /* The aurora, laid across every panel: teal through blue into pink. */
   --jin-surface-gradient: linear-gradient(
     135deg,
     rgba(63, 217, 197, 0.09) 0%,
-    rgba(124, 77, 255, 0.08) 38%,
+    rgba(37, 99, 235, 0.08) 38%,
     rgba(236, 72, 153, 0.05) 68%,
     rgba(63, 217, 197, 0) 100%
   );
   /* Fine grain to keep the wide gradients from banding on dark ground. */
   --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='.05'/%3E%3C/svg%3E");
 
-  /* status — lifted for text legibility on a violet night */
+  /* status — lifted for text legibility on a night-blue ground */
   --jin-accent: #3fd9c5;
   --jin-accent-hover: #5fe4d2;
   --jin-accent-active: #2fc0ae;
@@ -81,8 +81,8 @@
   --jin-success-bg: rgba(52, 190, 106, 0.15);
   --jin-info-bg: rgba(90, 120, 255, 0.16);
 
-  /* focus — the violet end of the aurora, declared on its own */
-  --jin-focus-ring-color: #b18cff;
+  /* focus — the pink end of the aurora, declared on its own */
+  --jin-focus-ring-color: #f472b6;
   --jin-focus-ring-width: 2px;
   --jin-focus-ring-offset: 2px;
 

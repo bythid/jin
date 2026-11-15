@@ -25,7 +25,7 @@ font pairings and UX guidelines.
   | **Brutalism** | Zero radius, no shadow, no motion, thick visible borders, flat colour |
   | **Dimensional Layering** | Soft depth through four elevation levels, generous radii, layered surfaces |
   | **Retro-Futurism** | Phosphor tube in a dark room: deep indigo ground, neon cyan at work, magenta held back for strong borders and the focus ring, CRT raster as the texture, one monospace voice, depth as glow |
-  | **Aurora UI** | A flowing teal-violet-pink gradient across every panel, depth drawn by coloured glow, fine grain against gradient banding |
+  | **Aurora UI** | A flowing teal-blue-pink gradient across every panel, depth drawn by coloured glow, fine grain against gradient banding |
   | **E-Ink / Paper** | One achromatic scale on matte paper: the accent is ink itself, state colours step through grays, borders carry depth because paper casts no shadow, serif reading voice, linear refresh-like motion |
   | **Skeuomorphism** | A desk of real materials: layered realistic shadows, a brushed specular sheen, recessed wells with a light bottom edge, linen crosshatch texture, tooled-leather accent, steel focus ring, and the 300–500ms motion the token contract reserved for this style |
   | **Memphis Design** | 80s Milan paper collage: geometric confetti texture (triangle, circle, squiggle, tilted square), clashing pastels with hot pink at work, depth declared none outright, spring easing |

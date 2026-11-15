@@ -21,20 +21,20 @@
   color-scheme: light;
 
   /* surface & text */
-  --jin-bg: #f6f1fa;
-  --jin-surface: #fbf7fe;
+  --jin-bg: #f2f6fb;
+  --jin-surface: #f8fafd;
   --jin-surface-raised: #ffffff;
-  --jin-surface-sunken: #ece2f6;
+  --jin-surface-sunken: #e2eaf4;
   --jin-surface-translucent: #ffffff;
-  --jin-scrim: rgba(46, 32, 66, 0.4);
-  --jin-text: #241a33;
-  --jin-text-muted: #4e4160;
-  --jin-text-subtle: #5b4d70;
+  --jin-scrim: rgba(24, 36, 58, 0.4);
+  --jin-text: #1c2940;
+  --jin-text-muted: #44546e;
+  --jin-text-subtle: #556684;
   --jin-text-on-accent: #ffffff;
 
   /* border & shape */
-  --jin-border-color: #e3d6f4;
-  --jin-border-color-strong: #c9b3e8;
+  --jin-border-color: #d8e2f0;
+  --jin-border-color-strong: #b8cbe4;
   --jin-border-width: 3px;
   --jin-border-style: solid;
   --jin-radius-sm: 14px;
@@ -46,34 +46,34 @@
   --jin-control-height-lg: 48px;
 
   /* depth — thickness first, then a soft shadow under it */
-  --jin-elevation-1: 0 3px 0 rgba(126, 87, 194, 0.12), 0 6px 14px rgba(126, 87, 194, 0.14);
-  --jin-elevation-2: 0 5px 0 rgba(126, 87, 194, 0.12), 0 10px 22px rgba(126, 87, 194, 0.18);
-  --jin-elevation-3: 0 8px 0 rgba(126, 87, 194, 0.12), 0 16px 32px rgba(126, 87, 194, 0.22);
-  --jin-elevation-4: 0 12px 0 rgba(126, 87, 194, 0.14), 0 24px 48px rgba(126, 87, 194, 0.26);
-  --jin-shadow-inset: inset -3px -3px 8px rgba(255, 255, 255, 0.9), inset 4px 4px 10px rgba(126, 87, 194, 0.16);
+  --jin-elevation-1: 0 3px 0 rgba(70, 104, 164, 0.12), 0 6px 14px rgba(70, 104, 164, 0.14);
+  --jin-elevation-2: 0 5px 0 rgba(70, 104, 164, 0.12), 0 10px 22px rgba(70, 104, 164, 0.18);
+  --jin-elevation-3: 0 8px 0 rgba(70, 104, 164, 0.12), 0 16px 32px rgba(70, 104, 164, 0.22);
+  --jin-elevation-4: 0 12px 0 rgba(70, 104, 164, 0.14), 0 24px 48px rgba(70, 104, 164, 0.26);
+  --jin-shadow-inset: inset -3px -3px 8px rgba(255, 255, 255, 0.9), inset 4px 4px 10px rgba(70, 104, 164, 0.16);
   --jin-blur: 0px;
-  --jin-surface-gradient: linear-gradient(160deg, rgba(255, 255, 255, 0.95) 0%, rgba(236, 226, 246, 0.9) 100%);
+  --jin-surface-gradient: linear-gradient(160deg, rgba(255, 255, 255, 0.95) 0%, rgba(226, 236, 248, 0.9) 100%);
   --jin-surface-texture: none;
 
   /* status */
-  --jin-accent: #6d28d9;
-  --jin-accent-hover: #5b21b6;
-  --jin-accent-active: #4c1d95;
+  --jin-accent: #1d5fa8;
+  --jin-accent-hover: #174e8c;
+  --jin-accent-active: #123f74;
   --jin-danger: #c62348;
   --jin-warning: #96601a;
   --jin-success: #1f7a52;
-  --jin-info: #2f5fd0;
+  --jin-info: #0e7f9e;
   --jin-danger-text: #a81a3c;
   --jin-warning-text: #7c4d0d;
   --jin-success-text: #186b47;
-  --jin-info-text: #2748a8;
+  --jin-info-text: #0b6b86;
   --jin-danger-bg: #ffe4ec;
   --jin-warning-bg: #fff2d8;
   --jin-success-bg: #dff5e8;
-  --jin-info-bg: #e6e9ff;
+  --jin-info-bg: #d9f0f6;
 
   /* focus */
-  --jin-focus-ring-color: #6d28d9;
+  --jin-focus-ring-color: #1d5fa8;
   --jin-focus-ring-width: 3px;
   --jin-focus-ring-offset: 2px;
 

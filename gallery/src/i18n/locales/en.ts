@@ -131,7 +131,7 @@ export const EN_MESSAGES = {
     'A phosphor tube in a dark room: deep indigo ground, neon cyan at work, magenta held back for strong borders and the focus ring. Depth is glow, and the raster shows only on the ground.',
   'app.style.aurora-ui.label': 'Aurora UI',
   'app.style.aurora-ui.note':
-    'A flowing teal-violet-pink gradient across every panel, depth drawn by coloured glow. The accent is the teal end of the aurora; the violet end belongs to the focus ring.',
+    'A flowing teal-blue-pink gradient across every panel, depth drawn by coloured glow. The accent is the teal end of the aurora; the pink end belongs to the focus ring.',
   'app.style.e-ink-paper.label': 'E-Ink / Paper',
   'app.style.e-ink-paper.note':
     'One achromatic scale on matte paper: the accent is ink itself, state colours step through grays, and borders carry depth because paper casts no shadow.',
