@@ -104,6 +104,10 @@ describe('rotateColor', () => {
     expect(rotateColor('#111111', 90)).toBeNull()
     expect(rotateColor('#ffffff', 90)).toBeNull()
   })
+  it('lets faint tints follow the rotation', () => {
+    // jin.dark's ground: chroma ~0.016 — near-neutral, but not neutral.
+    expect(rotateColor('#12171d', 120)).not.toBeNull()
+  })
   it('preserves alpha', () => {
     const rotated = rotateColor('rgba(63, 217, 197, 0.09)', 90)!
     expect(rotated).toContain('0.09')

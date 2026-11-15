@@ -94,8 +94,14 @@ function scopeFor(participation: RecolorParticipation): readonly string[] {
   return RECOLOR_COLOR_TOKENS
 }
 
-/** Below this OKLCH chroma a colour is treated as neutral and left untouched. */
-const CHROMA_FLOOR = 0.02
+/**
+ * Below this OKLCH chroma a colour is treated as neutral and left untouched.
+ * The floor only exists because rotating a pure gray is meaningless (chroma 0
+ * has no hue to move); a faint tint — jin's near-neutral ground sits around
+ * 0.016 — must still follow the re-anchored hue, or the largest surface on
+ * the page ignores the one axis the user can move.
+ */
+const CHROMA_FLOOR = 0.004
 
 export interface Rgba {
   r: number
