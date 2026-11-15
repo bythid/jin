@@ -225,6 +225,20 @@ body,
   font-size: var(--jin-font-size-sm);
 }
 
+/* The About drawer's mark. The icon carries its own cream plate, so it needs
+   no background — only a size, a hairline frame and a corner radius. */
+.gallery-about-mark {
+  display: flex;
+  justify-content: center;
+}
+
+.gallery-about-mark img {
+  width: 160px;
+  height: 160px;
+  border: var(--jin-border-width) var(--jin-border-style) var(--jin-border-color);
+  border-radius: var(--jin-radius-lg);
+}
+
 /* ---------------------------------------------------------- token panel */
 
 .gallery-tokens {

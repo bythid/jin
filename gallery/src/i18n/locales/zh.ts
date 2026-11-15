@@ -65,10 +65,13 @@ export const ZH_MESSAGES: Record<MessageKey, string> = {
   'app.toast.desktopTitle': '正在桌面外壳中运行',
   'app.toast.folderPickerAvailable': '可使用原生文件夹选择器',
   'app.toast.folderPickerUnavailable': '浏览器环境：没有文件夹选择器',
+  'app.about.markAlt': '锦的徽记：三片重叠的鳞',
   'app.about.p1':
     'Jin 是一个由令牌驱动的 Vue 3 控件库。它的名字取自中文的“锦”：一种由无数细小重复单元织成的织物——组件集正是如此；它又能染成许多配色——风格系统也正是如此。',
+  'app.about.koi':
+    '锦也是锦鲤的锦。徽记里的三片鳞，摊开来是织锦的纹样，叠起来是鲤鱼的鳞——红、橙、奶油，正是一尾锦鲤的颜色。',
   'app.about.p2':
-    '这个库只关心结构、交互、无障碍与状态机。任何需要用业务名词描述的东西，都通过 props、插槽或注入传入——本画廊中的控件完全不携带领域词汇。',
+    '这本画廊本身就是用它搭起来的：导航、菜单、抽屉、提示，都是它的组件。这里的每个交互，也都能只用键盘走完。',
   'app.about.contract': '契约',
   'app.about.contract.tokens': '令牌：',
   'app.about.contract.classes': '类名：',
