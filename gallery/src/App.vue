@@ -209,27 +209,17 @@ function onSliderInput(event: Event): void {
   theme.setAccentHue(hue)
 }
 
+function applyHue(hue: number | null): void {
+  // No toast on purpose: the page itself is the feedback — every surface
+  // re-derives the moment the hue lands.
+  theme.setAccentHue(hue)
+}
+
 // The trigger dot shows the colour the theme actually wears right now —
 // the accent itself while the theme owns its palette, the anchor hue otherwise.
 const dotColor = computed(() =>
   theme.accentHue.value === null ? 'var(--jin-accent)' : `hsl(${theme.accentHue.value} 70% 55%)`,
 )
-
-function announceHue(): void {
-  const validation = theme.validateRecolor()
-  const failed = validation ? validation.pairs.filter((pair) => !pair.pass).length : 0
-  toasts.push({
-    tone: failed > 0 ? 'warning' : 'success',
-    title: t('app.toast.hueTitle', { hue: theme.accentHue.value ?? 0 }),
-    description: failed > 0 ? t('app.toast.hueWarning', { count: failed }) : t('app.toast.hueOk'),
-    duration: 2200,
-  })
-}
-
-function applyHue(hue: number | null): void {
-  theme.setAccentHue(hue)
-  if (theme.accentHue.value !== null) announceHue()
-}
 
 const portalHint = computed(() =>
   capabilities.isDesktop ? t('app.toast.folderPickerAvailable') : t('app.toast.folderPickerUnavailable'),
@@ -333,7 +323,6 @@ onMounted(() => {
                 :value="sliderHue"
                 :aria-label="t('app.control.paletteSliderAria')"
                 @input="onSliderInput"
-                @change="announceHue()"
               />
               <div class="gallery-palette__row">
                 <JinTooltip :content="t('app.control.paletteResetTooltip')" placement="bottom">
