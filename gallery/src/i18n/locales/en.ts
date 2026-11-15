@@ -50,7 +50,7 @@ export const EN_MESSAGES = {
   'app.control.palette': 'Palette',
   'app.control.paletteAria': 'Accent hue',
   'app.control.paletteHue': 'Accent hue {hue}',
-  'app.control.palettePickerAria': 'Custom accent colour',
+  'app.control.paletteSliderAria': 'Accent hue slider',
   'app.control.paletteReset': 'Reset accent colour',
   'app.control.paletteResetTooltip': 'Back to the theme’s own palette',
   'app.control.reset': 'Reset demo',

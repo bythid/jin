@@ -12,7 +12,7 @@
  * what makes the library's own strings follow: the translation passed to
  * `JinUI` is the same dictionary (see src/i18n).
  */
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import {
   JinAlert,
   JinButton,
@@ -187,6 +187,28 @@ function announceStyle(): void {
 // re-derives the whole colour family from the anchor, clamped to WCAG AA.
 const PRESET_HUES = [220, 195, 150, 90, 30, 0, 330, 270]
 const paletteOpen = ref(false)
+// The slider rides while dragging (no toast per pixel) and announces on release.
+const sliderHue = ref(theme.accentHue.value ?? 220)
+watch(paletteOpen, (open) => {
+  if (!open) return
+  // Park the slider where the theme currently sits: the anchored hue when one
+  // is set, the theme's own accent hue otherwise.
+  if (theme.accentHue.value !== null) {
+    sliderHue.value = theme.accentHue.value
+    return
+  }
+  if (typeof document === 'undefined') return
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--jin-accent').trim()
+  const hue = hueOfColor(accent)
+  if (hue !== null) sliderHue.value = hue
+})
+
+function onSliderInput(event: Event): void {
+  const hue = Number((event.target as HTMLInputElement).value)
+  sliderHue.value = hue
+  theme.setAccentHue(hue)
+}
+
 // The trigger dot shows the colour the theme actually wears right now —
 // the accent itself while the theme owns its palette, the anchor hue otherwise.
 const dotColor = computed(() =>
@@ -207,12 +229,6 @@ function announceHue(): void {
 function applyHue(hue: number | null): void {
   theme.setAccentHue(hue)
   if (theme.accentHue.value !== null) announceHue()
-}
-
-function onPickerInput(event: Event): void {
-  const hue = hueOfColor((event.target as HTMLInputElement).value)
-  if (hue === null) return
-  applyHue(hue)
 }
 
 const portalHint = computed(() =>
@@ -308,13 +324,18 @@ onMounted(() => {
                 :aria-label="t('app.control.paletteHue', { hue })"
                 @click="applyHue(hue)"
               />
+              <input
+                type="range"
+                class="gallery-hue-slider"
+                min="0"
+                max="360"
+                step="1"
+                :value="sliderHue"
+                :aria-label="t('app.control.paletteSliderAria')"
+                @input="onSliderInput"
+                @change="announceHue()"
+              />
               <div class="gallery-palette__row">
-                <input
-                  type="color"
-                  class="gallery-hue-input"
-                  :aria-label="t('app.control.palettePickerAria')"
-                  @input="onPickerInput"
-                />
                 <JinTooltip :content="t('app.control.paletteResetTooltip')" placement="bottom">
                   <JinButton
                     variant="ghost"

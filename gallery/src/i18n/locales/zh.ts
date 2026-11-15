@@ -47,7 +47,7 @@ export const ZH_MESSAGES: Record<MessageKey, string> = {
   'app.control.palette': '色盘',
   'app.control.paletteAria': '强调色色相',
   'app.control.paletteHue': '强调色色相 {hue}',
-  'app.control.palettePickerAria': '自定义强调色',
+  'app.control.paletteSliderAria': '强调色色相滑杆',
   'app.control.paletteReset': '重置强调色',
   'app.control.paletteResetTooltip': '恢复主题自带配色',
   'app.control.reset': '重置演示',
