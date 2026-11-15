@@ -8,10 +8,12 @@ built, so the SVG can be reconstructed from the recipe alone. The executable for
 
 ## The idea
 
-Three overlapping scale shards — the repeating woven unit behind the name 锦 (brocade). Each shard is
+Three overlapping scale shards — the repeating woven unit behind the name 锦 (brocade), and equally
+the scales of the 锦鲤 (koi). Each shard is
 a crescent: a strongly curved outer rim and a shallow inner scoop, with a comb of cream spines near
 the rim. The three shards overlap like roof tiles; the cream lines between them are revealed
-background, not strokes. The palette is warm silk on paper; the shadows are flat and hard, not
+background, not strokes. The palette is warm silk on paper — red, orange and cream, the colouring of
+a koi's scales; the shadows are flat and hard, not
 lighting.
 
 The mark is **not traced** from the reference image. The reference supplies proportions and colours;
