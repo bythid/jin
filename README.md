@@ -153,15 +153,15 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 
 | 属性 | 取值 |
 | --- | --- |
-| `data-jin-style` | 视觉风格：`jin`（默认）加 8 个目录风格，见下表 |
+| `data-jin-style` | 视觉风格：`jin`（默认）加 14 个目录风格，见下表 |
 | `data-jin-mode` | `dark`（Jin 的标志性模式「玄锦」）或 `light`（「素锦」）；每个风格都提供两种 |
 
 外观的每一项取值都来自 CSS 自定义属性（设计令牌），共 80 个，清单在
 [`contracts/tokens.json`](contracts/tokens.json)。每个主题文件都完整定义这 80 个，不依赖其他主题
 留下的值——所以换一个主题就是换一组文件，不需要追查某个变量的值来自哪一层。
 
-随库发布九种风格。选取标准是覆盖不同的设计取向：同样的「深度」，一种风格用弥散阴影表达，另一种
-用硬偏移、模糊或内阴影表达，还有干脆不表达深度的。
+随库发布十五种风格。选取标准是覆盖不同的设计取向：同样的「深度」，一种风格用弥散阴影表达，另一种
+用硬偏移、辉光、模糊、内凹槽或分层写实阴影表达，还有干脆不表达深度的。
 
 | 风格 | 圆角（sm / md / lg） | 深度 | 边框 | 动效（base） |
 | --- | --- | --- | --- | --- |
@@ -174,10 +174,19 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 | **新粗野主义** | 0 | 硬偏移，无模糊半径 | 3px 黑 | 150ms |
 | **粗野主义** | 0 | 无 | 3px，始终可见 | 0s |
 | **维度分层** | 6 / 10 / 14px | 四级阴影 | 1px 发丝线 | 200ms |
+| **复古未来主义** | 2 / 4 / 8px | 辉光 + 黑色投影 | 1px，霓虹品红强边 | 200ms |
+| **极光** | 8 / 14 / 20px | 彩色辉光阴影 | 1px，青色强边 | 260ms |
+| **墨水纸** | 2 / 4 / 6px | 无，显式声明为 `none` | 1px，墨色强边 | 100ms，线性 |
+| **拟物** | 4 / 6 / 10px | 分层写实阴影 + 内凹槽 | 1px，皮革色强边 | 320ms |
+| **孟菲斯** | 4 / 10 / 14px | 无，显式声明为 `none` | 1px，墨色强边 | 200ms，弹性缓动 |
+| **像素** | 0 | 硬方块阴影，无模糊 | 1px，墨色强边 | 60ms，steps 逐帧 |
 
-标题读取 `--jin-font-display`：在 Jin 风格里它是第二字族（衬线/宋体）；其余风格里与正文同字族，
-玻璃拟态例外——同族的展示变体（SF Pro Display 对正文的 SF Pro Text）。
-纹理令牌 `--jin-surface-texture` 只有 Jin 定义经纬网格图案，其余八个风格全部为 `none`。
+标题读取 `--jin-font-display`：在 Jin 风格里它是第二字族（衬线/宋体）；多数风格里与正文同字族，
+玻璃拟态与极光用同族或近族的展示变体，墨水纸通篇衬线（正文与标题同族），复古未来主义通篇等宽字，
+拟物用雕刻感的人文展示体对正文的系统无衬线，像素用像素展示体（未安装时回退等宽）。
+纹理令牌 `--jin-surface-texture` 在 Jin 里是经纬网格，在复古未来主义里是 CRT 扫描线，在拟物里是
+亚麻斜纹织理，在孟菲斯里是几何拼贴碎花，在像素里是抖动棋盘，在极光与墨水纸里是防条带的细颗粒
+噪点，其余风格全部为 `none`。
 
 ### 写一个自己的主题
 
@@ -195,13 +204,14 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 
 **Jin（锦）是原创设计**——本库自己的视觉风格，也是默认风格。
 
-**其余八种风格是对
+**其余十四种风格是对
 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 （MIT，© 2024 Next Level Builder）目录条目的独立实现。** 该目录是一个可检索的 UI 风格清单，只提供
 设计指引、不提供 CSS，因此本库没有复制它的任何样式表；「令牌必须覆盖形状、深度与动效而不只是颜色」
-这一要求正是从这个目录提出的。八个实现条目为 `minimalism-and-swiss-style`、`neumorphism`、
+这一要求正是从这个目录提出的。十四个实现条目为 `minimalism-and-swiss-style`、`neumorphism`、
 `glassmorphism`、`claymorphism`、`flat-design`、`neubrutalism`、`brutalism`、
-`dimensional-layering`。逐个署名见 [CREDITS.md](CREDITS.md)，每个主题文件头部也写明来源。
+`dimensional-layering`、`retro-futurism`、`aurora-ui`、`e-ink-paper`、`skeuomorphism`、
+`memphis-design`、`pixel-art`。逐个署名见 [CREDITS.md](CREDITS.md)，每个主题文件头部也写明来源。
 
 ---
 

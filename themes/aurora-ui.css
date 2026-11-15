@@ -1,0 +1,135 @@
+/*
+ * Jin theme: aurora-ui (light).
+ *
+ * Dawn aurora: pale violet-white surfaces, each panel carrying a whisper of
+ * teal-violet-pink flow in its gradient, and depth drawn by coloured shadows —
+ * violet in the near field, teal in the far. The accent is the deep-teal end of
+ * the aurora; the violet end is reserved for the focus ring.
+ *
+ * ---
+ * Style definition: the "aurora-ui" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='aurora-ui'] {
+  color-scheme: light;
+
+  /* surface & text */
+  --jin-bg: #edeffa;
+  --jin-surface: #f6f7fd;
+  --jin-surface-raised: #fcfcff;
+  --jin-surface-sunken: #e3e6f2;
+  --jin-surface-translucent: #fcfcff;
+  --jin-scrim: rgba(13, 10, 28, 0.45);
+  --jin-text: #191534;
+  --jin-text-muted: #4e4a72;
+  /* Held against the sunken well, not just against white panels. */
+  --jin-text-subtle: #625d87;
+  --jin-text-on-accent: #ffffff;
+
+  /* border & shape */
+  --jin-border-color: rgba(83, 74, 130, 0.2);
+  --jin-border-color-strong: #0a6d63;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 8px;
+  --jin-radius-md: 14px;
+  --jin-radius-lg: 20px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth — coloured shadows: violet nearby, teal in the distance */
+  --jin-elevation-1: 0 1px 3px rgba(46, 34, 92, 0.08);
+  --jin-elevation-2: 0 2px 8px rgba(46, 34, 92, 0.1), 0 8px 20px rgba(46, 34, 92, 0.07);
+  --jin-elevation-3: 0 6px 18px rgba(46, 34, 92, 0.12), 0 14px 34px rgba(12, 127, 116, 0.08);
+  --jin-elevation-4: 0 12px 32px rgba(46, 34, 92, 0.16), 0 26px 60px rgba(12, 127, 116, 0.1);
+  --jin-shadow-inset: inset 0 1px 2px rgba(46, 34, 92, 0.08);
+  --jin-blur: 0px;
+  /* The aurora itself, laid across every panel: teal fading through violet
+     into pink. Kept faint enough that text never competes with it. */
+  --jin-surface-gradient: linear-gradient(
+    160deg,
+    rgba(63, 217, 197, 0.1) 0%,
+    rgba(124, 77, 255, 0.07) 40%,
+    rgba(236, 72, 153, 0.04) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  /* Fine grain to keep the wide gradients from banding. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='.04'/%3E%3C/svg%3E");
+
+  /* status — the deep-teal accent's neighbours, tuned for silver surfaces */
+  --jin-accent: #0a6d63;
+  --jin-accent-hover: #095d55;
+  --jin-accent-active: #084e47;
+  --jin-danger: #d0336c;
+  --jin-warning: #9a5b00;
+  --jin-success: #0f7a52;
+  --jin-info: #0b63ce;
+  --jin-danger-text: #a81c4d;
+  --jin-warning-text: #7d4a00;
+  --jin-success-text: #0a6142;
+  --jin-info-text: #0b56b0;
+  --jin-danger-bg: #fce8ef;
+  --jin-warning-bg: #faf0d7;
+  --jin-success-bg: #e0f6ea;
+  --jin-info-bg: #e3edfe;
+
+  /* focus — the violet end of the aurora, declared on its own */
+  --jin-focus-ring-color: #7c3aed;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — smooth, flowing: the northern lights do not snap */
+  --jin-duration-fast: 180ms;
+  --jin-duration-base: 260ms;
+  --jin-duration-slow: 340ms;
+  --jin-easing-standard: cubic-bezier(0.25, 0.7, 0.3, 1);
+  --jin-easing-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* typography */
+  --jin-font-family: 'Inter', 'SF Pro Text', 'Segoe UI', system-ui, -apple-system, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  --jin-font-display: 'Space Grotesk', 'Inter', 'SF Pro Display', 'Segoe UI', system-ui,
+    -apple-system, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 17px;
+  --jin-font-size-xl: 22px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 600;
+  --jin-line-height: 1.55;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='aurora-ui'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

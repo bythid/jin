@@ -1,0 +1,134 @@
+/*
+ * Jin theme: retro-futurism (light).
+ *
+ * Daylight silver: the 1980s terminal seen through a lit room. Cool silver-blue
+ * surfaces, deep petrol controls, and the neon duo kept for the moments that
+ * earn it — a magenta strong border and focus ring over a cyan-leaning accent.
+ *
+ * ---
+ * Style definition: the "retro-futurism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='retro-futurism'] {
+  color-scheme: light;
+
+  /* surface & text */
+  --jin-bg: #eceef4;
+  --jin-surface: #f5f6fa;
+  --jin-surface-raised: #fbfcfe;
+  --jin-surface-sunken: #e2e4ee;
+  --jin-surface-translucent: #fbfcfe;
+  --jin-scrim: rgba(17, 16, 29, 0.5);
+  --jin-text: #181629;
+  --jin-text-muted: #4c4968;
+  /* The terminal keeps every line of a hint legible, even on the deepest well. */
+  --jin-text-subtle: #5d5a7a;
+  --jin-text-on-accent: #ffffff;
+
+  /* border & shape */
+  --jin-border-color: #c9cddb;
+  --jin-border-color-strong: #b0146e;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 2px;
+  --jin-radius-md: 4px;
+  --jin-radius-lg: 8px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth — a soft daylight shadow; the glow appears only as panels rise */
+  --jin-elevation-1: 0 1px 2px rgba(24, 22, 41, 0.1);
+  --jin-elevation-2: 0 2px 8px rgba(24, 22, 41, 0.12), 0 6px 18px rgba(24, 22, 41, 0.08);
+  --jin-elevation-3: 0 6px 16px rgba(24, 22, 41, 0.14), 0 12px 32px rgba(10, 95, 120, 0.1);
+  --jin-elevation-4: 0 12px 28px rgba(24, 22, 41, 0.18), 0 24px 56px rgba(10, 95, 120, 0.14);
+  --jin-shadow-inset: inset 0 1px 2px rgba(24, 22, 41, 0.1);
+  --jin-blur: 0px;
+  --jin-surface-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0) 42%,
+    rgba(24, 22, 41, 0.06) 100%
+  );
+  /* CRT raster, drawn in ink at a whisper: the tube is off, the grid remains. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Cg fill='none' stroke='%23181629' stroke-opacity='.05'%3E%3Cpath d='M0 .5h4'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* status — deep petrol where the accent sits; the catalogue's neons reappear
+     only once they are dark enough to stay readable on silver */
+  --jin-accent: #0a5f78;
+  --jin-accent-hover: #09516a;
+  --jin-accent-active: #084356;
+  --jin-danger: #c81e5b;
+  --jin-warning: #8f5a00;
+  --jin-success: #0f7a52;
+  --jin-info: #0b63ce;
+  --jin-danger-text: #a0103f;
+  --jin-warning-text: #7a4a06;
+  --jin-success-text: #0a6142;
+  --jin-info-text: #0b56b0;
+  --jin-danger-bg: #fbdde8;
+  --jin-warning-bg: #f9ecd4;
+  --jin-success-bg: #def3e8;
+  --jin-info-bg: #e0ebfd;
+
+  /* focus — the magenta half of the neon duo, declared on its own */
+  --jin-focus-ring-color: #e0189a;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 140ms;
+  --jin-duration-base: 200ms;
+  --jin-duration-slow: 280ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --jin-easing-emphasized: cubic-bezier(0.3, 0.7, 0.2, 1);
+
+  /* typography — the terminal voice: one monospace family for everything,
+     labels in caps (a no-op on CJK, which falls through to the system face) */
+  --jin-font-family: 'JetBrains Mono', 'Cascadia Code', 'SF Mono', ui-monospace, Consolas,
+    'Courier New', monospace;
+  --jin-font-display: 'JetBrains Mono', 'Cascadia Code', 'SF Mono', ui-monospace, Consolas,
+    'Courier New', monospace;
+  --jin-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, SFMono-Regular, Consolas,
+    monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 20px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.55;
+  --jin-letter-spacing: 0.02em;
+  --jin-text-transform: uppercase;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='retro-futurism'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

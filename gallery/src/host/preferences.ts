@@ -60,6 +60,36 @@ export const AVAILABLE_STYLES = [
     labelKey: 'app.style.brutalism.label',
     noteKey: 'app.style.brutalism.note',
   },
+  {
+    id: 'retro-futurism',
+    labelKey: 'app.style.retro-futurism.label',
+    noteKey: 'app.style.retro-futurism.note',
+  },
+  {
+    id: 'aurora-ui',
+    labelKey: 'app.style.aurora-ui.label',
+    noteKey: 'app.style.aurora-ui.note',
+  },
+  {
+    id: 'e-ink-paper',
+    labelKey: 'app.style.e-ink-paper.label',
+    noteKey: 'app.style.e-ink-paper.note',
+  },
+  {
+    id: 'skeuomorphism',
+    labelKey: 'app.style.skeuomorphism.label',
+    noteKey: 'app.style.skeuomorphism.note',
+  },
+  {
+    id: 'memphis-design',
+    labelKey: 'app.style.memphis-design.label',
+    noteKey: 'app.style.memphis-design.note',
+  },
+  {
+    id: 'pixel-art',
+    labelKey: 'app.style.pixel-art.label',
+    noteKey: 'app.style.pixel-art.note',
+  },
 ] as const
 
 export interface Preferences {

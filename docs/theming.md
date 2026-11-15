@@ -8,12 +8,13 @@
 模式：`data-jin-mode="dark"` = **玄锦**（标志性模式，库的默认）· `data-jin-mode="light"` = **素锦**
 
 > **来源说明**：**Jin（锦）主题是原创设计**，也是本库的默认视觉风格。
-> 另外八个风格（`minimalism-and-swiss-style`、`neumorphism`、`glassmorphism`、`claymorphism`、
-> `flat-design`、`neubrutalism`、`brutalism`、`dimensional-layering`）是对
+> 另外十四个风格（`minimalism-and-swiss-style`、`neumorphism`、`glassmorphism`、`claymorphism`、
+> `flat-design`、`neubrutalism`、`brutalism`、`dimensional-layering`、`retro-futurism`、
+> `aurora-ui`、`e-ink-paper`、`skeuomorphism`、`memphis-design`、`pixel-art`）是对
 > [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 > 所收录风格的实现——"令牌必须覆盖形状、深度与动效，而不只是颜色"这一要求正是出自该目录。
 > 我们实现的是各风格的设计特征，值全部落在本库自己的 80 令牌契约上；该仓库提供的是设计指引而
-> 不是 CSS，因此没有复制它的任何样式表。完整署名见 [CREDITS.md](../CREDITS.md)，八个风格各自的
+> 不是 CSS，因此没有复制它的任何样式表。完整署名见 [CREDITS.md](../CREDITS.md)，十四个风格各自的
 > 定位与所覆盖的契约轴见[第八节](#八已实现风格清单)。
 
 ---
@@ -352,20 +353,36 @@ hook 只运行令牌检查。任何低于阈值的组合都会让检查失败。
 
 ## 八、已实现风格清单
 
-本库发布 9 个风格，每个风格一个浅色文件加一个深色文件；每个文件独立声明全部 80 个契约令牌。
-**Jin（锦）是原创**且为默认；另外八个风格是对
+本库发布 15 个风格，每个风格一个浅色文件加一个深色文件；每个文件独立声明全部 80 个契约令牌。
+**Jin（锦）是原创**且为默认；另外十四个风格是对
 [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) 目录条目的实现
 （署名见 [CREDITS.md](../CREDITS.md)）。
 
 ### 选择标准
 
-该目录共 88 个条目（其中 50 个标记为 active，按 2026-09 选取时的仓库快照）。本批实现的是其中的
-**主流风格**：既是业界广泛采用的，也是该目录在自己的 product 与 UX 指引里引用最多的。第二个
-条件同样重要——它们覆盖的契约轴互不重叠：`glassmorphism` 与 `dimensional-layering` 是
-`--jin-blur` 仅有的两个非零使用者，`neumorphism` 把 `--jin-shadow-inset` 用成主视觉（其余风格
-只留轻微内凹），`claymorphism` 把"3px 描边 + 大圆角"推到
+该目录共 89 个条目（其中 51 个标记为 active；第一批按 2026-09 的仓库快照选取，第二批按 2026-11
+的快照选取）。第一批实现的是其中的**主流风格**：既是业界广泛采用的，也是该目录在自己的 product
+与 UX 指引里引用最多的。第二个条件同样重要——它们覆盖的契约轴互不重叠：`glassmorphism` 与
+`dimensional-layering` 是 `--jin-blur` 仅有的两个非零使用者，`neumorphism` 把
+`--jin-shadow-inset` 用成主视觉（其余风格只留轻微内凹），`claymorphism` 把"3px 描边 + 大圆角"推到
 极限，`brutalism` 与 `flat-design` 分别把动效轴和深度轴归零。一个只换配色、不动形状与深度的
 风格，验证不了契约表达的任何一条差异。
+
+第二批（`retro-futurism`、`aurora-ui`、`e-ink-paper`）延续同一条标准，补上第一批没有开辟的
+三条契约轴：`retro-futurism` 是第二个定义 `--jin-surface-texture` 的风格（CRT 扫描线，与锦的
+经纬网格完全不同的图案），并把辉光带进深度轴；`aurora-ui` 把 `--jin-surface-gradient` 从锦的
+"一层微光"推成每块面板的主视觉，深度用彩色辉光表达；`e-ink-paper` 是唯一的无彩色风格——强调色
+就是墨色，状态色退成灰阶，深度全部交给边框。状态退成灰阶在本库是安全的，因为颜色从不是唯一的
+状态载体（每个 tone 都配独立图标与文字）。
+
+第三批（`skeuomorphism`、`memphis-design`、`pixel-art`）是同一标准下剩余候选里最后的强项：
+`skeuomorphism` 是 80 令牌契约点名预留的风格（`--jin-duration-slow` 的描述写着
+"300-500ms for skeuomorphism"，本批照此取 480ms），它带来写实材质的整个象限——分层写实阴影、
+镜面高光渐变、亚麻斜纹织理，内阴影只做配角以免与新拟态撞轴；`memphis-design` 打开几何纹样这
+条纹理子轴（三角/圆/折线/斜方块的拼贴碎花，与网格、扫描线、噪点全然不同），深度按拼贴的本性
+显式归 `none`，弹性缓动取值刻意避开黏土的曲线与时长；`pixel-art` 带来抖动棋盘纹理、NES 色盘
+与 `steps()` 逐帧缓动——它是唯一动用 steps 的风格，代价是与 brutalism 共享 0 圆角、与
+neubrutalism 共享硬偏移阴影，换来的是整体气质的完全不同。
 
 ### 清单
 
@@ -380,6 +397,12 @@ hook 只运行令牌检查。任何低于阈值的组合都会让检查失败。
 | `neubrutalism` | 新粗野主义 | 0 | 硬偏移阴影，无模糊半径 | 3px 黑描边、海报配色、暖色底 |
 | `brutalism` | 粗野主义 | 0 | 无 | 3px 描边、纯色平涂、0ms 动效 |
 | `dimensional-layering` | 维度分层 | 6 / 10 / 14px | 四级柔和阴影 | 常规现代取值；唯一使用半透明表面与背景模糊的非玻璃风格 |
+| `retro-futurism` | 复古未来主义 | 2 / 4 / 8px | 辉光 + 黑色投影 | 深靛底、霓虹青作主色、品红只留给强边界与焦点环、CRT 扫描线纹理、等宽字通篇 |
+| `aurora-ui` | 极光 | 8 / 14 / 20px | 彩色辉光阴影 | 青—紫—粉流动渐变铺满每块面板，细颗粒噪点防条带 |
+| `e-ink-paper` | 墨水纸 | 2 / 4 / 6px | 无（显式 `none`） | 无彩灰阶、纸纹噪点、衬线通篇（正文与标题同族）、线性短动效 |
+| `skeuomorphism` | 拟物 | 4 / 6 / 10px | 分层写实阴影 + 内凹槽 | 亚麻斜纹织理、镜面高光渐变、皮革强调色、钢色焦点环、32/40/48 控件高度、480ms 慢动效 |
+| `memphis-design` | 孟菲斯 | 4 / 10 / 14px | 无（显式 `none`） | 几何拼贴碎花纹理、撞色粉彩、纸片扁平、弹性缓动 |
+| `pixel-art` | 像素 | 0 | 硬方块阴影，无模糊 | NES 色盘、抖动棋盘纹理、steps() 逐帧缓动、像素字标题 |
 
 ### 三条跨风格约定
 

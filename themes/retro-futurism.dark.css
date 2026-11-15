@@ -1,0 +1,139 @@
+/*
+ * Jin theme — dark mode: retro-futurism. This is the style's signature mode.
+ * Style axis: data-jin-style="retro-futurism"  ·  Mode axis: data-jin-mode="dark"
+ *
+ * A phosphor tube in a dark room: deep indigo ground, neon cyan as the working
+ * colour, magenta held back for strong boundaries and the focus ring. Depth is
+ * glow — the higher a panel rises, the more its cyan halo bleeds into the room.
+ *
+ * The catalogue calls for a pure #000000 ground; a small amount of indigo is
+ * kept instead so the glow has something to sit on and true black is reserved
+ * for the scrim and the shadows.
+ *
+ * ---
+ * Style definition: the "retro-futurism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='retro-futurism'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text */
+  --jin-bg: #11101d;
+  --jin-surface: #181629;
+  --jin-surface-raised: #201d35;
+  --jin-surface-sunken: #0c0b15;
+  --jin-surface-translucent: #201d35;
+  --jin-scrim: rgba(4, 3, 10, 0.66);
+  --jin-text: #e9e7f6;
+  --jin-text-muted: #aaa5c6;
+  /* Phosphor dimming: still 4.5:1 on the raised panel where hints land. */
+  --jin-text-subtle: #908bb1;
+  /* The fill is a bright neon, so dark text is the readable pairing. */
+  --jin-text-on-accent: #0d0c16;
+
+  /* border & shape — violet hairlines; the magenta neon only on strong edges */
+  --jin-border-color: rgba(190, 180, 235, 0.16);
+  --jin-border-color-strong: rgba(255, 79, 163, 0.65);
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 2px;
+  --jin-radius-md: 4px;
+  --jin-radius-lg: 8px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth — glow, not drop: each level bleeds more cyan into the room */
+  --jin-elevation-1: 0 0 8px rgba(63, 230, 236, 0.07), 0 1px 3px rgba(0, 0, 0, 0.5);
+  --jin-elevation-2: 0 0 14px rgba(63, 230, 236, 0.1), 0 4px 10px rgba(0, 0, 0, 0.55);
+  --jin-elevation-3: 0 0 20px rgba(63, 230, 236, 0.12), 0 10px 26px rgba(0, 0, 0, 0.6);
+  --jin-elevation-4: 0 0 28px rgba(63, 230, 236, 0.14), 0 20px 48px rgba(0, 0, 0, 0.65);
+  --jin-shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.55);
+  --jin-blur: 0px;
+  /* The tube's faint light from above, then the screen falls away to black. */
+  --jin-surface-gradient: linear-gradient(
+    180deg,
+    rgba(63, 230, 236, 0.05) 0%,
+    rgba(63, 230, 236, 0) 42%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  /* CRT raster: one scanline every 4px, phosphor-bright at 7%. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Cg fill='none' stroke='%23e9e7f6' stroke-opacity='.07'%3E%3Cpath d='M0 .5h4'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* status — the 80s palette lifted until every member clears 4.5:1 as text */
+  --jin-accent: #3fe6ec;
+  --jin-accent-hover: #6ceef2;
+  --jin-accent-active: #23cdd4;
+  --jin-danger: #ff6188;
+  --jin-warning: #f2c14e;
+  --jin-success: #53e08c;
+  --jin-info: #5fa8ff;
+  --jin-danger-text: #ff8fa9;
+  --jin-warning-text: #f0cf7f;
+  --jin-success-text: #83e9ab;
+  --jin-info-text: #8fc2ff;
+  --jin-danger-bg: rgba(255, 70, 120, 0.16);
+  --jin-warning-bg: rgba(216, 162, 46, 0.15);
+  --jin-success-bg: rgba(60, 200, 110, 0.15);
+  --jin-info-bg: rgba(70, 130, 255, 0.16);
+
+  /* focus — magenta against a cyan world; declared here, never derived */
+  --jin-focus-ring-color: #ff4fa3;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion */
+  --jin-duration-fast: 140ms;
+  --jin-duration-base: 200ms;
+  --jin-duration-slow: 280ms;
+  --jin-easing-standard: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --jin-easing-emphasized: cubic-bezier(0.3, 0.7, 0.2, 1);
+
+  /* typography — the terminal voice, one monospace family for everything */
+  --jin-font-family: 'JetBrains Mono', 'Cascadia Code', 'SF Mono', ui-monospace, Consolas,
+    'Courier New', monospace;
+  --jin-font-display: 'JetBrains Mono', 'Cascadia Code', 'SF Mono', ui-monospace, Consolas,
+    'Courier New', monospace;
+  --jin-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, SFMono-Regular, Consolas,
+    monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 20px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.55;
+  --jin-letter-spacing: 0.02em;
+  --jin-text-transform: uppercase;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='retro-futurism'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

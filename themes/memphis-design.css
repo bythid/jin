@@ -1,0 +1,131 @@
+/*
+ * Jin theme: memphis-design (light). This is the style's signature mode.
+ * Style axis: data-jin-style="memphis-design"  ·  Mode axis: data-jin-mode="light"
+ *
+ * 1980s Milan: a cream ground with geometric confetti (triangle, circle,
+ * squiggle, tilted square) showing wherever the ground shows, hot pink as
+ * the working colour, and the rest of the gang — teal, blue-purple, mustard —
+ * spread across the status tones. Everything sits flat: a paper collage has
+ * no depth, and the depth tokens say so outright.
+ *
+ * ---
+ * Style definition: the "memphis-design" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='memphis-design'] {
+  color-scheme: light;
+
+  /* surface & text — cream ground, violet ink */
+  --jin-bg: #f6f1e6;
+  --jin-surface: #fbf8f0;
+  --jin-surface-raised: #fefcf6;
+  --jin-surface-sunken: #ece5d4;
+  --jin-surface-translucent: #fefcf6;
+  --jin-scrim: rgba(34, 30, 46, 0.5);
+  --jin-text: #221e2e;
+  --jin-text-muted: #4f4a5e;
+  /* Measured against the sunken well, not just against white panels. */
+  --jin-text-subtle: #635d72;
+  --jin-text-on-accent: #fff5fa;
+
+  /* border & shape — a thin keyline; the ink line is for emphasis */
+  --jin-border-color: #d8d2c2;
+  --jin-border-color-strong: #221e2e;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 4px;
+  --jin-radius-md: 10px;
+  --jin-radius-lg: 14px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 38px;
+  --jin-control-height-lg: 46px;
+
+  /* depth — flat collage: declared absent, not forgotten. The style's depth
+     work is done by overlapping colour blocks, which the components already
+     express through their own surfaces. */
+  --jin-elevation-1: none;
+  --jin-elevation-2: none;
+  --jin-elevation-3: none;
+  --jin-elevation-4: none;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  /* Geometric confetti: pink triangle, teal circle, purple squiggle, tilted
+     mustard square — each at a whisper, never inside the reading area. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M3 21l5-9 5 9z' fill='%23b81f66' fill-opacity='.07'/%3E%3Ccircle cx='21' cy='7' r='3' fill='none' stroke='%230e7a6e' stroke-opacity='.09' stroke-width='1.5'/%3E%3Cpath d='M13 25q3-3 6 0t6 0' fill='none' stroke='%234d5aa8' stroke-opacity='.08' stroke-width='1.5'/%3E%3Crect x='4' y='3' width='4' height='4' fill='%238f6400' fill-opacity='.06' transform='rotate(15 6 5)'/%3E%3C/svg%3E");
+
+  /* status — the Memphis gang, darkened until every member clears 4.5:1 */
+  --jin-accent: #b81f66;
+  --jin-accent-hover: #9d1a58;
+  --jin-accent-active: #85154a;
+  --jin-danger: #b33020;
+  --jin-warning: #8f6400;
+  --jin-success: #0e7a6e;
+  --jin-info: #4d5aa8;
+  --jin-danger-text: #94291c;
+  --jin-warning-text: #7a5600;
+  --jin-success-text: #0b6355;
+  --jin-info-text: #3f4b90;
+  --jin-danger-bg: #f8ddd6;
+  --jin-warning-bg: #f6ecd0;
+  --jin-success-bg: #d9efe9;
+  --jin-info-bg: #e2e4f6;
+
+  /* focus — the blue-purple end of the palette, declared on its own */
+  --jin-focus-ring-color: #5a53c9;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — playful, a touch of spring, but snappier than claymorphism */
+  --jin-duration-fast: 130ms;
+  --jin-duration-base: 200ms;
+  --jin-duration-slow: 280ms;
+  --jin-easing-standard: cubic-bezier(0.3, 0.9, 0.4, 1);
+  --jin-easing-emphasized: cubic-bezier(0.34, 1.45, 0.64, 1);
+
+  /* typography */
+  --jin-font-family: 'Poppins', 'Montserrat', 'Segoe UI', system-ui, -apple-system, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  --jin-font-display: 'Poppins', 'Montserrat', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 17px;
+  --jin-font-size-xl: 22px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.5;
+  --jin-letter-spacing: 0.01em;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='memphis-design'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

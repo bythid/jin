@@ -1,0 +1,142 @@
+/*
+ * Jin theme: skeuomorphism (light). This is the style's signature mode.
+ * Style axis: data-jin-style="skeuomorphism"  ·  Mode axis: data-jin-mode="light"
+ *
+ * A well-lit desk of real materials: warm linen ground, paper panels with a
+ * brushed sheen, wells that are actually recessed, and shadows built from
+ * layers — a tight contact shadow under a wide ambient one. The accent is
+ * tooled leather; the focus ring is cool steel, declared on its own so it
+ * never blends into the brass world around it.
+ *
+ * The 80-token contract anticipated this style: --jin-duration-slow's
+ * description reserves 300-500ms for skeuomorphism, and this file uses it —
+ * physical objects have weight, so everything moves a little slower.
+ *
+ * ---
+ * Style definition: the "skeuomorphism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='skeuomorphism'] {
+  color-scheme: light;
+
+  /* surface & text — linen desk, paper panels, leather well */
+  --jin-bg: #d9d4c7;
+  --jin-surface: #e5e1d4;
+  --jin-surface-raised: #efebdf;
+  --jin-surface-sunken: #c9c3b3;
+  --jin-surface-translucent: #efebdf;
+  --jin-scrim: rgba(36, 31, 21, 0.5);
+  --jin-text: #241f15;
+  --jin-text-muted: #45402f;
+  /* Pencil on paper, measured against the deepest well. */
+  --jin-text-subtle: #55503f;
+  --jin-text-on-accent: #f5efe2;
+
+  /* border & shape */
+  --jin-border-color: #b4ad99;
+  --jin-border-color-strong: #6e3f0e;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 4px;
+  --jin-radius-md: 6px;
+  --jin-radius-lg: 10px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 32px;
+  --jin-control-height-md: 40px;
+  --jin-control-height-lg: 48px;
+
+  /* depth — layered realism: contact shadow first, ambient under it, and a
+     well that carries a light bottom edge the way a recessed surface does */
+  --jin-elevation-1: 0 1px 1px rgba(30, 24, 12, 0.2), 0 2px 3px rgba(30, 24, 12, 0.12);
+  --jin-elevation-2: 0 1px 2px rgba(30, 24, 12, 0.2), 0 5px 10px rgba(30, 24, 12, 0.14);
+  --jin-elevation-3: 0 2px 3px rgba(30, 24, 12, 0.2), 0 10px 22px rgba(30, 24, 12, 0.18);
+  --jin-elevation-4: 0 3px 5px rgba(30, 24, 12, 0.22), 0 18px 40px rgba(30, 24, 12, 0.24);
+  --jin-shadow-inset: inset 0 2px 3px rgba(30, 24, 12, 0.25), inset 0 -1px 0 rgba(255, 253, 245, 0.6);
+  --jin-blur: 0px;
+  /* Brushed metal catching light from above: bright edge, falling sheen. */
+  --jin-surface-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.12) 38%,
+    rgba(255, 255, 255, 0) 55%,
+    rgba(46, 36, 18, 0.07) 100%
+  );
+  /* Linen weave: a diagonal crosshatch, present only where the ground shows. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cg fill='none' stroke='%23241f15'%3E%3Cpath d='M0 6L6 0' stroke-opacity='.06'/%3E%3Cpath d='M0 0l6 6' stroke-opacity='.04'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* status — the physical world: brick, mustard, moss, steel */
+  --jin-accent: #6e3f0e;
+  --jin-accent-hover: #5c340b;
+  --jin-accent-active: #4c2b09;
+  --jin-danger: #8e2320;
+  --jin-warning: #7d5a10;
+  --jin-success: #2d5e2a;
+  --jin-info: #2c5a78;
+  --jin-danger-text: #7a1c19;
+  --jin-warning-text: #6b4c0a;
+  --jin-success-text: #244d22;
+  --jin-info-text: #234b64;
+  --jin-danger-bg: #ecd9d2;
+  --jin-warning-bg: #f0e4c8;
+  --jin-success-bg: #dfe8d8;
+  --jin-info-bg: #d9e5ec;
+
+  /* focus — cool steel against warm leather; declared here, never derived */
+  --jin-focus-ring-color: #1d5f8a;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — objects with weight: the slow token runs where the contract
+     reserved it, 480ms inside the catalogue's 300-500ms window */
+  --jin-duration-fast: 200ms;
+  --jin-duration-base: 320ms;
+  --jin-duration-slow: 480ms;
+  --jin-easing-standard: cubic-bezier(0.3, 0.6, 0.2, 1);
+  --jin-easing-emphasized: cubic-bezier(0.25, 0.8, 0.3, 1);
+
+  /* typography — an engraved humanist voice for titles over a workaday sans */
+  --jin-font-family: 'Segoe UI', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei',
+    'Helvetica Neue', sans-serif;
+  --jin-font-display: 'Optima', 'Candara', 'Segoe UI', system-ui, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, SFMono-Regular, Consolas,
+    monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 20px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.5;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density — chunkier physical controls */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='skeuomorphism'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

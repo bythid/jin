@@ -58,9 +58,10 @@ this layering is for.
 ```
 contracts/        the token list and the string list — the two files library and application agree on
 themes/           one file per style[.mode], each defining the whole contract
-                  (nine styles: jin, minimalism-and-swiss-style, neumorphism, glassmorphism,
+                  (fifteen styles: jin, minimalism-and-swiss-style, neumorphism, glassmorphism,
                   claymorphism, flat-design, neubrutalism, brutalism, dimensional-layering,
-                  each with a .dark variant)
+                  retro-futurism, aurora-ui, e-ink-paper, skeuomorphism, memphis-design,
+                  pixel-art, each with a .dark variant)
 src/core/         pure TypeScript: positioning, focus, roving tabindex, menu, tree, hotkeys, queue
 src/composables/  the DOM half of those modules, plus the overlay controller
 src/injection/    translation, capabilities, theme, and the plugin that combines them

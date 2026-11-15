@@ -1,0 +1,137 @@
+/*
+ * Jin theme: e-ink-paper (light). This is the style's signature mode.
+ * Style axis: data-jin-style="e-ink-paper"  ·  Mode axis: data-jin-mode="light"
+ *
+ * Matte paper under even light: one achromatic scale, a serif reading voice,
+ * paper grain instead of pattern, and depth carried by borders because paper
+ * casts no shadow. The accent is ink itself — the primary control is a
+ * printed black; state colours are stepped grays, which is safe here because
+ * the library never signals state by colour alone (each tone also has its
+ * icon and its words).
+ *
+ * Motion is short and linear like a display refresh: no fades, no springs.
+ *
+ * ---
+ * Style definition: the "e-ink-paper" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='e-ink-paper'] {
+  color-scheme: light;
+
+  /* surface & text — a warm paper scale, ink on top */
+  --jin-bg: #f1efe9;
+  --jin-surface: #f7f6f1;
+  --jin-surface-raised: #fcfbf7;
+  --jin-surface-sunken: #e8e6de;
+  --jin-surface-translucent: #fcfbf7;
+  --jin-scrim: rgba(29, 28, 24, 0.45);
+  --jin-text: #1d1c18;
+  --jin-text-muted: #4c4a44;
+  /* Pencil grey, measured against the deepest well a hint can land in. */
+  --jin-text-subtle: #615f58;
+  /* Paper on ink: the primary control reads as print. */
+  --jin-text-on-accent: #f7f6f1;
+
+  /* border & shape — the line does the depth work; emphasis is ink */
+  --jin-border-color: #d3d0c6;
+  --jin-border-color-strong: #1d1c18;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 2px;
+  --jin-radius-md: 4px;
+  --jin-radius-lg: 6px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth — paper casts no shadow: elevation is declared absent, and every
+     panel is held by its border instead. Not forgotten; removed. */
+  --jin-elevation-1: none;
+  --jin-elevation-2: none;
+  --jin-elevation-3: none;
+  --jin-elevation-4: none;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  /* Paper grain: monochrome noise, present only where the ground shows. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='.05'/%3E%3C/svg%3E");
+
+  /* status — one ink, stepped by weight: danger the blackest, info the
+     faintest. The icons and words carry the meaning; the gray only follows. */
+  --jin-accent: #28261f;
+  --jin-accent-hover: #141310;
+  --jin-accent-active: #000000;
+  --jin-danger: #1d1c18;
+  --jin-warning: #3c3a34;
+  --jin-success: #2b2a25;
+  --jin-info: #54524b;
+  --jin-danger-text: #1d1c18;
+  --jin-warning-text: #33312b;
+  --jin-success-text: #26241f;
+  --jin-info-text: #47453f;
+  --jin-danger-bg: #e4e1d8;
+  --jin-warning-bg: #ebe8e0;
+  --jin-success-bg: #e7e5dc;
+  --jin-info-bg: #eeede5;
+
+  /* focus — ink against paper; declared here, never derived */
+  --jin-focus-ring-color: #1d1c18;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — refresh, not fade: short, sharp, linear */
+  --jin-duration-fast: 60ms;
+  --jin-duration-base: 100ms;
+  --jin-duration-slow: 150ms;
+  --jin-easing-standard: linear;
+  --jin-easing-emphasized: linear;
+
+  /* typography — the reading voice: a serif for everything, display and body
+     alike, which is the inverse of Jin's serif-titles/sans-body split */
+  --jin-font-family: Georgia, 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'Times New Roman',
+    serif;
+  --jin-font-display: Georgia, 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC',
+    'Times New Roman', serif;
+  --jin-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, SFMono-Regular, Consolas,
+    'Noto Sans Mono CJK SC', monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 21px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.6;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='e-ink-paper'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

@@ -22,6 +22,30 @@ downstream an afternoon.
 
 ## [Unreleased]
 
+Added:
+
+- **Three new styles: `retro-futurism`, `aurora-ui`, `e-ink-paper`.** Each ships
+  a light and a dark file under `themes/`, restates all 80 contract tokens, and
+  is selectable through `data-jin-style`. They were picked to open contract
+  axes the first batch of catalogue styles left untouched: retro-futurism is
+  the second style with a real `--jin-surface-texture` (a CRT raster) and draws
+  depth as neon glow; aurora-ui makes `--jin-surface-gradient` the main visual
+  and uses coloured glow for elevation; e-ink-paper is the only achromatic
+  style — the accent is ink, the state colours are stepped grays (safe because
+  the library never signals state by colour alone), and elevation is declared
+  `none` with borders carrying depth. Existing hosts are unaffected: the new
+  ids only appear if a host opts in.
+- **Three more styles: `skeuomorphism`, `memphis-design`, `pixel-art`.** Same
+  shape as above — a light and a dark file, all 80 tokens, new
+  `data-jin-style` ids. skeuomorphism is the style the token contract itself
+  reserved a window for (`--jin-duration-slow` at 300–500ms; this
+  implementation uses 480ms) and brings layered realistic shadows, a brushed
+  specular sheen, and a linen-crosshatch texture; memphis-design adds the
+  geometric-confetti texture and declares depth `none` like the flat styles
+  it descends from; pixel-art is the only user of `steps()` easing, with a
+  dither-checker texture and hard block shadows. Existing hosts are
+  unaffected: the new ids only appear if a host opts in.
+
 Changed:
 
 - **Notifications now default to the bottom-end corner.** The notification

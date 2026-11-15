@@ -1,0 +1,133 @@
+/*
+ * Jin theme: pixel-art (light).
+ * Style axis: data-jin-style="pixel-art"  ·  Mode axis: data-jin-mode="light"
+ *
+ * A console on a warm plastic beige: a limited NES-family palette, dither
+ * checker where the ground shows, hard block shadows with no blur radius,
+ * and every state named by a sprite-like colour. Zero radius is shared with
+ * brutalism, and the hard offset with neubrutalism — what pixel-art adds is
+ * the dither texture, the palette, and frame-stepped motion.
+ *
+ * ---
+ * Style definition: the "pixel-art" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='pixel-art'] {
+  color-scheme: light;
+
+  /* surface & text — console beige, olive ink */
+  --jin-bg: #e3ded0;
+  --jin-surface: #ede9dc;
+  --jin-surface-raised: #f5f2e7;
+  --jin-surface-sunken: #d3cdbb;
+  --jin-surface-translucent: #f5f2e7;
+  --jin-scrim: rgba(19, 17, 9, 0.55);
+  --jin-text: #262218;
+  --jin-text-muted: #4c473a;
+  /* Measured against the sunken cell, not just the panels. */
+  --jin-text-subtle: #595344;
+  --jin-text-on-accent: #f5f2e7;
+
+  /* border & shape — the outline does the work, as on every sprite */
+  --jin-border-color: #6b6450;
+  --jin-border-color-strong: #262218;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 0px;
+  --jin-radius-md: 0px;
+  --jin-radius-lg: 0px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth — hard blocks, never blurred: a shadow in this world is itself
+     made of pixels. The offsets are smaller than neubrutalism's and drawn in
+     olive ink rather than pure black. */
+  --jin-elevation-1: 2px 2px 0 #494335;
+  --jin-elevation-2: 3px 3px 0 #494335;
+  --jin-elevation-3: 4px 4px 0 #494335;
+  --jin-elevation-4: 6px 6px 0 #494335;
+  --jin-shadow-inset: inset 2px 2px 0 rgba(38, 34, 24, 0.3);
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  /* Dither: a 2×2 checker, the texture of a limited palette. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='%23262218' fill-opacity='.06'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23262218' fill-opacity='.06'/%3E%3C/svg%3E");
+
+  /* status — the NES family, darkened until text clears 4.5:1 */
+  --jin-accent: #9e200c;
+  --jin-accent-hover: #87190a;
+  --jin-accent-active: #6f1408;
+  --jin-danger: #7e1508;
+  --jin-warning: #8a5f00;
+  --jin-success: #1c6322;
+  --jin-info: #1a3f8f;
+  --jin-danger-text: #6b1207;
+  --jin-warning-text: #745100;
+  --jin-success-text: #16511b;
+  --jin-info-text: #153476;
+  --jin-danger-bg: #f0dcd4;
+  --jin-warning-bg: #f2e6c4;
+  --jin-success-bg: #dbe8d6;
+  --jin-info-bg: #dbe1f0;
+
+  /* focus — the deep NES blue next to the red accent; declared on its own */
+  --jin-focus-ring-color: #1d3a9e;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — frame-stepped: steps() easing is the whole idea, and the
+     durations are short enough to read as deliberate, not broken */
+  --jin-duration-fast: 40ms;
+  --jin-duration-base: 60ms;
+  --jin-duration-slow: 90ms;
+  --jin-easing-standard: steps(2, end);
+  --jin-easing-emphasized: steps(3, end);
+
+  /* typography — pixel voice for titles where a pixel face is installed,
+     monospace everywhere so the body stays readable without one */
+  --jin-font-family: 'JetBrains Mono', 'Cascadia Code', ui-monospace, Consolas, 'Courier New',
+    monospace;
+  --jin-font-display: 'Press Start 2P', 'Silkscreen', 'JetBrains Mono', ui-monospace, Consolas,
+    monospace;
+  --jin-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, Consolas, monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 20px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 500;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.5;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='pixel-art'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

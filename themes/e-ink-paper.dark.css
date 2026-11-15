@@ -1,0 +1,130 @@
+/*
+ * Jin theme — dark mode: e-ink-paper (night paper).
+ * Style axis: data-jin-style="e-ink-paper"  ·  Mode axis: data-jin-mode="dark"
+ *
+ * Not an inverted photo: a warm dark paper with the same rules as the light
+ * file — one achromatic scale, borders instead of shadows, grain where the
+ * ground shows. The accent flips to paper white, so the primary control reads
+ * as white print on dark paper; state colours stay stepped grays.
+ *
+ * ---
+ * Style definition: the "e-ink-paper" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='e-ink-paper'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text — warm dark paper, pale ink on top */
+  --jin-bg: #1e1d19;
+  --jin-surface: #26251f;
+  --jin-surface-raised: #2d2c25;
+  --jin-surface-sunken: #171613;
+  --jin-surface-translucent: #2d2c25;
+  --jin-scrim: rgba(5, 5, 3, 0.62);
+  --jin-text: #e9e7de;
+  --jin-text-muted: #b5b2a6;
+  /* Faint pencil, still 4.5:1 on the raised panel where hints land. */
+  --jin-text-subtle: #9b988b;
+  /* White print on dark paper: the primary control flips with the page. */
+  --jin-text-on-accent: #1e1d19;
+
+  /* border & shape — the line does the depth work; emphasis is paper white */
+  --jin-border-color: rgba(233, 231, 222, 0.16);
+  --jin-border-color-strong: #e9e7de;
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 2px;
+  --jin-radius-md: 4px;
+  --jin-radius-lg: 6px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 30px;
+  --jin-control-height-md: 36px;
+  --jin-control-height-lg: 44px;
+
+  /* depth — paper casts no shadow in the dark either */
+  --jin-elevation-1: none;
+  --jin-elevation-2: none;
+  --jin-elevation-3: none;
+  --jin-elevation-4: none;
+  --jin-shadow-inset: none;
+  --jin-blur: 0px;
+  --jin-surface-gradient: none;
+  /* Paper grain, drawn in pale ink. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='.04'/%3E%3C/svg%3E");
+
+  /* status — one pale ink, stepped by weight: danger the brightest */
+  --jin-accent: #e9e7de;
+  --jin-accent-hover: #f6f4ec;
+  --jin-accent-active: #d8d5ca;
+  --jin-danger: #e9e7de;
+  --jin-warning: #c9c6ba;
+  --jin-success: #d5d2c6;
+  --jin-info: #a3a094;
+  --jin-danger-text: #f2f0e8;
+  --jin-warning-text: #d5d2c6;
+  --jin-success-text: #dddacd;
+  --jin-info-text: #b0ada1;
+  --jin-danger-bg: rgba(233, 231, 222, 0.12);
+  --jin-warning-bg: rgba(233, 231, 222, 0.09);
+  --jin-success-bg: rgba(233, 231, 222, 0.08);
+  --jin-info-bg: rgba(233, 231, 222, 0.06);
+
+  /* focus — paper white against dark paper; declared here, never derived */
+  --jin-focus-ring-color: #f6f4ec;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — refresh, not fade: short, sharp, linear */
+  --jin-duration-fast: 60ms;
+  --jin-duration-base: 100ms;
+  --jin-duration-slow: 150ms;
+  --jin-easing-standard: linear;
+  --jin-easing-emphasized: linear;
+
+  /* typography — the reading voice, a serif for everything */
+  --jin-font-family: Georgia, 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'Times New Roman',
+    serif;
+  --jin-font-display: Georgia, 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC',
+    'Times New Roman', serif;
+  --jin-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, SFMono-Regular, Consolas,
+    'Noto Sans Mono CJK SC', monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 21px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.6;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='e-ink-paper'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}
