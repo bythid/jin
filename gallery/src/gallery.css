@@ -106,6 +106,38 @@ body,
   white-space: nowrap;
 }
 
+/* The recolor palette: preset hues plus a free picker. The swatch colours are
+   hue samples, not theme values — the theme itself renders the result. */
+.gallery-palette {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jin-space-1);
+}
+
+.gallery-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--jin-radius-full);
+  border: 2px solid var(--jin-border-color);
+  padding: 0;
+  cursor: pointer;
+}
+
+.gallery-swatch--active {
+  outline: var(--jin-focus-ring-width) solid var(--jin-focus-ring-color);
+  outline-offset: var(--jin-focus-ring-offset);
+}
+
+.gallery-hue-input {
+  width: 26px;
+  height: 22px;
+  padding: 0;
+  border: var(--jin-border-width) var(--jin-border-style) var(--jin-border-color);
+  border-radius: var(--jin-radius-sm);
+  background: none;
+  cursor: pointer;
+}
+
 .gallery-sidebar {
   padding: var(--jin-space-3);
   border-right: var(--jin-border-width) var(--jin-border-style) var(--jin-border-color);

@@ -8,6 +8,7 @@ import type { GalleryLocale } from '../i18n'
 const STYLE_KEY = 'jin-gallery.style'
 const MODE_KEY = 'jin-gallery.mode'
 const LOCALE_KEY = 'jin-gallery.locale'
+const HUE_KEY = 'jin-gallery.hue'
 
 /**
  * The catalogue of styles. Labels and notes are dictionary keys rather than
@@ -112,6 +113,28 @@ export function savePreferences(snapshot: { style: string; mode: JinMode }): voi
   try {
     localStorage.setItem(STYLE_KEY, snapshot.style)
     localStorage.setItem(MODE_KEY, snapshot.mode)
+  } catch {
+    // A gallery that cannot persist a preference still works; say nothing.
+  }
+}
+
+/**
+ * The re-anchored accent hue, persisted the same way as the locale: a small
+ * number or "no opinion" (null), and the theme controller owns what it means.
+ */
+export function loadHue(): number | null {
+  if (typeof localStorage === 'undefined') return null
+  const raw = localStorage.getItem(HUE_KEY)
+  if (raw === null) return null
+  const hue = Number(raw)
+  return Number.isFinite(hue) ? hue : null
+}
+
+export function saveHue(hue: number | null): void {
+  if (typeof localStorage === 'undefined') return
+  try {
+    if (hue === null) localStorage.removeItem(HUE_KEY)
+    else localStorage.setItem(HUE_KEY, String(hue))
   } catch {
     // A gallery that cannot persist a preference still works; say nothing.
   }

@@ -34,6 +34,9 @@ const { t } = useI18n()
 const theme = useTheme()
 const values = ref<Record<string, string>>({})
 const overrides = ref<Record<string, string>>({})
+// Inline properties written by the library (the recolor API) rather than by
+// this panel. They read as overrides, but only the palette can clear them.
+const external = ref<Set<string>>(new Set())
 const filter = ref('')
 const groupFilter = ref<string>('all')
 const showOnlyOverridden = ref(false)
@@ -54,19 +57,30 @@ const groupOptions = computed(() => [
 
 function readAll(): void {
   if (typeof document === 'undefined') return
-  const styles = getComputedStyle(document.documentElement)
+  const root = document.documentElement
+  const styles = getComputedStyle(root)
   const next: Record<string, string> = {}
+  const externalNext = new Set<string>()
   for (const token of tokens) {
     next[token.name] = styles.getPropertyValue(token.name).trim()
+    if (root.style.getPropertyValue(token.name).trim() && !overrides.value[token.name]) {
+      externalNext.add(token.name)
+    }
   }
   values.value = next
+  external.value = externalNext
+}
+
+/** Panel-written and library-written overrides both count as overridden. */
+function isOverridden(token: TokenEntry): boolean {
+  return Boolean(overrides.value[token.name]) || external.value.has(token.name)
 }
 
 const visible = computed(() => {
   const needle = filter.value.trim().toLowerCase()
   return tokens.filter((token) => {
     if (groupFilter.value !== 'all' && token.group !== groupFilter.value) return false
-    if (showOnlyOverridden.value && !overrides.value[token.name]) return false
+    if (showOnlyOverridden.value && !isOverridden(token)) return false
     if (!needle) return true
     return (
       token.name.toLowerCase().includes(needle) ||
@@ -77,7 +91,7 @@ const visible = computed(() => {
 })
 
 const missing = computed(() => tokens.filter((token) => !values.value[token.name]).map((token) => token.name))
-const overrideCount = computed(() => Object.keys(overrides.value).length)
+const overrideCount = computed(() => tokens.filter((token) => isOverridden(token)).length)
 
 function override(token: TokenEntry, value: string): void {
   const root = document.documentElement
@@ -92,6 +106,9 @@ function override(token: TokenEntry, value: string): void {
 }
 
 function clearOverride(token: TokenEntry): void {
+  // Library-written recolor properties belong to the palette control; the
+  // panel only ever clears the overrides it wrote itself.
+  if (!overrides.value[token.name]) return
   document.documentElement.style.removeProperty(token.name)
   const next = { ...overrides.value }
   delete next[token.name]
@@ -100,7 +117,9 @@ function clearOverride(token: TokenEntry): void {
 }
 
 function clearAll(): void {
-  for (const token of tokens) document.documentElement.style.removeProperty(token.name)
+  for (const token of Object.keys(overrides.value)) {
+    document.documentElement.style.removeProperty(token)
+  }
   overrides.value = {}
   readAll()
 }
@@ -120,7 +139,7 @@ function swatchStyle(token: TokenEntry): Record<string, string> {
 }
 
 function sourceOf(token: TokenEntry): 'override' | 'theme' | 'missing' {
-  if (overrides.value[token.name]) return 'override'
+  if (isOverridden(token)) return 'override'
   return values.value[token.name] ? 'theme' : 'missing'
 }
 

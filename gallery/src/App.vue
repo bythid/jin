@@ -26,6 +26,7 @@ import {
   JinSwitch,
   JinToastRegion,
   JinTooltip,
+  hueOfColor,
   useNotifications,
   useTheme,
   useToasts,
@@ -149,6 +150,7 @@ function resetDemo(): void {
   notifications.clear()
   theme.setStyle('jin')
   theme.setMode('dark')
+  theme.setAccentHue(null)
   toasts.push({
     tone: 'success',
     title: t('app.toast.resetTitle'),
@@ -177,6 +179,33 @@ function announceStyle(): void {
     title: `${label} · ${t(theme.mode.value === 'dark' ? 'app.mode.dark' : 'app.mode.light')}`,
     duration: 2200,
   })
+}
+
+// The palette demonstrates the recolor API. Only the hue moves: the theme
+// keeps its lightness ladder and saturation discipline, and the controller
+// re-derives the whole colour family from the anchor, clamped to WCAG AA.
+const PRESET_HUES = [220, 195, 150, 90, 30, 0, 330, 270]
+
+function announceHue(): void {
+  const validation = theme.validateRecolor()
+  const failed = validation ? validation.pairs.filter((pair) => !pair.pass).length : 0
+  toasts.push({
+    tone: failed > 0 ? 'warning' : 'success',
+    title: t('app.toast.hueTitle', { hue: theme.accentHue.value ?? 0 }),
+    description: failed > 0 ? t('app.toast.hueWarning', { count: failed }) : t('app.toast.hueOk'),
+    duration: 2200,
+  })
+}
+
+function applyHue(hue: number | null): void {
+  theme.setAccentHue(hue)
+  if (theme.accentHue.value !== null) announceHue()
+}
+
+function onPickerInput(event: Event): void {
+  const hue = hueOfColor((event.target as HTMLInputElement).value)
+  if (hue === null) return
+  applyHue(hue)
 }
 
 const portalHint = computed(() =>
@@ -238,6 +267,41 @@ onMounted(() => {
               :aria-label="t('app.control.languageAria')"
               @update:model-value="(value: string | null) => i18n.setLocale((value ?? 'en') as GalleryLocale)"
             />
+          </div>
+
+          <div class="gallery-control">
+            <span class="gallery-control__label">{{ t('app.control.palette') }}</span>
+            <div class="gallery-palette" role="group" :aria-label="t('app.control.paletteAria')">
+              <button
+                v-for="hue in PRESET_HUES"
+                :key="hue"
+                type="button"
+                class="gallery-swatch"
+                :class="{ 'gallery-swatch--active': theme.accentHue.value === hue }"
+                :style="{ backgroundColor: `hsl(${hue} 70% 55%)` }"
+                :aria-pressed="theme.accentHue.value === hue"
+                :aria-label="t('app.control.paletteHue', { hue })"
+                @click="applyHue(hue)"
+              />
+              <input
+                type="color"
+                class="gallery-hue-input"
+                :aria-label="t('app.control.palettePickerAria')"
+                @input="onPickerInput"
+              />
+              <JinTooltip :content="t('app.control.paletteResetTooltip')" placement="bottom">
+                <JinButton
+                  variant="ghost"
+                  size="sm"
+                  icon
+                  :disabled="theme.accentHue.value === null"
+                  :label="t('app.control.paletteReset')"
+                  @click="applyHue(null)"
+                >
+                  <template #icon><JinIcon name="refresh" /></template>
+                </JinButton>
+              </JinTooltip>
+            </div>
           </div>
 
           <JinTooltip :content="t('app.control.resetTooltip')" placement="bottom">
