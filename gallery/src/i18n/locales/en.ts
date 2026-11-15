@@ -126,6 +126,24 @@ export const EN_MESSAGES = {
   'app.style.brutalism.label': 'Brutalism',
   'app.style.brutalism.note':
     'Zero radius, no shadows, no motion, thick visible borders. The token-contract stress test.',
+  'app.style.retro-futurism.label': 'Retro-Futurism',
+  'app.style.retro-futurism.note':
+    'A phosphor tube in a dark room: deep indigo ground, neon cyan at work, magenta held back for strong borders and the focus ring. Depth is glow, and the raster shows only on the ground.',
+  'app.style.aurora-ui.label': 'Aurora UI',
+  'app.style.aurora-ui.note':
+    'A flowing teal-violet-pink gradient across every panel, depth drawn by coloured glow. The accent is the teal end of the aurora; the violet end belongs to the focus ring.',
+  'app.style.e-ink-paper.label': 'E-Ink / Paper',
+  'app.style.e-ink-paper.note':
+    'One achromatic scale on matte paper: the accent is ink itself, state colours step through grays, and borders carry depth because paper casts no shadow.',
+  'app.style.skeuomorphism.label': 'Skeuomorphism',
+  'app.style.skeuomorphism.note':
+    'A desk of real materials: linen ground, brushed paper panels, genuinely recessed wells, shadows layered for weight — and the 300-500ms motion the contract reserved for it.',
+  'app.style.memphis-design.label': 'Memphis Design',
+  'app.style.memphis-design.note':
+    'An 80s Milan paper collage: geometric confetti texture, clashing pastels, flat as paper — depth declared none outright, with a spring easing as the only indulgence.',
+  'app.style.pixel-art.label': 'Pixel Art',
+  'app.style.pixel-art.note':
+    'An NES palette on warm console beige: dither-checker texture, hard block shadows, steps() frame-stepped motion — and the true NES yellow focus ring in dark mode.',
 
   /* -------------------------------------------------------- sidebar (nav.*) */
   'nav.feedback': 'Feedback',

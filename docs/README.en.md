@@ -167,7 +167,7 @@ Style and mode are two independent axes, set as attributes on `<html>`:
 
 | Attribute | Values |
 | --- | --- |
-| `data-jin-style` | The visual style: `jin` (default) plus eight catalogue styles — table below |
+| `data-jin-style` | The visual style: `jin` (default) plus fourteen catalogue styles — table below |
 | `data-jin-mode` | `dark` (Jin's signature mode, 玄锦) or `light` (素锦); every style ships both |
 
 Every appearance value comes from a CSS custom property (a design token). There are 80 of them,
@@ -175,9 +175,9 @@ listed in [`contracts/tokens.json`](../contracts/tokens.json). Every theme file 
 keeps no dependence on values left behind by another theme — switching a theme is swapping a group
 of files, with no need to trace which layer a variable's value came from.
 
-Nine styles ship. They were selected to cover different design positions: where one expresses depth
-with a diffuse shadow, the next expresses it with a hard offset, a blur, or an inner shadow, and
-others express no depth at all.
+Fifteen styles ship. They were selected to cover different design positions: where one expresses depth
+with a diffuse shadow, the next expresses it with a hard offset, a glow, a blur, a recessed well, or
+layered realistic shadows, and others express no depth at all.
 
 | Style | Radius (sm / md / lg) | Depth | Borders | Motion (base) |
 | --- | --- | --- | --- | --- |
@@ -190,11 +190,22 @@ others express no depth at all.
 | **Neubrutalism** | 0 | hard offset, no blur radius | 3px black | 150ms |
 | **Brutalism** | 0 | none | 3px, always visible | 0s |
 | **Dimensional Layering** | 6 / 10 / 14px | four shadow levels | 1px hairline | 200ms |
+| **Retro-Futurism** | 2 / 4 / 8px | glow + black drop | 1px, neon-magenta strong border | 200ms |
+| **Aurora UI** | 8 / 14 / 20px | coloured glow shadows | 1px, teal strong border | 260ms |
+| **E-Ink / Paper** | 2 / 4 / 6px | none, declared as `none` | 1px, ink strong border | 100ms, linear |
+| **Skeuomorphism** | 4 / 6 / 10px | layered realistic shadows + recessed wells | 1px, leather strong border | 320ms |
+| **Memphis Design** | 4 / 10 / 14px | none, declared as `none` | 1px, ink strong border | 200ms, spring easing |
+| **Pixel Art** | 0 | hard block shadows, no blur | 1px, ink strong border | 60ms, steps |
 
-Titles read `--jin-font-display`: in Jin it is a second family (serif/Songti); the other styles set
-the same family as body text, with glassmorphism the exception — a display variant of the same
-family (SF Pro Display against body SF Pro Text). The texture token `--jin-surface-texture` carries
-Jin's warp/weft grid and is `none` in the other eight.
+Titles read `--jin-font-display`: in Jin it is a second family (serif/Songti); most styles set the
+same family as body text, glassmorphism and aurora use a display variant of the same or a near
+family, e-ink-paper reads serif throughout (body and titles in one family), retro-futurism is
+monospace throughout, skeuomorphism pairs an engraved humanist display face with a system sans for
+body, and pixel-art uses a pixel display face that falls back to monospace when none is installed.
+The texture token `--jin-surface-texture` carries Jin's warp/weft grid, the CRT raster in
+retro-futurism, a linen crosshatch in skeuomorphism, geometric confetti in memphis, a dither
+checker in pixel-art, and a fine anti-banding grain in aurora and e-ink-paper; it is `none`
+in the rest.
 
 ### Writing your own theme
 
@@ -216,13 +227,14 @@ will not change.
 
 **Jin（锦）is original work** — the library's own visual style, and the default.
 
-**The other eight are independent implementations of entries in
+**The other fourteen are independent implementations of entries in
 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**
 (MIT, © 2024 Next Level Builder), a searchable catalogue of UI styles. The catalogue ships design
 guidance rather than CSS, so no stylesheet of it is copied here; the requirement that tokens cover
-shape, depth and motion — not just colour — came from that catalogue. The eight implemented entries
-are `minimalism-and-swiss-style`, `neumorphism`, `glassmorphism`, `claymorphism`, `flat-design`,
-`neubrutalism`, `brutalism` and `dimensional-layering`. Full attribution:
+shape, depth and motion — not just colour — came from that catalogue. The fourteen implemented
+entries are `minimalism-and-swiss-style`, `neumorphism`, `glassmorphism`, `claymorphism`,
+`flat-design`, `neubrutalism`, `brutalism`, `dimensional-layering`, `retro-futurism`, `aurora-ui`,
+`e-ink-paper`, `skeuomorphism`, `memphis-design` and `pixel-art`. Full attribution:
 [CREDITS.md](../CREDITS.md); each theme file also credits its source in its header.
 
 ---

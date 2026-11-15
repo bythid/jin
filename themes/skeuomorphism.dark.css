@@ -1,0 +1,137 @@
+/*
+ * Jin theme — dark mode: skeuomorphism (the study at night).
+ * Style axis: data-jin-style="skeuomorphism"  ·  Mode axis: data-jin-mode="dark"
+ *
+ * Dark walnut and brass instead of linen and paper, but the same physical
+ * rules: layered shadows, a recessed well with a faint light bottom edge,
+ * a brushed sheen falling from above. The accent turns to polished brass
+ * with dark text on it, and the focus ring becomes pale steel — still
+ * declared on its own, never derived from the brass.
+ *
+ * ---
+ * Style definition: the "skeuomorphism" entry in nextlevelbuilder/ui-ux-pro-max-skill
+ * (https://github.com/nextlevelbuilder/ui-ux-pro-max-skill, MIT, (c) 2024 Next Level Builder).
+ * The token values below are this library's own implementation of that style; no stylesheet
+ * from that project is copied. See CREDITS.md.
+ */
+:root[data-jin-style='skeuomorphism'][data-jin-mode='dark'] {
+  color-scheme: dark;
+
+  /* surface & text — walnut study, warm cream text */
+  --jin-bg: #1e1912;
+  --jin-surface: #272117;
+  --jin-surface-raised: #302a1d;
+  --jin-surface-sunken: #151109;
+  --jin-surface-translucent: #302a1d;
+  --jin-scrim: rgba(6, 4, 2, 0.66);
+  --jin-text: #efe8d8;
+  --jin-text-muted: #beb59e;
+  /* Dimmed brass-cream, still 4.5:1 on the raised panel where hints land. */
+  --jin-text-subtle: #a39a80;
+  /* The fill is polished brass, so dark text is the readable pairing. */
+  --jin-text-on-accent: #241a08;
+
+  /* border & shape */
+  --jin-border-color: rgba(239, 232, 216, 0.15);
+  --jin-border-color-strong: rgba(217, 164, 74, 0.6);
+  --jin-border-width: 1px;
+  --jin-border-style: solid;
+  --jin-radius-sm: 4px;
+  --jin-radius-md: 6px;
+  --jin-radius-lg: 10px;
+  --jin-radius-full: 999px;
+  --jin-control-height-sm: 32px;
+  --jin-control-height-md: 40px;
+  --jin-control-height-lg: 48px;
+
+  /* depth — the same layered realism, lit by a desk lamp */
+  --jin-elevation-1: 0 1px 1px rgba(0, 0, 0, 0.5), 0 2px 3px rgba(0, 0, 0, 0.35);
+  --jin-elevation-2: 0 1px 2px rgba(0, 0, 0, 0.5), 0 5px 10px rgba(0, 0, 0, 0.4);
+  --jin-elevation-3: 0 2px 3px rgba(0, 0, 0, 0.5), 0 10px 22px rgba(0, 0, 0, 0.45);
+  --jin-elevation-4: 0 3px 5px rgba(0, 0, 0, 0.55), 0 18px 40px rgba(0, 0, 0, 0.5);
+  --jin-shadow-inset: inset 0 2px 3px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(239, 232, 216, 0.07);
+  --jin-blur: 0px;
+  /* The sheen survives the dark: a dimmer brushed light, then shadow. */
+  --jin-surface-gradient: linear-gradient(
+    180deg,
+    rgba(255, 248, 230, 0.06) 0%,
+    rgba(255, 248, 230, 0.02) 40%,
+    rgba(255, 248, 230, 0) 55%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  /* Linen weave, drawn in cream. */
+  --jin-surface-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cg fill='none' stroke='%23efe8d8'%3E%3Cpath d='M0 6L6 0' stroke-opacity='.05'/%3E%3Cpath d='M0 0l6 6' stroke-opacity='.03'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* status — lifted for a dark room */
+  --jin-accent: #d9a44a;
+  --jin-accent-hover: #e4b45e;
+  --jin-accent-active: #c6933e;
+  --jin-danger: #e57368;
+  --jin-warning: #d9b13e;
+  --jin-success: #7cb46a;
+  --jin-info: #6f9fbd;
+  --jin-danger-text: #f09a8e;
+  --jin-warning-text: #e5c268;
+  --jin-success-text: #96c687;
+  --jin-info-text: #8db5cc;
+  --jin-danger-bg: rgba(190, 60, 50, 0.16);
+  --jin-warning-bg: rgba(180, 140, 40, 0.15);
+  --jin-success-bg: rgba(70, 130, 60, 0.16);
+  --jin-info-bg: rgba(60, 110, 150, 0.16);
+
+  /* focus — pale steel on walnut; declared here, never derived */
+  --jin-focus-ring-color: #cdd8de;
+  --jin-focus-ring-width: 2px;
+  --jin-focus-ring-offset: 2px;
+
+  /* motion — objects with weight */
+  --jin-duration-fast: 200ms;
+  --jin-duration-base: 320ms;
+  --jin-duration-slow: 480ms;
+  --jin-easing-standard: cubic-bezier(0.3, 0.6, 0.2, 1);
+  --jin-easing-emphasized: cubic-bezier(0.25, 0.8, 0.3, 1);
+
+  /* typography — the engraved voice over the workaday sans */
+  --jin-font-family: 'Segoe UI', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei',
+    'Helvetica Neue', sans-serif;
+  --jin-font-display: 'Optima', 'Candara', 'Segoe UI', system-ui, sans-serif;
+  --jin-font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, SFMono-Regular, Consolas,
+    monospace;
+  --jin-font-size-xs: 12px;
+  --jin-font-size-sm: 13px;
+  --jin-font-size-md: 14px;
+  --jin-font-size-lg: 16px;
+  --jin-font-size-xl: 20px;
+  --jin-font-weight-normal: 400;
+  --jin-font-weight-medium: 600;
+  --jin-font-weight-bold: 700;
+  --jin-line-height: 1.5;
+  --jin-letter-spacing: normal;
+  --jin-text-transform: none;
+
+  /* density — chunkier physical controls */
+  --jin-space-1: 4px;
+  --jin-space-2: 8px;
+  --jin-space-3: 12px;
+  --jin-space-4: 16px;
+  --jin-space-5: 20px;
+  --jin-space-6: 24px;
+  --jin-space-7: 32px;
+  --jin-space-8: 48px;
+
+  /* layers */
+  --jin-z-dropdown: 1000;
+  --jin-z-sticky: 900;
+  --jin-z-overlay: 1100;
+  --jin-z-modal: 1200;
+  --jin-z-toast: 1400;
+  --jin-z-tooltip: 1500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-jin-style='skeuomorphism'][data-jin-mode='dark'] {
+    --jin-duration-fast: 0s;
+    --jin-duration-base: 0s;
+    --jin-duration-slow: 0s;
+  }
+}

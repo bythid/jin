@@ -120,6 +120,24 @@ export const ZH_MESSAGES: Record<MessageKey, string> = {
     '带硬偏移阴影的粗野主义，配海报配色：3px 黑色描边、5px 实心偏移、无渐变、无模糊。',
   'app.style.brutalism.label': '粗野主义',
   'app.style.brutalism.note': '零圆角、无阴影、无动效、边框粗重可见。令牌契约的压力测试。',
+  'app.style.retro-futurism.label': '复古未来主义',
+  'app.style.retro-futurism.note':
+    '暗房里的荧光管：深靛底、霓虹青作主色，品红只留给强边界与焦点环；深度用辉光表达，扫描线只在地面区域出现。',
+  'app.style.aurora-ui.label': '极光',
+  'app.style.aurora-ui.note':
+    '流动的青—紫—粉渐变铺在每块面板上，深度用彩色辉光表达；强调色取极光的青端，紫端留给焦点环。',
+  'app.style.e-ink-paper.label': '墨水纸',
+  'app.style.e-ink-paper.note':
+    '哑光纸面上一套无彩灰阶：强调色就是墨色，状态色退成深浅灰阶，深度交给边框而不是阴影——纸不投影。',
+  'app.style.skeuomorphism.label': '拟物',
+  'app.style.skeuomorphism.note':
+    '一张摆着真实材质的书桌：亚麻地、纸面高光、真正凹陷的槽，阴影分层叠出重量；动效按契约预留的 300-500ms 走。',
+  'app.style.memphis-design.label': '孟菲斯',
+  'app.style.memphis-design.note':
+    '80 年代米兰的纸拼贴：几何碎花纹理、撞色粉彩、纸片一样扁平——深度被显式声明为无，弹性缓动是唯一的多余动作。',
+  'app.style.pixel-art.label': '像素',
+  'app.style.pixel-art.note':
+    '暖米色的游戏机壳上一套 NES 色盘：抖动棋盘纹理、硬方块阴影、steps() 逐帧动效，深色模式焦点环终于用上真正的任天堂黄。',
 
   /* -------------------------------------------------------- sidebar (nav.*) */
   'nav.feedback': '反馈',
