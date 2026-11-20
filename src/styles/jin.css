@@ -151,6 +151,31 @@
   outline-offset: var(--jin-focus-ring-offset, 2px);
 }
 
+/* ------------------------------------------------------------------ prose */
+
+/*
+ * The classes below are the library's multi-line prose: descriptions, hints,
+ * error text, key-value values. CJK text ends a paragraph in a lone-character
+ * last line at nearly every width, so they take text-wrap: pretty — an
+ * additive hint that engines without it ignore. Labels, tabs and other short
+ * chrome keep greedy breaking; their lines never run long enough to end in
+ * a lone character on its own line.
+ */
+.jin-alert__description,
+.jin-toast__description,
+.jin-notification__description,
+.jin-modal__description,
+.jin-drawer__description,
+.jin-card__description,
+.jin-result__description,
+.jin-field__hint,
+.jin-field__error,
+.jin-popconfirm__message,
+.jin-popconfirm__description,
+.jin-detail-list__value {
+  text-wrap: pretty;
+}
+
 /* ----------------------------------------------------------------- button */
 
 .jin-button {

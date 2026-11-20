@@ -59,6 +59,15 @@ Changed:
   §5 now gives the token-override recipe (a stylesheet stacked after the theme
   files, or inline overrides on `<html>`, colour tokens moved as a family) and
   states that contrast on overridden values is the application's responsibility.
+- **Multi-line prose asks for `text-wrap: pretty`.** Twelve prose classes —
+  alert, toast, notification, modal, drawer, card and result descriptions, field
+  hints and errors, popconfirm message and description, detail-list values — opt
+  into `text-wrap: pretty`, an additive hint that older engines ignore and that
+  falls back to greedy breaking. Short chrome (labels, tabs, buttons) keeps
+  greedy breaking. CJK prose is the reason: at nearly every width it ends a
+  paragraph with a lone character on the last line, and `pretty` avoids that
+  where it is supported. No token, selector or prop changed; a host that
+  overrides `white-space` on a description is unaffected.
 
 ## [0.5.0] — 2026-11-15
 
