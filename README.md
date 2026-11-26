@@ -233,7 +233,7 @@ async function loadChildren(node: TreeNode): Promise<TreeNode[]> {
 `JinNotificationRegion` `JinResult`
 **浮层** —— `JinModal` `JinDrawer` `JinPopover` `JinTooltip` `JinPopconfirm`
 **表单** —— `JinField` `JinTextField` `JinSearchField` `JinSelect` `JinCombobox` `JinCheckbox`
-`JinRadioGroup` `JinSwitch` `JinHotkeyRecorder`
+`JinRadioGroup` `JinSegmentedControl` `JinSwitch` `JinHotkeyRecorder`
 **导航** —— `JinTabs` `JinMenu` `JinDropdown` `JinContextMenu` `JinBreadcrumb` `JinDivider`
 `JinCard` `JinToolbar` `JinNav` `JinTree`
 **数据** —— `JinBadge` `JinTag` `JinDetailList` `JinLink` `JinIcon`

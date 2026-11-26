@@ -420,6 +420,26 @@ reasoning as "Not built, and why" in [architecture.md](architecture.md)).
 The group is one tab stop; arrows move and select, skipping disabled options. Implemented over real
 radio inputs, so screen readers announce them as actual radio buttons.
 
+### JinSegmentedControl
+
+| Prop | Type | Notes |
+| --- | --- | --- |
+| `modelValue` | `string \| null` | |
+| `items` | `SegmentedItem[]` | `{ value, label, disabled?, tooltip? }` |
+| `size` | `'sm' \| 'md' \| 'lg'` | Default `'md'` |
+| `name` | `string` | Form name for the underlying radio inputs; generated when omitted |
+| `disabled` | `boolean` | |
+| `ariaLabel` | `string` | The group's accessible name |
+
+A single-select pill group for switching between a small set of peer options. Implemented over
+native radio inputs in one group, so the group is one tab stop and screen readers announce actual
+radios; arrows move and select while skipping disabled segments. The selected segment is marked by
+the raised pill plus the text weight, not by colour alone. `tooltip` renders as the native `title`;
+the accessible name stays the label.
+
+The number of segments is open. It is meant for two to five options: past that the labels compete
+for width and a select or tabs is the better control.
+
 ### JinSwitch
 
 `modelValue: boolean`, `label`, `disabled`, `size`, `name`, `ariaLabel`.

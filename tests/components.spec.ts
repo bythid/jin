@@ -15,6 +15,7 @@ import JinPopconfirm from '../src/components/JinPopconfirm.vue'
 import JinProgress from '../src/components/JinProgress.vue'
 import JinTabs from '../src/components/JinTabs.vue'
 import JinSelect from '../src/components/JinSelect.vue'
+import JinSegmentedControl from '../src/components/JinSegmentedControl.vue'
 import JinSwitch from '../src/components/JinSwitch.vue'
 import JinIcon from '../src/components/JinIcon.vue'
 import JinButtonIdx from '../src/components/JinButton.vue'
@@ -200,6 +201,68 @@ describe('JinSwitch', () => {
     expect(input.attributes('role')).toBe('switch')
     await input.setValue(true)
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+  })
+})
+
+describe('JinSegmentedControl', () => {
+  const items = [
+    { value: 'list', label: 'List' },
+    { value: 'grid', label: 'Grid' },
+  ]
+
+  it('exposes a radiogroup and marks the selected segment', () => {
+    const wrapper = mount(JinSegmentedControl, {
+      props: { modelValue: 'grid', items, ariaLabel: 'View' },
+    })
+    expect(wrapper.attributes('role')).toBe('radiogroup')
+    expect(wrapper.attributes('aria-label')).toBe('View')
+    const inputs = wrapper.findAll('input[type="radio"]')
+    expect(inputs).toHaveLength(2)
+    expect((inputs[1]?.element as HTMLInputElement).checked).toBe(true)
+    expect(inputs.map((input) => input.attributes('tabindex'))).toEqual(['-1', '0'])
+    /* The raised pill covers exactly one segment and sits on the selected one. */
+    const thumb = wrapper.get('.jin-segmented__thumb')
+    expect(thumb.attributes('style')).toContain('width: 50%')
+    expect(thumb.attributes('style')).toContain('translateX(100%)')
+  })
+
+  it('selects on change and emits the value once', async () => {
+    const wrapper = mount(JinSegmentedControl, { props: { modelValue: 'list', items } })
+    await wrapper.findAll('input[type="radio"]')[1]?.setValue(true)
+    expect(wrapper.emitted('update:modelValue')).toEqual([['grid']])
+    expect(wrapper.emitted('change')).toEqual([['grid']])
+  })
+
+  it('moves with arrow keys, Home and End, skipping disabled segments', async () => {
+    const three = [
+      { value: 'a', label: 'A' },
+      { value: 'b', label: 'B', disabled: true },
+      { value: 'c', label: 'C' },
+    ]
+    const wrapper = mount(JinSegmentedControl, { props: { modelValue: 'a', items: three } })
+    const inputs = wrapper.findAll('input[type="radio"]')
+
+    await inputs[0]?.trigger('keydown', { key: 'ArrowRight' })
+    expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual(['c'])
+
+    await inputs[2]?.trigger('keydown', { key: 'Home' })
+    expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual(['a'])
+
+    await inputs[0]?.trigger('keydown', { key: 'End' })
+    expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual(['c'])
+  })
+
+  it('ignores input while the group is disabled', async () => {
+    const wrapper = mount(JinSegmentedControl, {
+      props: { modelValue: 'list', items, disabled: true },
+    })
+    await wrapper.findAll('input[type="radio"]')[1]?.setValue(true)
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+  })
+
+  it('applies the size modifier', () => {
+    const wrapper = mount(JinSegmentedControl, { props: { modelValue: 'list', items, size: 'sm' } })
+    expect(wrapper.classes()).toContain('jin-segmented--sm')
   })
 })
 

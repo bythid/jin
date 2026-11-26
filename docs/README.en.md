@@ -261,7 +261,7 @@ entries are `minimalism-and-swiss-style`, `neumorphism`, `glassmorphism`, `claym
 `JinNotificationRegion` `JinResult`
 **Overlays** — `JinModal` `JinDrawer` `JinPopover` `JinTooltip` `JinPopconfirm`
 **Forms** — `JinField` `JinTextField` `JinSearchField` `JinSelect` `JinCombobox` `JinCheckbox`
-`JinRadioGroup` `JinSwitch` `JinHotkeyRecorder`
+`JinRadioGroup` `JinSegmentedControl` `JinSwitch` `JinHotkeyRecorder`
 **Navigation** — `JinTabs` `JinMenu` `JinDropdown` `JinContextMenu` `JinBreadcrumb` `JinDivider`
 `JinCard` `JinToolbar` `JinNav` `JinTree`
 **Data** — `JinBadge` `JinTag` `JinDetailList` `JinLink` `JinIcon`
