@@ -20,6 +20,23 @@ what it contains. Entries are written for the application that has to react — 
 that only shows up in an unusual host layout, because that is the kind of change that costs
 downstream an afternoon.
 
+## [0.7.0] — 2026-11-26
+
+Added:
+
+- **`JinSegmentedControl`**, a single-select pill group for switching between a small set of peer
+  options. Built over native radio inputs in one group, so the group stays one tab stop and screen
+  readers announce actual radios; arrows move and select while skipping disabled segments, and the
+  selected segment is marked by the raised pill plus the text weight, not by colour alone. The
+  number of segments is open — the gallery demonstrates two to five, the range the guidance targets
+  — and the raised pill is one percentage-sized layer, so the segments fill whatever width the host
+  gives the control. Props: `items` (`SegmentedItem[]`), `modelValue`, `size` (`sm | md | lg`),
+  `disabled`, `name`, `ariaLabel`; an item's `tooltip` renders as the native `title`. The
+  `SegmentedItem` type is exported with the component.
+
+Nothing existing changes. A host that does not import the new component sees no difference and
+there is no migration step.
+
 ## [0.6.0] — 2026-11-15
 
 Added:
