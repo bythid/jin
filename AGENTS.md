@@ -7,8 +7,8 @@ disagree, they win.
 ## What this is
 
 Jin (锦) — a Vue 3 control library whose entire style interface is a token contract, published to
-npm as `@bythid/jin` (MIT, peer `vue ^3.5`; the current version is `package.json`'s). 37 components,
-15 pure decision modules, 9 DOM composables, 257 tests. Two ideas carry everything:
+npm as `@bythid/jin` (MIT, peer `vue ^3.5`; the current version is `package.json`'s). 38 components,
+15 pure decision modules, 9 DOM composables, 304 tests. Two ideas carry everything:
 
 1. **Behaviour lives in plain TypeScript; components only render.** `src/core/` imports no Vue and
    assumes no DOM, which is why most tests run in Node in milliseconds.

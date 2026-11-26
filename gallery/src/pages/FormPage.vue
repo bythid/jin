@@ -24,6 +24,7 @@ import {
   JinIcon,
   JinRadioGroup,
   JinSearchField,
+  JinSegmentedControl,
   JinSelect,
   JinSwitch,
   JinTag,
@@ -59,6 +60,11 @@ const unchecked = ref(false)
 const indeterminate = ref(false)
 const radio = ref<string | null>('normal')
 const radioEmpty = ref<string | null>(null)
+const segmentedView = ref<string | null>('list')
+const segmentedSmall = ref<string | null>('grid')
+const segmentedDensity = ref<string | null>('comfortable')
+const segmentedViewFour = ref<string | null>('columns')
+const segmentedAlign = ref<string | null>('center')
 const toggledOn = ref(true)
 const toggledOff = ref(false)
 const bio = ref('')
@@ -75,6 +81,32 @@ const richOptions = computed(() => [
   { value: 'sm', label: t('forms.select.optionSmall') },
   { value: 'md', label: t('forms.select.optionMedium') },
   { value: 'lg', label: t('forms.select.optionLarge') },
+])
+
+const segmentedViewItems = computed(() => [
+  { value: 'list', label: t('forms.segmented.list') },
+  { value: 'grid', label: t('forms.segmented.grid') },
+])
+
+const segmentedDensityItems = computed(() => [
+  { value: 'compact', label: t('forms.segmented.compact') },
+  { value: 'comfortable', label: t('forms.segmented.comfortable') },
+  { value: 'spacious', label: t('forms.segmented.spacious') },
+])
+
+const segmentedViewFourItems = computed(() => [
+  { value: 'list', label: t('forms.segmented.list') },
+  { value: 'grid', label: t('forms.segmented.grid') },
+  { value: 'columns', label: t('forms.segmented.columns') },
+  { value: 'gallery', label: t('forms.segmented.gallery') },
+])
+
+const segmentedAlignItems = computed(() => [
+  { value: 'left', label: t('forms.segmented.alignLeft') },
+  { value: 'center', label: t('forms.segmented.alignCenter') },
+  { value: 'right', label: t('forms.segmented.alignRight') },
+  { value: 'justify', label: t('forms.segmented.alignJustify') },
+  { value: 'distribute', label: t('forms.segmented.alignDistribute') },
 ])
 
 // Static on purpose: filterable lists usually arrive from the application
@@ -439,6 +471,43 @@ const searchHint = computed(() =>
           :label="t('forms.radio.withError')"
           :error="t('forms.radio.errorText')"
           model-value="normal"
+        />
+      </div>
+    </DemoSection>
+
+    <DemoSection id="segmented" :title="t('forms.segmented.title')" :note="t('forms.segmented.note')">
+      <div class="gallery-grid gallery-grid--two">
+        <JinSegmentedControl
+          v-model="segmentedView"
+          :items="segmentedViewItems"
+          :aria-label="t('forms.segmented.view')"
+        />
+        <JinSegmentedControl
+          v-model="segmentedSmall"
+          :items="segmentedViewItems"
+          size="sm"
+          :aria-label="t('forms.segmented.small')"
+        />
+        <JinSegmentedControl
+          :items="segmentedViewItems"
+          model-value="grid"
+          disabled
+          :aria-label="t('forms.segmented.disabled')"
+        />
+        <JinSegmentedControl
+          v-model="segmentedDensity"
+          :items="segmentedDensityItems"
+          :aria-label="t('forms.segmented.density')"
+        />
+        <JinSegmentedControl
+          v-model="segmentedViewFour"
+          :items="segmentedViewFourItems"
+          :aria-label="t('forms.segmented.four')"
+        />
+        <JinSegmentedControl
+          v-model="segmentedAlign"
+          :items="segmentedAlignItems"
+          :aria-label="t('forms.segmented.five')"
         />
       </div>
     </DemoSection>
