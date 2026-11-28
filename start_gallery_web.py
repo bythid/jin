@@ -126,10 +126,24 @@ def require() -> None:
 # --------------------------------------------------------------------------
 # port handling
 # --------------------------------------------------------------------------
-def port_is_open(port: int, host: str = "127.0.0.1") -> bool:
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.settimeout(0.4)
-        return sock.connect_ex((host, port)) == 0
+def port_is_open(port: int) -> bool:
+    """True when either IP stack accepts a connection on this port.
+
+    Vite's default host is `localhost`, which Node resolves to `::1` first on
+    Windows — so the dev server listens on IPv6 only. Probing 127.0.0.1 alone
+    reports that server as missing and the launcher kills it after the 60s
+    ready timeout, while a browser pointed at `localhost` loads it fine.
+    """
+    for host, family in (("127.0.0.1", socket.AF_INET), ("::1", socket.AF_INET6)):
+        try:
+            with socket.socket(family, socket.SOCK_STREAM) as sock:
+                sock.settimeout(0.4)
+                if sock.connect_ex((host, port)) == 0:
+                    return True
+        except OSError:
+            # No IPv6 stack on this machine; the IPv4 probe is the whole answer.
+            continue
+    return False
 
 
 def is_our_gallery(port: int, timeout: float = 1.5) -> bool:
