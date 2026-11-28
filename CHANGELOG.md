@@ -20,6 +20,19 @@ what it contains. Entries are written for the application that has to react — 
 that only shows up in an unusual host layout, because that is the kind of change that costs
 downstream an afternoon.
 
+## [0.7.1] — 2026-11-28
+
+Fixed:
+
+- **`JinSegmentedControl`: the pill inset no longer derives from `--jin-border-width`.** It was
+  `calc(var(--jin-border-width, 1px) * 2)`, which silently assumed 1px borders. On the three
+  thick-stroke themes (claymorphism, brutalism, neubrutalism — `--jin-border-width: 3px`) the
+  inner track collapsed until the raised pill rendered shorter than its own label: claymorphism's
+  small control left a 14px painted pill under a 14px font. The inset is now a fixed `2px`. Every
+  1px-border theme (twelve of fifteen) renders pixel-identically; only the three thick-stroke
+  themes change, and they regain a pill that encloses its text. A host that overrode
+  `--jin-segmented-inset` to work around this can drop the override.
+
 ## [0.7.0] — 2026-11-26
 
 Added:
