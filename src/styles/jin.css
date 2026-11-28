@@ -1914,9 +1914,13 @@
 
 /* One pill per option on a sunken track. The raised pill is a single layer
    sized and moved by percentages of the inner track (the component supplies
-   them), so the count is open and nothing here divides by it. */
+   them), so the count is open and nothing here divides by it. The inset is
+   a fixed 2px, not a function of --jin-border-width: the track gap is layout,
+   not decoration, and scaling it with the theme's stroke width assumed 1px
+   borders — on the thick-stroke themes (claymorphism, brutalism,
+   neubrutalism, 3px) it collapsed the pill below its own label. */
 .jin-segmented {
-  --jin-segmented-inset: calc(var(--jin-border-width, 1px) * 2);
+  --jin-segmented-inset: 2px;
   display: inline-flex;
   box-sizing: border-box;
   height: var(--jin-control-height-md, 36px);
